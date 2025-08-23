@@ -30,15 +30,16 @@ An interactive web application for experimenting with various Large Language Mod
    pip install -r pages/requirements.txt
    ```
 
+2. **Start server** 
+   ```bash
+   python ChatPlayground-Server.py
+   ```
+
 2. **Run the application**
    ```bash
    streamlit run pages/ChatPlayground.py
    ```
 
-3. **Optional: Start Flask server** (for Together AI models)
-   ```bash
-   python ChatPlayground-Server.py
-   ```
 
 #### How to Use
 1. Select model provider (OpenAI or Together AI) from sidebar
