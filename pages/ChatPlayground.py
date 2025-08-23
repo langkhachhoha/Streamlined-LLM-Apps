@@ -541,21 +541,22 @@ st.markdown(
     """
     <div class="main-container">
         <div class="main-title">🤖 Chatbot Playground</div>
-        <div class="subtitle">✨ Trải nghiệm các mô hình LLM với giao diện chat hiện đại ✨</div>
+        <div class="subtitle">✨ Trải nghiệm trò chuyện với AI một cách đơn giản và thú vị ✨</div>
         <div class="info-box">
             <b>🎉 Chào mừng bạn đến với Chatbot Playground!</b><br><br>
-            Hãy chọn mô hình, điều chỉnh các tham số như <i>temperature</i> và <i>top_p</i> để khám phá cách chúng ảnh hưởng đến phản hồi của chatbot.<br><br>
+            Đây là nơi bạn có thể thử nghiệm và trò chuyện cùng các mô hình AI để khám phá cách chúng phản hồi trong nhiều tình huống khác nhau.<br><br>
             <ul>
                 <li>🎯 Chọn mô hình ở thanh bên trái</li>
-                <li>⚙️ Điều chỉnh các tham số để thử nghiệm</li>
-                <li>🚀 Bắt đầu trò chuyện ngay!</li>
-                <li>💫 Khám phá sức mạnh của AI</li>
+                <li>🚀 Bắt đầu cuộc trò chuyện với AI</li>
+                <li>💡 Khám phá những phản hồi sáng tạo và bất ngờ</li>
             </ul>
         </div>
     </div>
     """,
     unsafe_allow_html=True
 )
+
+
 
 st.session_state.flask_api_url = "http://localhost:5001"  # Set your Flask API URL here
 
