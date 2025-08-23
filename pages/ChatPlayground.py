@@ -571,83 +571,6 @@ for message in st.session_state.chat_history:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Accept user input
-if prompt := st.chat_input(key="chat", placeholder="💬 Nhập tin nhắn của bạn... ✨"):
-    # Add user message to chat history
-    st.session_state.chat_history.append({"role": "user", "content": prompt})
-
-    # Display user message in chat message container
-    with st.chat_message("user"):
-        st.markdown(prompt)
-
-    # Prepare the payload for the request
-    payload = {
-        "message": {"content": prompt},
-        "context": st.session_state.chat_history,
-        "sessionId": session_id,
-        "model": st.session_state.selected_model,
-        "temperature": st.session_state.temperature,
-        "top_p": st.session_state.top_p,
-        "stream": True  # Enable streaming
-    }
-
-    # Stream the response from the Flask API
-    with st.chat_message("assistant"):
-        streamed_content = ""  # Initialize an empty string to concatenate chunks
-        response = requests.post(st.session_state.flask_api_url, json=payload, stream=True)
-
-        # Create a placeholder to update the markdown
-        response_placeholder = st.empty()
-        
-        # Add loading animation
-        with response_placeholder.container():
-            st.markdown(
-                """
-                <div style="text-align: center; padding: 2rem;">
-                    <div class="loading-dots">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
-                    <p style="color: #ffd700; margin-top: 1rem; font-weight: 500;">🤖 AI đang suy nghĩ...</p>
-                </div>
-                """, 
-                unsafe_allow_html=True
-            )
-
-        # Check if the request was successful
-        if response.status_code == 200:
-            
-            # TODO 4
-            # Loop through each chunk and add the content to the variable streamed_content
-            # Don't forget to use markdown to print the result
-            for line in response.iter_lines():
-                if line:
-                    line = line.decode('utf-8')
-                    if line.startswith('data: '):
-                        try:
-                            data = line[6:]  # Remove 'data: ' prefix
-                            json_data = json.loads(data)  # Parse JSON safely
-                            
-                            if 'content' in json_data:
-                                content = json_data['content']
-                                streamed_content += content
-                                # Update the placeholder with the current streamed content
-                                response_placeholder.markdown(streamed_content)
-                            elif 'done' in json_data and json_data['done']:
-                                break
-                            elif 'error' in json_data:
-                                st.error(f"Error: {json_data['error']}")
-                                break
-                        except json.JSONDecodeError:
-                            continue
-
-            # Once complete, add the full response to the chat history
-            st.session_state.chat_history.append({"role": "assistant", "content": streamed_content})
-        else:
-            st.error(f"Error: {response.status_code}")
-
 # Sidebar settings for model, temperature, and top_p
 with st.sidebar:
     st.markdown(
@@ -675,7 +598,7 @@ with st.sidebar:
         )
     else:
         # Together AI model selection with enhanced UI
-        st.markdown("**🚀 Chọn mô hình Together AI (Miễn phí):**")
+        st.markdown("**🚀 Chọn mô hình Together AI:**")
         
         # Đọc thông tin model từ file model_info.json
         model_info_path = os.path.join(os.path.dirname(__file__), "model_info.json")
@@ -694,17 +617,14 @@ with st.sidebar:
         )
         
         st.session_state.selected_model = model_options[selected_display_name]
-        
-        
-        st.markdown(model_descriptions[st.session_state.selected_model])
 
     # Display selected model with provider info
-    provider_emoji = "🤖" if 'gpt' in st.session_state.selected_model.lower() else "🚀"
+    provider_emoji = "🤖" if model_provider == "OpenAI (GPT)" else "🚀"
     try:
         price = model_prices[st.session_state.selected_model]
     except:
         price = ""
-    provider_name = "OpenAI" if 'gpt' in st.session_state.selected_model.lower() else "Together AI"
+    provider_name = "OpenAI" if model_provider == "OpenAI (GPT)" else "Together AI"
 
     if provider_name == "OpenAI":
         st.markdown(
@@ -763,44 +683,11 @@ with st.sidebar:
     )
     st.caption(f"🎯 Top P hiện tại: **{st.session_state.top_p}** {'🎊' if st.session_state.top_p > 0.8 else '🎯' if st.session_state.top_p < 0.5 else '⚖️'}")
     
-    # Simple centered button for clearing chat (moved solar system to bottom)
+    # Simple clear button in sidebar that clears immediately
     st.markdown("<br>", unsafe_allow_html=True)
-    
-    # Center the button using columns
-    col1, col2, col3 = st.columns([4, 1, 4])
-    with col2:
-        if st.button("🗑️", key="clear_chat", help="Xóa toàn bộ lịch sử chat", 
-                     use_container_width=True, type="primary"):
-            st.session_state.chat_history = []
-            st.success("✨ Đã xóa lịch sử!")
-            st.rerun()
-        
-    # Show chat statistics
-    if st.session_state.chat_history:
-        total_messages = len(st.session_state.chat_history)
-        user_messages = len([m for m in st.session_state.chat_history if m["role"] == "user"])
-        
-        st.markdown(
-            f"""
-            <div class="metric-container">
-                <div style="color: #ffd700; font-size: 2rem;">📊</div>
-                <div style="color: #e8e8f0; font-weight: 600; font-size: 1.5rem;">{total_messages}</div>
-                <div style="color: rgba(232,232,240,0.8);">Tổng tin nhắn</div>
-            </div>
-            """, 
-            unsafe_allow_html=True
-        )
-        
-        st.markdown(
-            f"""
-            <div class="metric-container">
-                <div style="color: #ff6b35; font-size: 2rem;">👤</div>
-                <div style="color: #e8e8f0; font-weight: 600; font-size: 1.5rem;">{user_messages}</div>
-                <div style="color: rgba(232,232,240,0.8);">Tin nhắn của bạn</div>
-            </div>
-            """, 
-            unsafe_allow_html=True
-        )
+    if st.button("🗑️ Xóa lịch sử chat", key="clear_chat", type="secondary", use_container_width=True):
+        st.session_state.chat_history = []
+        st.rerun()
 
     st.markdown("---")
     
@@ -979,3 +866,322 @@ with st.sidebar:
         """,
         unsafe_allow_html=True
     )
+
+
+# Display model description if Together AI model is selected
+if hasattr(st.session_state, 'selected_model') and st.session_state.selected_model not in ["gpt-4o-mini", "gpt-4o", "gpt-4", "gpt-3.5-turbo"]:
+    model_info_path = os.path.join(os.path.dirname(__file__), "model_info.json")
+    with open(model_info_path, "r", encoding="utf-8") as f:
+        model_info = json.load(f)
+    
+    model_descriptions = {item["id"]: item["description"] for item in model_info}
+    
+    if st.session_state.selected_model in model_descriptions:
+        description_text = model_descriptions[st.session_state.selected_model]
+        
+        st.markdown(
+            f"""
+            <div class="model-description-box">
+                <div class="shimmer-overlay"></div>
+                <div class="glow-border"></div>
+                <div class="description-content">
+                    <div class="description-icon">🚀</div>
+                    <div class="description-text">
+                        <strong>Model Description:</strong><br>
+                        {description_text}
+                    </div>
+                </div>
+            </div>
+            
+            <style>
+            .model-description-box {{
+                position: relative;
+                background: linear-gradient(135deg, 
+                    rgba(255,215,0,0.15) 0%, 
+                    rgba(255,107,53,0.15) 35%, 
+                    rgba(138,43,226,0.1) 70%,
+                    rgba(0,191,255,0.1) 100%);
+                border-radius: 25px;
+                padding: 2rem;
+                margin: 1.5rem 0;
+                overflow: hidden;
+                backdrop-filter: blur(20px);
+                border: 2px solid transparent;
+                animation: borderGlow 3s ease-in-out infinite;
+                transition: all 0.3s ease;
+                box-shadow: 
+                    0 15px 35px rgba(0,0,0,0.3),
+                    0 5px 15px rgba(255,215,0,0.2),
+                    inset 0 1px 0 rgba(255,255,255,0.1);
+            }}
+            
+            .model-description-box:hover {{
+                transform: translateY(-5px) scale(1.02);
+                box-shadow: 
+                    0 25px 50px rgba(0,0,0,0.4),
+                    0 10px 30px rgba(255,215,0,0.4),
+                    0 0 40px rgba(255,107,53,0.3);
+            }}
+            
+            @keyframes borderGlow {{
+                0% {{
+                    border-color: rgba(255, 215, 0, 0.6);
+                    box-shadow: 
+                        0 15px 35px rgba(0,0,0,0.3),
+                        0 5px 15px rgba(255,215,0,0.2),
+                        0 0 20px rgba(255,215,0,0.3);
+                }}
+                33% {{
+                    border-color: rgba(255, 107, 53, 0.8);
+                    box-shadow: 
+                        0 20px 40px rgba(0,0,0,0.4),
+                        0 8px 25px rgba(255,107,53,0.4),
+                        0 0 30px rgba(255,107,53,0.5);
+                }}
+                66% {{
+                    border-color: rgba(138, 43, 226, 0.7);
+                    box-shadow: 
+                        0 18px 38px rgba(0,0,0,0.35),
+                        0 6px 20px rgba(138,43,226,0.3),
+                        0 0 25px rgba(138,43,226,0.4);
+                }}
+                100% {{
+                    border-color: rgba(255, 215, 0, 0.6);
+                    box-shadow: 
+                        0 15px 35px rgba(0,0,0,0.3),
+                        0 5px 15px rgba(255,215,0,0.2),
+                        0 0 20px rgba(255,215,0,0.3);
+                }}
+            }}
+            
+            .shimmer-overlay {{
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: linear-gradient(
+                    45deg, 
+                    transparent, 
+                    rgba(255,255,255,0.1), 
+                    transparent
+                );
+                transform: rotate(45deg);
+                animation: shimmerMove 4s ease-in-out infinite;
+                pointer-events: none;
+            }}
+            
+            @keyframes shimmerMove {{
+                0% {{
+                    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+                    opacity: 0;
+                }}
+                50% {{
+                    opacity: 1;
+                }}
+                100% {{
+                    transform: translateX(100%) translateY(100%) rotate(45deg);
+                    opacity: 0;
+                }}
+            }}
+            
+            .glow-border {{
+                position: absolute;
+                top: -2px;
+                left: -2px;
+                right: -2px;
+                bottom: -2px;
+                background: linear-gradient(
+                    45deg,
+                    #ffd700,
+                    #ff6b35,
+                    #8a2be2,
+                    #00bfff,
+                    #ffd700
+                );
+                border-radius: 25px;
+                z-index: -1;
+                animation: rotateBorder 6s linear infinite;
+                opacity: 0.7;
+            }}
+            
+            @keyframes rotateBorder {{
+                0% {{
+                    transform: rotate(0deg);
+                }}
+                100% {{
+                    transform: rotate(360deg);
+                }}
+            }}
+            
+            .description-content {{
+                position: relative;
+                z-index: 2;
+                display: flex;
+                align-items: flex-start;
+                gap: 1rem;
+            }}
+            
+            .description-icon {{
+                font-size: 2.5rem;
+                animation: iconFloat 3s ease-in-out infinite;
+                filter: drop-shadow(0 0 10px rgba(255,215,0,0.5));
+            }}
+            
+            @keyframes iconFloat {{
+                0%, 100% {{
+                    transform: translateY(0px) rotate(0deg);
+                }}
+                25% {{
+                    transform: translateY(-8px) rotate(-5deg);
+                }}
+                50% {{
+                    transform: translateY(-12px) rotate(0deg);
+                }}
+                75% {{
+                    transform: translateY(-8px) rotate(5deg);
+                }}
+            }}
+            
+            .description-text {{
+                flex: 1;
+                color: #e8e8f0;
+                font-size: 1.1rem;
+                line-height: 1.7;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+                animation: textGlow 4s ease-in-out infinite;
+            }}
+            
+            .description-text strong {{
+                color: #ffd700;
+                font-weight: 700;
+                font-size: 1.2rem;
+                display: inline-block;
+                margin-bottom: 0.5rem;
+                text-shadow: 0 0 10px rgba(255,215,0,0.3);
+            }}
+            
+            @keyframes textGlow {{
+                0%, 100% {{
+                    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+                }}
+                50% {{
+                    text-shadow: 
+                        1px 1px 2px rgba(0,0,0,0.5),
+                        0 0 15px rgba(255,215,0,0.2);
+                }}
+            }}
+            
+            /* Floating particles effect */
+            .model-description-box::before {{
+                content: '✨';
+                position: absolute;
+                top: 20px;
+                right: 25px;
+                font-size: 1.2rem;
+                animation: sparkle 2s ease-in-out infinite;
+                z-index: 3;
+            }}
+            
+            .model-description-box::after {{
+                content: '💫';
+                position: absolute;
+                bottom: 20px;
+                left: 25px;
+                font-size: 1rem;
+                animation: sparkle 2.5s ease-in-out infinite 1s;
+                z-index: 3;
+            }}
+            
+            @keyframes sparkle {{
+                0%, 100% {{
+                    opacity: 0.6;
+                    transform: scale(0.8) rotate(0deg);
+                }}
+                50% {{
+                    opacity: 1;
+                    transform: scale(1.2) rotate(180deg);
+                }}
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+
+# Accept user input
+if prompt := st.chat_input(key="chat", placeholder="💬 Nhập tin nhắn của bạn... ✨"):
+    # Add user message to chat history
+    st.session_state.chat_history.append({"role": "user", "content": prompt})
+
+    # Display user message in chat message container
+    with st.chat_message("user"):
+        st.markdown(prompt)
+
+    # Prepare the payload for the request
+    payload = {
+        "message": {"content": prompt},
+        "context": st.session_state.chat_history,
+        "sessionId": session_id,
+        "model": st.session_state.selected_model,
+        "temperature": st.session_state.temperature,
+        "top_p": st.session_state.top_p,
+        "stream": True  # Enable streaming
+    }
+
+    # Stream the response from the Flask API
+    with st.chat_message("assistant"):
+        streamed_content = ""  # Initialize an empty string to concatenate chunks
+        response = requests.post(st.session_state.flask_api_url, json=payload, stream=True)
+
+        # Create a placeholder to update the markdown
+        response_placeholder = st.empty()
+        
+        # Add loading animation
+        with response_placeholder.container():
+            st.markdown(
+                """
+                <div style="text-align: center; padding: 2rem;">
+                    <div class="loading-dots">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <p style="color: #ffd700; margin-top: 1rem; font-weight: 500;">🤖 AI đang suy nghĩ...</p>
+                </div>
+                """, 
+                unsafe_allow_html=True
+            )
+
+        # Check if the request was successful
+        if response.status_code == 200:
+            
+            # TODO 4
+            # Loop through each chunk and add the content to the variable streamed_content
+            # Don't forget to use markdown to print the result
+            for line in response.iter_lines():
+                if line:
+                    line = line.decode('utf-8')
+                    if line.startswith('data: '):
+                        try:
+                            data = line[6:]  # Remove 'data: ' prefix
+                            json_data = json.loads(data)  # Parse JSON safely
+                            
+                            if 'content' in json_data:
+                                content = json_data['content']
+                                streamed_content += content
+                                # Update the placeholder with the current streamed content
+                                response_placeholder.markdown(streamed_content)
+                            elif 'done' in json_data and json_data['done']:
+                                break
+                            elif 'error' in json_data:
+                                st.error(f"Error: {json_data['error']}")
+                                break
+                        except json.JSONDecodeError:
+                            continue
+
+            # Once complete, add the full response to the chat history
+            st.session_state.chat_history.append({"role": "assistant", "content": streamed_content})
+        else:
+            st.error(f"Error: {response.status_code}")
+

@@ -1,32 +1,104 @@
 [
     {
-        "name": "🦙 Llama 3.3 70B Instruct Turbo",
+        "name": "Llama 3.3 70B Instruct Turbo Free",
         "id": "meta-llama/Llama-3.3-70B-Instruct-Turbo-Free",
-        "description": "🦙 **Meta Llama 3.3 70B** - Mô hình mạnh mẽ, phù hợp cho nhiều tác vụ",
+        "description": "Mô hình ngôn ngữ lớn đa ngữ Meta Llama 3.3 (LLM) là một mô hình sinh có sẵn tiền huấn luyện và tinh chỉnh theo chỉ dẫn, với 70 tỷ tham số (dữ liệu đầu vào/đầu ra dạng văn bản). Phiên bản Llama 3.3 tinh chỉnh theo chỉ dẫn, chỉ xử lý văn bản, được tối ưu hóa cho các tình huống đối thoại đa ngữ và vượt trội hơn nhiều mô hình trò chuyện mã nguồn mở cũng như đóng hiện có trên các bộ đánh giá chuẩn trong ngành.",
         "price": "Free"
     },
     {
-        "name": "🧠 DeepSeek R1 Distill 70B",
+        "name": "DeepSeek R1 Distill Llama 70B Free",
         "id": "deepseek-ai/DeepSeek-R1-Distill-Llama-70B-free",
-        "description": "🧠 **DeepSeek R1** - Chuyên về reasoning và giải quyết vấn đề",
+        "description": "DeepSeek R1 Distill Llama 70B là một mô hình ngôn ngữ lớn được chưng cất từ Llama-3.3-70B-Instruct, sử dụng đầu ra từ DeepSeek R1. Mô hình này kết hợp các kỹ thuật chưng cất tiên tiến để đạt hiệu năng cao trên nhiều bộ đánh giá chuẩn, bao gồm: AIME 2024 pass@1: 70.0, MATH-500 pass@1: 94.5, Xếp hạng CodeForces: 1633. Mô hình tận dụng quá trình tinh chỉnh từ đầu ra của DeepSeek R1, cho phép đạt hiệu năng cạnh tranh, tương đương với các mô hình tiên tiến có quy mô lớn hơn.",
         "price": "Free"
     },
     {
-        "name": "🎯 EXAONE Deep 32B",
+        "name": "EXAONE Deep 32B",
         "id": "lgai/exaone-deep-32b",
-        "description": "🎯 **EXAONE Deep 32B** - Tối ưu cho phân tích sâu",
+        "description": "Chúng tôi giới thiệu EXAONE Deep — dòng mô hình do LG AI Research phát triển và phát hành — với dải quy mô từ 2.4B đến 32B tham số, thể hiện năng lực vượt trội trên nhiều tác vụ suy luận, bao gồm các bộ đánh giá về toán học và lập trình. Kết quả đánh giá cho thấy: (1) EXAONE Deep 2.4B vượt trội so với các mô hình cùng hạng kích thước; (2) EXAONE Deep 7.8B không chỉ vượt các mô hình có trọng số mở cùng quy mô mà còn hơn cả mô hình suy luận độc quyền OpenAI o1-mini; và (3) EXAONE Deep 32B đạt hiệu năng cạnh tranh so với các mô hình mở trọng số hàng đầu.",
         "price": "Free"
     },
     {
-        "name": "✨ EXAONE 3.5 32B Instruct",
+        "name": "EXAONE 3.5 32B Instruct",
         "id": "lgai/exaone-3-5-32b-instruct",
-        "description": "✨ **EXAONE 3.5 32B** - Phiên bản cải tiến với khả năng instruction following tốt",
+        "description": "Chúng tôi giới thiệu EXAONE Deep — dòng mô hình do LG AI Research phát triển và phát hành — với dải quy mô từ 2.4B đến 32B tham số, thể hiện năng lực vượt trội trên nhiều tác vụ suy luận, bao gồm các bộ đánh giá về toán học và lập trình. Kết quả đánh giá cho thấy: (1) EXAONE Deep 2.4B vượt trội so với các mô hình cùng hạng kích thước; (2) EXAONE Deep 7.8B không chỉ vượt các mô hình có trọng số mở cùng quy mô mà còn hơn cả mô hình suy luận độc quyền OpenAI o1-mini; và (3) EXAONE Deep 32B đạt hiệu năng cạnh tranh so với các mô hình mở trọng số hàng đầu.",
         "price": "Free"
     },
     {
         "name": "Meta Llama Vision Free",
         "id": "meta-llama/Llama-Vision-Free",
-        "description": "🦙 **Meta Llama Vision** - Mô hình mạnh mẽ cho các tác vụ thị giác máy tính",
+        "description": "Llama 3.2 là một mô hình ngôn ngữ tự hồi quy (auto-regressive) sử dụng kiến trúc transformer được tối ưu hóa. Các phiên bản đã tinh chỉnh áp dụng kỹ thuật tinh chỉnh có giám sát (SFT) và học tăng cường với phản hồi từ con người (RLHF) nhằm điều chỉnh mô hình phù hợp với các ưu tiên của con người về tính hữu ích và mức độ an toàn.",
         "price": "Free"
+    },
+    {
+        "name": "OpenAI GPT-OSS 20B",
+        "id": "openai/gpt-oss-20b",
+        "description": "gpt-oss-20b là một mô hình 21 tỷ tham số với trọng số mở, được OpenAI phát hành theo giấy phép Apache 2.0. Mô hình này sử dụng kiến trúc Mixture-of-Experts (MoE) với 3.6 tỷ tham số được kích hoạt trong mỗi lượt lan truyền tiến, được tối ưu hóa cho suy luận có độ trễ thấp và khả năng triển khai trên phần cứng phổ thông hoặc một GPU đơn lẻ. Mô hình được huấn luyện theo định dạng phản hồi Harmony của OpenAI và hỗ trợ cấu hình mức độ suy luận, tinh chỉnh, cũng như các năng lực tác tử (agentic) bao gồm gọi hàm, sử dụng công cụ và tạo đầu ra có cấu trúc.",
+        "price": "$0.05 / $0.20"
+    },
+    {
+        "name": "Meta Llama 3.2 3B Instruct Turbo",
+        "id": "meta-llama/Llama-3.2-3B-Instruct-Turbo",
+        "description": "Llama 3.2 là một mô hình ngôn ngữ tự hồi quy (auto-regressive) sử dụng kiến trúc transformer được tối ưu hóa. Các phiên bản đã tinh chỉnh áp dụng kỹ thuật tinh chỉnh có giám sát (SFT) và học tăng cường với phản hồi từ con người (RLHF) nhằm điều chỉnh mô hình phù hợp với các ưu tiên của con người về tính hữu ích và mức độ an toàn.",
+        "price": "$0.06"
+    },
+    {
+        "name": "Meta Llama 3 8B Instruct Lite",
+        "id": "meta-llama/Meta-Llama-3-8B-Instruct-Lite",
+        "description": "Llama 3 là một mô hình ngôn ngữ tự hồi quy (auto-regressive) sử dụng kiến trúc transformer được tối ưu hóa. Các phiên bản đã tinh chỉnh áp dụng kỹ thuật tinh chỉnh có giám sát (SFT) và học tăng cường với phản hồi từ con người (RLHF) nhằm điều chỉnh mô hình phù hợp với các ưu tiên của con người về tính hữu ích và mức độ an toàn.",
+        "price": "$0.10"
+    },
+    {
+        "name": "Meta Llama 3.1 8B Instruct Turbo",
+        "id": "meta-llama/Meta-Llama-3-1-8B-Instruct-Turbo",
+        "description": "Llama 3.1 là một mô hình ngôn ngữ tự hồi quy (auto-regressive) sử dụng kiến trúc transformer được tối ưu hóa. Các phiên bản đã tinh chỉnh áp dụng kỹ thuật tinh chỉnh có giám sát (SFT) và học tăng cường với phản hồi từ con người (RLHF) nhằm điều chỉnh mô hình phù hợp với các ưu tiên của con người về tính hữu ích và mức độ an toàn.",
+        "price": "$0.18"
+    },
+    {
+        "name": "Mistral 7B Instruct v0.1",
+        "id": "mistralai/Mistral-7B-Instruct-v0.1",
+        "description": "Một mô hình 7.3 tỷ tham số đạt hiệu năng cao, theo chuẩn công nghiệp, được tối ưu hóa cho tốc độ và độ dài ngữ cảnh.",
+        "price": "$0.20"
+    },
+    {
+        "name": "Mistral 7B Instruct v0.2",
+        "id": "mistralai/Mistral-7B-Instruct-v0.2",
+        "description": "Một mô hình 7.3 tỷ tham số đạt hiệu năng cao, theo chuẩn công nghiệp, được tối ưu hóa cho tốc độ và độ dài ngữ cảnh.",
+        "price": "$0.20"
+    },
+    {
+        "name": "Mistral 7B Instruct v0.3",
+        "id": "mistralai/Mistral-7B-Instruct-v0.3",
+        "description": "Một mô hình 7.3 tỷ tham số đạt hiệu năng cao, theo chuẩn công nghiệp, được tối ưu hóa cho tốc độ và độ dài ngữ cảnh.",
+        "price": "$0.20"
+    },
+    {
+        "name": "Qwen3 235B A22B Instruct 2507 tput",
+        "id": "Qwen/Qwen3-235B-A22B-Instruct-2507-tput",
+        "description": "Qwen3 (232B×22B \"T\") là một mô hình văn bản kết hợp giữa instruct và reasoning, dựa trên kiến trúc Mixture-of-Experts thưa (sparse MoE). Mô hình này cân bằng giữa hiệu năng, chất lượng và hiệu quả trong dịch vụ suy luận được cấu hình cho thông lượng cao. Cấu hình thông lượng cao là phương thức tối ưu chi phí nhất để phục vụ các khối lượng công việc lớn, chẳng hạn như suy luận theo lô và chưng cất mô hình.",
+        "price": "$0.20 / $0.60"
+    },
+    {
+        "name": "Qwen2.5 7B Instruct Turbo",
+        "id": "Qwen/Qwen2.5-7B-Instruct-Turbo",
+        "description": "Qwen2.5 là dòng mô hình ngôn ngữ lớn mới nhất trong họ Qwen. Trong phiên bản Qwen2.5, chúng tôi phát hành nhiều mô hình ngôn ngữ cơ sở và mô hình ngôn ngữ tinh chỉnh theo chỉ dẫn, với quy mô từ 0.5 đến 72 tỷ tham số.",
+        "price": "$0.30"
+    },
+    {
+        "name": "DeepSeek R1 Distill Qwen 1.5B",
+        "id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+        "description": "DeepSeek R1 Distill Qwen 1.5B là một mô hình ngôn ngữ lớn được tinh chỉnh dựa trên   Qwen 2.5 Math 1.5B , sử dụng kết quả đầu ra từ DeepSeek R1 . Đây là một mô hình rất nhỏ và hiệu quả, vượt trội hơn GPT 4o 0513 về điểm chuẩn toán học. Các kết quả chuẩn khác bao gồm: Điểm đỗ AIME 2024 @1: 28,9, AIME 2024 cons@64: 52,7, Điểm đậu MATH-500 ở mức 1: 83,9. Mô hình này tận dụng khả năng tinh chỉnh từ đầu ra của DeepSeek R1, cho phép đạt hiệu suất cạnh tranh tương đương với các mô hình biên giới lớn hơn.",
+        "price": "$0.18"
+    },
+    {
+        "name": "DeepSeek R1 Distill Llama 70B",
+        "id": "deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
+        "description": "DeepSeek R1 Distill Llama 70B là một mô hình ngôn ngữ lớn được chưng cất từ Llama-3.3-70B-Instruct, sử dụng đầu ra của DeepSeek R1. Mô hình này kết hợp các kỹ thuật chưng cất tiên tiến để đạt hiệu năng cao trên nhiều bộ đánh giá chuẩn, bao gồm: AIME 2024 pass@1: 70.0, MATH-500 pass@1: 94.5, Xếp hạng CodeForces: 1633. Mô hình tận dụng quá trình tinh chỉnh từ đầu ra của DeepSeek R1, cho phép đạt hiệu năng cạnh tranh, tương đương với các mô hình tiên tiến có quy mô lớn hơn.",
+        "price": "$2.00"
+    },
+    {
+        "name": "DeepSeek R1 Distill Qwen 14B",
+        "id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
+        "description": "DeepSeek R1 Distill Qwen 14B là một mô hình ngôn ngữ lớn được chưng cất từ Qwen 2.5 14B, sử dụng đầu ra của DeepSeek R1. Mô hình này vượt trội hơn o1-mini của OpenAI trên nhiều bộ đánh giá chuẩn, đạt các kết quả tiên tiến mới cho dòng mô hình đặc (dense models). Kết quả trên các bộ đánh giá khác bao gồm: AIME 2024 pass@1: 69.7, MATH-500 pass@1: 93.9, Xếp hạng CodeForces: 1481. Mô hình tận dụng quá trình tinh chỉnh từ đầu ra của DeepSeek R1, cho phép đạt hiệu năng cạnh tranh, tương đương với các mô hình tiên tiến có quy mô lớn hơn.",
+        "price": "$1.60"
     }
 ]
