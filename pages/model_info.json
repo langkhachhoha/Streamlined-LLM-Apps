@@ -1,0 +1,32 @@
+[
+    {
+        "name": "🦙 Llama 3.3 70B Instruct Turbo",
+        "id": "meta-llama/Llama-3.3-70B-Instruct-Turbo-Free",
+        "description": "🦙 **Meta Llama 3.3 70B** - Mô hình mạnh mẽ, phù hợp cho nhiều tác vụ",
+        "price": "Free"
+    },
+    {
+        "name": "🧠 DeepSeek R1 Distill 70B",
+        "id": "deepseek-ai/DeepSeek-R1-Distill-Llama-70B-free",
+        "description": "🧠 **DeepSeek R1** - Chuyên về reasoning và giải quyết vấn đề",
+        "price": "Free"
+    },
+    {
+        "name": "🎯 EXAONE Deep 32B",
+        "id": "lgai/exaone-deep-32b",
+        "description": "🎯 **EXAONE Deep 32B** - Tối ưu cho phân tích sâu",
+        "price": "Free"
+    },
+    {
+        "name": "✨ EXAONE 3.5 32B Instruct",
+        "id": "lgai/exaone-3-5-32b-instruct",
+        "description": "✨ **EXAONE 3.5 32B** - Phiên bản cải tiến với khả năng instruction following tốt",
+        "price": "Free"
+    },
+    {
+        "name": "Meta Llama Vision Free",
+        "id": "meta-llama/Llama-Vision-Free",
+        "description": "🦙 **Meta Llama Vision** - Mô hình mạnh mẽ cho các tác vụ thị giác máy tính",
+        "price": "Free"
+    }
+]

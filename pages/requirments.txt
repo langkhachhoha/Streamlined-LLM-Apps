@@ -1,0 +1,8 @@
+streamlit
+flask
+openai
+flask-cors
+requests
+uuid
+python-dotenv
+together
