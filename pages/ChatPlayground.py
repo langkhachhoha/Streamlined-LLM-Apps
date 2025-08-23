@@ -566,10 +566,33 @@ session_id = str(uuid.uuid4())
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-# Display the chat history using chat UI
-for message in st.session_state.chat_history:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+# Function to get avatar path based on selected model
+def get_avatar_path():
+    if hasattr(st.session_state, 'selected_model'):
+        # For GPT models, use openai.png
+        if st.session_state.selected_model in ["gpt-4o-mini", "gpt-4o", "gpt-4", "gpt-3.5-turbo"]:
+            return os.path.join(os.path.dirname(__file__), "..", "logo", "openai.png")
+        else:
+            # For Together AI models, get logo from model_info.json
+            try:
+                model_info_path = os.path.join(os.path.dirname(__file__), "model_info.json")
+                with open(model_info_path, "r", encoding="utf-8") as f:
+                    model_info = json.load(f)
+                
+                for model in model_info:
+                    if model["id"] == st.session_state.selected_model:
+                        logo_filename = model["logo_url"]
+                        return os.path.join(os.path.dirname(__file__), "..", "logo", logo_filename)
+                        
+                # Fallback to meta.png if model not found
+                return os.path.join(os.path.dirname(__file__), "..", "logo", "meta.png")
+            except:
+                # Fallback to meta.png if any error occurs
+                return os.path.join(os.path.dirname(__file__), "..", "logo", "meta.png")
+    
+    # Default fallback
+    return os.path.join(os.path.dirname(__file__), "..", "logo", "meta.png")
+
 
 # Sidebar settings for model, temperature, and top_p
 with st.sidebar:
@@ -688,6 +711,47 @@ with st.sidebar:
     if st.button("🗑️ Xóa lịch sử chat", key="clear_chat", type="secondary", use_container_width=True):
         st.session_state.chat_history = []
         st.rerun()
+
+    st.markdown("---")
+    
+    # User Avatar Upload Section
+    st.markdown(
+        """
+        <div style="text-align: center; margin: 1rem 0;">
+            <h3 style="color: #ffd700; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); font-weight: 600;">👤 Avatar Cá Nhân</h3>
+        </div>
+        """, 
+        unsafe_allow_html=True
+    )
+    
+    # Avatar upload
+    uploaded_avatar = st.file_uploader(
+        "📸 Tải lên avatar của bạn:",
+        type=['png', 'jpg', 'jpeg', 'gif'],
+        help="Chọn ảnh để làm avatar cá nhân (PNG, JPG, JPEG, GIF)",
+        key="user_avatar_upload"
+    )
+    
+    # Store uploaded avatar in session state
+    if uploaded_avatar is not None:
+        # Save the uploaded file to session state
+        st.session_state.user_avatar = uploaded_avatar
+        
+        # Display preview
+        st.markdown("**🔍 Xem trước avatar:**")
+        st.image(uploaded_avatar, width=80)
+        
+        st.success("✅ Avatar đã được tải lên thành công!")
+    else:
+        # Reset avatar if no file uploaded
+        if "user_avatar" in st.session_state:
+            del st.session_state.user_avatar
+    
+    # Option to reset avatar
+    if "user_avatar" in st.session_state:
+        if st.button("🔄 Đặt lại avatar mặc định", key="reset_avatar", type="secondary", use_container_width=True):
+            del st.session_state.user_avatar
+            st.rerun()
 
     st.markdown("---")
     
@@ -1108,14 +1172,269 @@ if hasattr(st.session_state, 'selected_model') and st.session_state.selected_mod
             unsafe_allow_html=True
         )
 
+
+else:
+    st.markdown(
+            f"""
+            <div class="gpt-description-box">
+                <div class="gpt-shimmer-overlay"></div>
+                <div class="gpt-glow-border"></div>
+                <div class="gpt-description-content">
+                    <div class="gpt-description-icon">🤖</div>
+                    <div class="gpt-description-text">
+                        <strong>OpenAI GPT Description:</strong><br>
+                        We are governed by a nonprofit and our unique capped-profit model drives our commitment to safety. This means that as AI becomes more powerful, we can redistribute profits from our work to maximize the social and economic benefits of AI technology.
+                    </div>
+                </div>
+            </div>
+            
+            <style>
+            .gpt-description-box {{
+                position: relative;
+                background: linear-gradient(135deg, 
+                    rgba(0,191,255,0.15) 0%, 
+                    rgba(30,144,255,0.15) 35%, 
+                    rgba(138,43,226,0.1) 70%,
+                    rgba(0,255,127,0.1) 100%);
+                border-radius: 25px;
+                padding: 2rem;
+                margin: 1.5rem 0;
+                overflow: hidden;
+                backdrop-filter: blur(20px);
+                border: 2px solid transparent;
+                animation: gptBorderGlow 3s ease-in-out infinite;
+                transition: all 0.3s ease;
+                box-shadow: 
+                    0 15px 35px rgba(0,0,0,0.3),
+                    0 5px 15px rgba(0,191,255,0.2),
+                    inset 0 1px 0 rgba(255,255,255,0.1);
+            }}
+            
+            .gpt-description-box:hover {{
+                transform: translateY(-5px) scale(1.02);
+                box-shadow: 
+                    0 25px 50px rgba(0,0,0,0.4),
+                    0 10px 30px rgba(0,191,255,0.4),
+                    0 0 40px rgba(30,144,255,0.3);
+            }}
+            
+            @keyframes gptBorderGlow {{
+                0% {{
+                    border-color: rgba(0, 191, 255, 0.6);
+                    box-shadow: 
+                        0 15px 35px rgba(0,0,0,0.3),
+                        0 5px 15px rgba(0,191,255,0.2),
+                        0 0 20px rgba(0,191,255,0.3);
+                }}
+                33% {{
+                    border-color: rgba(30, 144, 255, 0.8);
+                    box-shadow: 
+                        0 20px 40px rgba(0,0,0,0.4),
+                        0 8px 25px rgba(30,144,255,0.4),
+                        0 0 30px rgba(30,144,255,0.5);
+                }}
+                66% {{
+                    border-color: rgba(138, 43, 226, 0.7);
+                    box-shadow: 
+                        0 18px 38px rgba(0,0,0,0.35),
+                        0 6px 20px rgba(138,43,226,0.3),
+                        0 0 25px rgba(138,43,226,0.4);
+                }}
+                100% {{
+                    border-color: rgba(0, 191, 255, 0.6);
+                    box-shadow: 
+                        0 15px 35px rgba(0,0,0,0.3),
+                        0 5px 15px rgba(0,191,255,0.2),
+                        0 0 20px rgba(0,191,255,0.3);
+                }}
+            }}
+            
+            .gpt-shimmer-overlay {{
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: linear-gradient(
+                    45deg, 
+                    transparent, 
+                    rgba(0,191,255,0.1), 
+                    transparent
+                );
+                transform: rotate(45deg);
+                animation: gptShimmerMove 4s ease-in-out infinite;
+                pointer-events: none;
+            }}
+            
+            @keyframes gptShimmerMove {{
+                0% {{
+                    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+                    opacity: 0;
+                }}
+                50% {{
+                    opacity: 1;
+                }}
+                100% {{
+                    transform: translateX(100%) translateY(100%) rotate(45deg);
+                    opacity: 0;
+                }}
+            }}
+            
+            .gpt-glow-border {{
+                position: absolute;
+                top: -2px;
+                left: -2px;
+                right: -2px;
+                bottom: -2px;
+                background: linear-gradient(
+                    45deg,
+                    #00bfff,
+                    #1e90ff,
+                    #8a2be2,
+                    #00ff7f,
+                    #00bfff
+                );
+                border-radius: 25px;
+                z-index: -1;
+                animation: gptRotateBorder 6s linear infinite;
+                opacity: 0.7;
+            }}
+            
+            @keyframes gptRotateBorder {{
+                0% {{
+                    transform: rotate(0deg);
+                }}
+                100% {{
+                    transform: rotate(360deg);
+                }}
+            }}
+            
+            .gpt-description-content {{
+                position: relative;
+                z-index: 2;
+                display: flex;
+                align-items: flex-start;
+                gap: 1rem;
+            }}
+            
+            .gpt-description-icon {{
+                font-size: 2.5rem;
+                animation: gptIconFloat 3s ease-in-out infinite;
+                filter: drop-shadow(0 0 10px rgba(0,191,255,0.5));
+            }}
+            
+            @keyframes gptIconFloat {{
+                0%, 100% {{
+                    transform: translateY(0px) rotate(0deg);
+                }}
+                25% {{
+                    transform: translateY(-8px) rotate(-5deg);
+                }}
+                50% {{
+                    transform: translateY(-12px) rotate(0deg);
+                }}
+                75% {{
+                    transform: translateY(-8px) rotate(5deg);
+                }}
+            }}
+            
+            .gpt-description-text {{
+                flex: 1;
+                color: #e8e8f0;
+                font-size: 1.1rem;
+                line-height: 1.7;
+                text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+                animation: gptTextGlow 4s ease-in-out infinite;
+            }}
+            
+            .gpt-description-text strong {{
+                color: #00bfff;
+                font-weight: 700;
+                font-size: 1.2rem;
+                display: inline-block;
+                margin-bottom: 0.5rem;
+                text-shadow: 0 0 10px rgba(0,191,255,0.3);
+            }}
+            
+            @keyframes gptTextGlow {{
+                0%, 100% {{
+                    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+                }}
+                50% {{
+                    text-shadow: 
+                        1px 1px 2px rgba(0,0,0,0.5),
+                        0 0 15px rgba(0,191,255,0.2);
+                }}
+            }}
+            
+            /* Floating particles effect */
+            .gpt-description-box::before {{
+                content: '⚡';
+                position: absolute;
+                top: 20px;
+                right: 25px;
+                font-size: 1.2rem;
+                animation: gptSparkle 2s ease-in-out infinite;
+                z-index: 3;
+            }}
+            
+            .gpt-description-box::after {{
+                content: '💎';
+                position: absolute;
+                bottom: 20px;
+                left: 25px;
+                font-size: 1rem;
+                animation: gptSparkle 2.5s ease-in-out infinite 1s;
+                z-index: 3;
+            }}
+            
+            @keyframes gptSparkle {{
+                0%, 100% {{
+                    opacity: 0.6;
+                    transform: scale(0.8) rotate(0deg);
+                }}
+                50% {{
+                    opacity: 1;
+                    transform: scale(1.2) rotate(180deg);
+                }}
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+
+
+
+
+
+# Display the chat history using chat UI
+for message in st.session_state.chat_history:
+    if message["role"] == "assistant":
+        # Use appropriate avatar based on selected model
+        avatar_path = get_avatar_path()
+        with st.chat_message(message["role"], avatar=avatar_path):
+            st.markdown(message["content"])
+    else:
+        # User messages with custom avatar if uploaded
+        if "user_avatar" in st.session_state:
+            with st.chat_message(message["role"], avatar=st.session_state.user_avatar):
+                st.markdown(message["content"])
+        else:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+
 # Accept user input
 if prompt := st.chat_input(key="chat", placeholder="💬 Nhập tin nhắn của bạn... ✨"):
     # Add user message to chat history
     st.session_state.chat_history.append({"role": "user", "content": prompt})
 
-    # Display user message in chat message container
-    with st.chat_message("user"):
-        st.markdown(prompt)
+    # Display user message in chat message container with custom avatar if available
+    if "user_avatar" in st.session_state:
+        with st.chat_message("user", avatar=st.session_state.user_avatar):
+            st.markdown(prompt)
+    else:
+        with st.chat_message("user"):
+            st.markdown(prompt)
 
     # Prepare the payload for the request
     payload = {
@@ -1129,7 +1448,8 @@ if prompt := st.chat_input(key="chat", placeholder="💬 Nhập tin nhắn của
     }
 
     # Stream the response from the Flask API
-    with st.chat_message("assistant"):
+    avatar_path = get_avatar_path()
+    with st.chat_message("assistant", avatar=avatar_path):
         streamed_content = ""  # Initialize an empty string to concatenate chunks
         response = requests.post(st.session_state.flask_api_url, json=payload, stream=True)
 

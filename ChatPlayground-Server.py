@@ -7,13 +7,13 @@ from dotenv import load_dotenv
 from together import Together
 
 # Load environment variables from .env file in parent directory
-load_dotenv(dotenv_path='/Users/apple/Desktop/AI4DEV/Assignment/Assingment-3-LLMs-playground/pages/.env')
+load_dotenv(dotenv_path='/Users/apple/Desktop/LLM-apps/pages/.env')
 
 app = Flask(__name__)
 CORS(app)
 
 # Configure OpenAI client
-openai_client = OpenAI(api_key=os.getenv("API_KEYS"))
+openai_client = OpenAI(api_key=os.getenv("OPEN_API_KEY"))
 
 # Configure Together AI client
 together_client = Together(api_key=os.getenv("TOGETHER_API"))
@@ -144,7 +144,7 @@ def get_status():
     status = {
         'server': 'running',
         'providers': {
-            'openai': 'configured' if os.getenv("API_KEYS") else 'not configured',
+            'openai': 'configured' if os.getenv("OPEN_API_KEY") else 'not configured',
             'together': 'configured' if os.getenv("TOGETHER_API") else 'not configured'
         },
         'available_models': {
