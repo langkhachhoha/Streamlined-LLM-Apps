@@ -1,2 +1,4 @@
-[![Demo Video](demo.webm)](demo.webm)
+![Homepage](image/homepage.png)
+![ChatPlayground](image/ChatPlayground.png)
+
 
