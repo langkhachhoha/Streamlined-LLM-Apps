@@ -6,3 +6,5 @@ requests
 uuid
 python-dotenv
 together
+joblib
+scikit-learn
