@@ -1100,7 +1100,8 @@ with st.form("diabetes_assessment_form"):
             "Có bị cao huyết áp không?",
             options=[0, 1],
             format_func=lambda x: "Không" if x == 0 else "Có",
-            key="high_bp"
+            key="high_bp",
+            help="Cao huyết áp thường đi kèm với nguy cơ rối loạn chuyển hóa, trong đó có đái tháo đường. Việc theo dõi và kiểm soát huyết áp tốt sẽ giúp giảm gánh nặng cho tim mạch và phòng ngừa biến chứng."
         )
         st.markdown('<div class="medical-info">Huyết áp > 140/90 mmHg</div>', unsafe_allow_html=True)
     
@@ -1109,7 +1110,9 @@ with st.form("diabetes_assessment_form"):
             "Có bị cholesterol cao không?",
             options=[0, 1],
             format_func=lambda x: "Không" if x == 0 else "Có",
-            key="high_chol"
+            key="high_chol",
+            help = "Cholesterol cao có thể làm tăng nguy cơ xơ vữa động mạch và bệnh tim mạch, đồng thời thường đi kèm với rối loạn đường huyết. Kiểm soát mỡ máu thông qua chế độ ăn, vận động và theo dõi sức khỏe định kỳ sẽ giúp giảm nguy cơ mắc đái tháo đường và biến chứng lâu dài."
+
         )
         st.markdown('<div class="medical-info">Cholesterol toàn phần > 240 mg/dL</div>', unsafe_allow_html=True)
     
@@ -1118,7 +1121,8 @@ with st.form("diabetes_assessment_form"):
             "Đã kiểm tra cholesterol trong 5 năm qua?",
             options=[0, 1],
             format_func=lambda x: "Không" if x == 0 else "Có",
-            key="chol_check"
+            key="chol_check",
+            help = "Việc kiểm tra cholesterol định kỳ giúp phát hiện sớm rối loạn mỡ máu và các yếu tố nguy cơ liên quan đến tim mạch cũng như đái tháo đường. Nếu chưa từng kiểm tra trong 5 năm qua, bạn nên thực hiện xét nghiệm để có cơ sở theo dõi và điều chỉnh lối sống kịp thời."
         )
         st.markdown('<div class="medical-info">Khuyến nghị kiểm tra định kỳ</div>', unsafe_allow_html=True)
     
@@ -1229,7 +1233,8 @@ with st.form("diabetes_assessment_form"):
             "Có hút thuốc không?",
             options=[0, 1],
             format_func=lambda x: "Không" if x == 0 else "Có",
-            key="smoker"
+            key="smoker",
+            help = "Hút thuốc lá làm tăng nguy cơ kháng insulin, tổn thương mạch máu và biến chứng tim mạch ở người có nguy cơ đái tháo đường. Việc ngừng hút thuốc sẽ mang lại lợi ích rõ rệt cho sức khỏe toàn diện, đặc biệt trong phòng ngừa tiểu đường và các bệnh lý tim mạch."
         )
     
     with col2:
@@ -1237,7 +1242,8 @@ with st.form("diabetes_assessment_form"):
             "Có tập thể dục thường xuyên không?",
             options=[0, 1],
             format_func=lambda x: "Không" if x == 0 else "Có",
-            key="phys_activity"
+            key="phys_activity",
+            help = "Tập thể dục thường xuyên giúp cải thiện sức khỏe tim mạch, kiểm soát cân nặng và giảm nguy cơ mắc đái tháo đường. Bạn nên cố gắng thực hiện ít nhất 150 phút hoạt động thể chất vừa phải mỗi tuần."
         )
     
     with col3:
@@ -1245,7 +1251,8 @@ with st.form("diabetes_assessment_form"):
             "Có uống nhiều rượu bia không?",
             options=[0, 1],
             format_func=lambda x: "Không" if x == 0 else "Có",
-            key="hvy_alcohol"
+            key="hvy_alcohol",
+            help = "Uống nhiều rượu bia có thể làm tăng nguy cơ kháng insulin và các vấn đề về sức khỏe, bao gồm cả bệnh tiểu đường. Nếu bạn uống rượu, hãy cố gắng hạn chế lượng tiêu thụ và thực hiện các biện pháp bảo vệ sức khỏe."
         )
     
     # Section 3: Medical History
@@ -1272,14 +1279,16 @@ with st.form("diabetes_assessment_form"):
             "Đã từng bị đột quỵ không?",
             options=[0, 1],
             format_func=lambda x: "Không" if x == 0 else "Có",
-            key="stroke"
+            key="stroke",
+            help = "Đột quỵ có thể để lại di chứng nặng nề và làm tăng nguy cơ mắc các bệnh lý khác, bao gồm cả đái tháo đường. Việc kiểm soát các yếu tố nguy cơ như huyết áp, cholesterol và lối sống là rất quan trọng để phòng ngừa đột quỵ tái phát."
         )
         
         heart_disease = st.radio(
             "Có bệnh tim mạch không?",
             options=[0, 1],
             format_func=lambda x: "Không" if x == 0 else "Có",
-            key="heart_disease"
+            key="heart_disease",
+            help = "Bệnh tim mạch có thể làm tăng nguy cơ mắc đái tháo đường và các biến chứng nghiêm trọng. Việc kiểm soát huyết áp, cholesterol và duy trì lối sống lành mạnh là rất quan trọng để bảo vệ sức khỏe tim mạch."
         )
     
     with col2:
@@ -1287,14 +1296,16 @@ with st.form("diabetes_assessment_form"):
             "Có bảo hiểm y tế không?",
             options=[0, 1],
             format_func=lambda x: "Không" if x == 0 else "Có",
-            key="any_healthcare"
+            key="any_healthcare",
+            help = "Bảo hiểm y tế giúp giảm bớt gánh nặng tài chính khi khám chữa bệnh, đồng thời khuyến khích người dân tham gia các chương trình phòng ngừa và phát hiện sớm bệnh tật. Nếu bạn chưa có bảo hiểm, hãy xem xét việc tham gia để bảo vệ sức khỏe bản thân."
         )
         
         no_doc_cost = st.radio(
             "Đã từng không đi khám vì chi phí cao?",
             options=[0, 1],
             format_func=lambda x: "Không" if x == 0 else "Có",
-            key="no_doc_cost"
+            key="no_doc_cost",
+            help = "Chi phí khám chữa bệnh cao có thể là rào cản lớn đối với nhiều người, dẫn đến việc không đi khám định kỳ và phát hiện sớm bệnh tật. Nếu bạn đã từng không đi khám vì lý do này, hãy xem xét các lựa chọn bảo hiểm hoặc chương trình hỗ trợ tài chính để bảo vệ sức khỏe của mình."
         )
     
     # Section 4: Nutrition and Health Status
@@ -1321,7 +1332,8 @@ with st.form("diabetes_assessment_form"):
             "Có ăn trái cây hàng ngày không?",
             options=[0, 1],
             format_func=lambda x: "Không" if x == 0 else "Có",
-            key="fruits"
+            key="fruits",
+            help = "Ăn trái cây hàng ngày cung cấp nhiều vitamin, khoáng chất và chất xơ, giúp cải thiện sức khỏe tổng thể và giảm nguy cơ mắc bệnh tiểu đường."
         )
     
     with col2:
@@ -1329,7 +1341,8 @@ with st.form("diabetes_assessment_form"):
             "Có ăn rau hàng ngày không?",
             options=[0, 1],
             format_func=lambda x: "Không" if x == 0 else "Có",
-            key="veggies"
+            key="veggies",
+            help = "Ăn rau mỗi ngày cung cấp chất xơ, vitamin và khoáng chất giúp kiểm soát đường huyết tốt hơn và giảm nguy cơ thừa cân, béo phì. Duy trì thói quen này sẽ hỗ trợ phòng ngừa đái tháo đường cũng như bảo vệ sức khỏe tim mạch và tiêu hóa."
         )
     
     with col3:
