@@ -52,8 +52,8 @@ def preprocess_input(data):
         # Create DataFrame from input
         df = pd.DataFrame([data])
         
-        # Apply education grouping rule
-        df.loc[df['Education'] < 3, 'Education'] = 3
+        # # Apply education grouping rule
+        # df.loc[df['Education'] < 3, 'Education'] = 3
         
         # Create a copy for scaling
         df_scaled = df.copy()
@@ -106,10 +106,12 @@ def preprocess_input(data):
         
         # Reorder columns
         df_final = df_scaled[expected_features]
+        print(df_final.values)
         
         return df_final.values
         
     except Exception as e:
+        print(data)
         print(f"Error in preprocessing: {e}")
         # Fallback: return data as-is for basic features
         basic_features = ['HighBP', 'HighChol', 'CholCheck', 'BMI', 'Smoker', 'Stroke',

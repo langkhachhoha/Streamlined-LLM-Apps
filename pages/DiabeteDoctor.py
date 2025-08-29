@@ -1812,16 +1812,37 @@ with st.form("diabetes_assessment_form"):
                 
                 # Create professional medical result popup using components
                 risk_status = "cao" if prediction == 1 else "thấp"
-                risk_color = "#ff4444" if prediction == 1 else "#00cc66"
-                risk_bg_color = "#ffe6e6" if prediction == 1 else "#e6ffe6"
-                risk_icon = "⚠️" if prediction == 1 else "✅"
+                risk_color = "#ff4444" if prediction == 1 else "#00ccff"  # Bright cyan for low risk
+                risk_bg_color = "#ffe6e6" if prediction == 1 else "#e6f7ff"  # Light blue background
+                risk_icon = "⚠️" if prediction == 1 else "🌟"  # Star icon for positive result
                 confidence = probability*100 if prediction == 1 else (1-probability)*100
                 
-                # Create success message first
+                # Create success message first with enhanced styling
                 if prediction == 1:
                     st.error(f"⚠️ **Nguy cơ cao mắc bệnh tiểu đường** - Độ tin cậy: {confidence:.1f}%")
                 else:
-                    st.success(f"✅ **Nguy cơ thấp mắc bệnh tiểu đường** - Độ tin cậy: {confidence:.1f}%")
+                    # Use custom HTML for bright, positive message
+                    st.markdown(
+                        f"""
+                        <div style="
+                            background: linear-gradient(135deg, #e6f7ff 0%, #b3ecff 100%);
+                            border: 2px solid #00ccff;
+                            border-radius: 15px;
+                            padding: 1rem;
+                            margin: 1rem 0;
+                            text-align: center;
+                            box-shadow: 0 4px 15px rgba(0, 204, 255, 0.2);
+                        ">
+                            <h3 style="color: #0099cc; margin: 0; font-size: 1.2rem; font-weight: 700;">
+                                🌟 <strong>Nguy cơ thấp mắc bệnh tiểu đường</strong> - Độ tin cậy: {confidence:.1f}%
+                            </h3>
+                            <p style="color: #006699; margin: 0.5rem 0 0 0; font-weight: 500;">
+                                Chúc mừng! Bạn có nguy cơ thấp mắc bệnh tiểu đường
+                            </p>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
                 
                 # Display results in organized containers
                 with st.container():
@@ -1838,34 +1859,105 @@ with st.form("diabetes_assessment_form"):
                         st.write(f"**Hoạt động thể chất:** {'Có' if phys_activity else 'Không'}")
                         st.write(f"**Sức khỏe:** {['', 'Xuất sắc', 'Rất tốt', 'Tốt', 'Khá', 'Kém'][gen_hlth]}")
                 
-                # Recommendations
-                with st.container():
-                    st.markdown("### 💡 Khuyến nghị y tế")
-                    
-                    if prediction == 1:
-                        recommendations = [
-                            "🏥 Nên đến gặp bác sĩ chuyên khoa nội tiết để kiểm tra chi tiết",
-                            "🔬 Thực hiện xét nghiệm đường huyết đói và HbA1c", 
-                            "🥗 Điều chỉnh chế độ ăn uống, tăng cường vận động",
-                            "📊 Theo dõi cân nặng và huyết áp thường xuyên",
-                            "😌 Tránh stress và duy trì lối sống lành mạnh"
-                        ]
-                    else:
-                        recommendations = [
-                            "✅ Tiếp tục duy trì lối sống lành mạnh hiện tại",
-                            "📅 Kiểm tra sức khỏe định kỳ 6-12 tháng/lần",
-                            "⚖️ Duy trì BMI trong khoảng bình thường (18.5-24.9)",
-                            "🏃‍♂️ Tập thể dục ít nhất 150 phút/tuần",
-                            "🥬 Ăn nhiều rau xanh, trái cây và hạn chế đường"
-                        ]
-                    
-                    for rec in recommendations:
-                        st.write(f"- {rec}")
+                # Recommendations - simple list without containers
+                st.markdown("### 💡 Khuyến nghị y tế")
                 
-                # Progress bar for confidence
-                st.markdown("### 📊 Độ tin cậy dự đoán")
-                st.progress(confidence/100)
-                st.write(f"**{confidence:.1f}%** - Độ tin cậy của mô hình AI")
+                if prediction == 1:
+                    st.markdown(
+                        """
+                        <div style="
+                            background: linear-gradient(135deg, #ffe6e6 0%, #ffcccc 100%);
+                            border-left: 5px solid #ff4444;
+                            border-radius: 10px;
+                            padding: 1.5rem;
+                            margin: 1rem 0;
+                        ">
+                            <h4 style="color: #cc0000; margin-top: 0; font-weight: 700;">
+                                ✋ Khuyến nghị ưu tiên cho nguy cơ cao:
+                            </h4>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
+                    
+                    recommendations = [
+                        "🏥 Khẩn cấp: Đặt lịch khám bác sĩ chuyên khoa nội tiết trong vòng 1-2 tuần",
+                        "🔬 Xét nghiệm: Glucose máu đói, HbA1c, GTT (test dung nạp glucose)",
+                        "🍎 Dinh dưỡng: Giảm 10-15% cân nặng, hạn chế carbs tinh chế và đường",
+                        "🏃‍♂️ Vận động: Tập aerobic 30 phút/ngày, 5 ngày/tuần + kháng lực 2 lần/tuần",
+                        "📊 Theo dõi: Đo glucose, huyết áp hàng ngày, cân nặng mỗi tuần",
+                        "💊 Thuốc: Có thể cần metformin hoặc thuốc tiểu đường theo chỉ định bác sĩ",
+                        "😌 Tâm lý: Quản lý stress qua thiền, yoga, đủ giấc ngủ 7-8 giờ/đêm",
+                        "👨‍👩‍👧‍ Gia đình: Tư vấn di truyền nếu có tiền sử gia đình mắc tiểu đường"
+                    ]
+                else:
+                    st.markdown("🌟 **Khuyến nghị duy trì sức khỏe tối ưu:**")
+                    
+                    recommendations = [
+                        "✅ Duy trì: Tiếp tục lối sống lành mạnh hiện tại - bạn đang làm rất tốt!",
+                        "📅 Kiểm tra: Khám sức khỏe tổng quát 6-12 tháng/lần, xét nghiệm glucose hàng năm",
+                        "⚖️ Cân nặng: Giữ BMI 18.5-24.9, biến động không quá ±5% trong năm",
+                        "🏃‍♂️ Thể dục: 150 phút aerobic + 75 phút vận động cường độ cao/tuần",
+                        "🥗 Dinh dưỡng: Địa Trung Hải hoặc DASH diet, 5 portions rau củ/ngày",
+                        "💧 Hydration: 8-10 ly nước/ngày, hạn chế đồ uống có đường",
+                        "🧘‍♀️ Wellness: Thiền, yoga, đọc sách để giảm stress và cải thiện tâm trạng",
+                        "🏆 Mục tiêu: Tham gia hoạt động thể thao, thử thách sức khỏe để duy trì động lực"
+                    ]
+                
+                # Display recommendations as simple numbered list
+                for i, rec in enumerate(recommendations, 1):
+                    st.write(f"{i}. {rec}")
+                
+                # Progress bar for confidence with enhanced styling
+                st.markdown("### 📊 Độ tin cậy dự đoán AI")
+                
+                # Custom progress bar with color coding
+                progress_color = "#ff4444" if prediction == 1 else "#00ccff"
+                st.markdown(
+                    f"""
+                    <div style="
+                        background: rgba(255, 255, 255, 0.8);
+                        border-radius: 10px;
+                        padding: 1rem;
+                        margin: 1rem 0;
+                        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+                    ">
+                        <div style="
+                            background: #f0f0f0;
+                            border-radius: 20px;
+                            height: 25px;
+                            position: relative;
+                            overflow: hidden;
+                        ">
+                            <div style="
+                                background: linear-gradient(90deg, {progress_color}, {progress_color}dd);
+                                height: 100%;
+                                width: {confidence}%;
+                                border-radius: 20px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                color: white;
+                                font-weight: bold;
+                                font-size: 0.9rem;
+                                text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+                            ">
+                                {confidence:.1f}%
+                            </div>
+                        </div>
+                        <p style="
+                            text-align: center; 
+                            margin: 0.5rem 0 0 0; 
+                            color: #555; 
+                            font-weight: 600;
+                            font-size: 1rem;
+                        ">
+                            Độ tin cậy của mô hình AI dựa trên thuật toán K-Nearest Neighbors
+                        </p>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
                 
                 # Warning message
                 st.warning("⚠️ **Lưu ý quan trọng:** Kết quả này chỉ mang tính chất tham khảo. Không thay thế cho việc thăm khám và tư vấn trực tiếp từ bác sĩ chuyên khoa.")
