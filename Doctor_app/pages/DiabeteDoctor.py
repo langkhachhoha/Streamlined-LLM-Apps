@@ -1338,6 +1338,86 @@ else:
 st.markdown('<h1 class="medical-title">🩺 Diabetes Doctor</h1>', unsafe_allow_html=True)
 st.markdown('<p class="subtitle">AI-Powered Diabetes Risk Assessment | Trusted Medical Consultation</p>', unsafe_allow_html=True)
 
+# Sidebar với thông tin liên hệ và animation bác sĩ
+with st.sidebar:
+    # Doctor Animation - simplified
+    st.markdown("### 🏥 VinBig Doctor App")
+    
+    # Animated doctor section
+    st.markdown(
+        """
+        <div style="text-align: center; margin: 2rem 0;">
+            <div style="font-size: 4rem; animation: bounce 2s infinite;">🧬🦠🧪🌡️</div>
+            <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1rem;">
+                <span style="font-size: 2rem; animation: float 3s infinite;">👩‍⚕️</span>
+                <span style="font-size: 2rem; animation: float 3s infinite 0.5s;">🩺</span>
+                <span style="font-size: 2rem; animation: float 3s infinite 1s;">⚕️🏩</span>
+            </div>
+        </div>
+        
+        <style>
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-5px) scale(1.1); }
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+    
+    st.markdown("---")
+    
+    # Contact Information - using Streamlit components
+    st.markdown("### 📞 **THÔNG TIN LIÊN HỆ**")
+    
+    # Contact details
+    st.info("""
+    **📱 Hotline 24/7**  
+    1900-555-888
+    
+    **📧 Email Hỗ Trợ**  
+    support@vinbig-doctor.vn
+    
+    **🏢 Địa Chỉ**  
+    Tòa VinBig, Hà Nội
+    
+    **🕒 Giờ Làm Việc**  
+    24/7 - Luôn sẵn sàng
+    
+    **🚨 Cấp Cứu**  
+    115 - Miễn phí
+    """)
+    
+    st.markdown("---")
+    
+    # Additional info
+    st.success("✅ Hệ thống AI hỗ trợ chẩn đoán")
+    st.warning("⚠️ Chỉ mang tính chất tham khảo")
+    
+    # Medical icons animation
+    st.markdown(
+        """
+        <div style="text-align: center; margin: 1rem 0; font-size: 1.5rem;">
+            <span style="animation: pulse 2s infinite;">🩺</span>
+            <span style="animation: pulse 2s infinite 0.3s;">💊</span>
+            <span style="animation: pulse 2s infinite 0.6s;">💉</span>
+            <span style="animation: pulse 2s infinite 0.9s;">🔬</span>
+            <span style="animation: pulse 2s infinite 1.2s;">🏥</span>
+        </div>
+        
+        <style>
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 # Doctor introduction with enhanced styling
 st.markdown(
     """
