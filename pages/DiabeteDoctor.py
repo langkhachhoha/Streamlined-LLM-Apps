@@ -4,6 +4,7 @@ import json
 import pandas as pd
 import base64
 import os
+from datetime import datetime
 
 st.set_page_config(
     page_title="Diabetes Doctor - AI Health Consultant",
@@ -93,6 +94,295 @@ st.markdown(
         height: 100%;
         pointer-events: none;
         z-index: 1;
+    }
+    
+    .floating-icon {
+        position: absolute;
+        font-size: 2rem;
+    }
+    
+    /* Medical Popup Styles */
+    .medical-popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 51, 102, 0.85);
+        backdrop-filter: blur(8px);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: fadeInOverlay 0.5s ease-in-out;
+    }
+    
+    .medical-popup-container {
+        background: linear-gradient(135deg, #ffffff 0%, #f8fcff 50%, #f0f8ff 100%);
+        border-radius: 25px;
+        padding: 0;
+        max-width: 90%;
+        width: 650px;
+        max-height: 90vh;
+        overflow: hidden;
+        box-shadow: 
+            0 30px 80px rgba(0, 51, 102, 0.4),
+            0 0 0 1px rgba(255, 255, 255, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        position: relative;
+        animation: slideInScale 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .medical-popup-header {
+        background: linear-gradient(135deg, #0066cc 0%, #0080ff 50%, #4da6ff 100%);
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .medical-popup-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 50%);
+        animation: rotateGlow 6s linear infinite;
+    }
+    
+    .medical-popup-content {
+        padding: 2rem;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+    
+    .medical-logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+        animation: logoFloat 3s ease-in-out infinite;
+    }
+    
+    .medical-logo {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 1rem;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        animation: pulse 2s infinite;
+    }
+    
+    .result-status-badge {
+        display: inline-block;
+        padding: 0.8rem 2rem;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin: 1rem 0;
+        animation: badgePulse 2s ease-in-out infinite;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    
+    .confidence-meter {
+        width: 100%;
+        height: 25px;
+        background: linear-gradient(90deg, #e5e7eb 0%, #f3f4f6 100%);
+        border-radius: 15px;
+        overflow: hidden;
+        position: relative;
+        margin: 1rem 0;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .confidence-fill {
+        height: 100%;
+        border-radius: 15px;
+        position: relative;
+        animation: fillAnimation 2.5s ease-out;
+        overflow: hidden;
+    }
+    
+    .confidence-fill::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        animation: shimmerEffect 2s infinite;
+    }
+    
+    .patient-info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin: 1.5rem 0;
+    }
+    
+    .info-item {
+        background: linear-gradient(135deg, rgba(0, 102, 204, 0.05) 0%, rgba(77, 166, 255, 0.02) 100%);
+        padding: 0.8rem;
+        border-radius: 10px;
+        border-left: 4px solid #0066cc;
+        transition: all 0.3s ease;
+    }
+    
+    .info-item:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 15px rgba(0, 102, 204, 0.15);
+    }
+    
+    .recommendations-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .recommendations-list li {
+        background: linear-gradient(90deg, rgba(0, 204, 102, 0.1) 0%, transparent 100%);
+        padding: 0.8rem;
+        margin: 0.5rem 0;
+        border-radius: 8px;
+        border-left: 3px solid #00cc66;
+        animation: slideInLeft 0.6s ease-out;
+        animation-delay: calc(var(--delay) * 0.1s);
+    }
+    
+    .close-button {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: white;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        z-index: 10;
+    }
+    
+    .close-button:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+    }
+    
+    .action-button {
+        background: linear-gradient(135deg, #0066cc 0%, #4da6ff 100%);
+        color: white;
+        border: none;
+        padding: 14px 35px;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 1rem;
+        margin: 0.5rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .action-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s ease;
+    }
+    
+    .action-button:hover::before {
+        left: 100%;
+    }
+    
+    .action-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 102, 204, 0.4);
+    }
+    
+    /* Animations */
+    @keyframes fadeInOverlay {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    @keyframes slideInScale {
+        from { 
+            opacity: 0;
+            transform: translateY(50px) scale(0.8);
+        }
+        to { 
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+    
+    @keyframes rotateGlow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    @keyframes logoFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes badgePulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+    
+    @keyframes fillAnimation {
+        from { width: 0%; }
+    }
+    
+    @keyframes shimmerEffect {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+    
+    @keyframes slideInLeft {
+        from { 
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        to { 
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    @keyframes floatAround {
+        0%, 100% { 
+            transform: translateY(0px) translateX(0px) rotate(0deg);
+        }
+        25% { 
+            transform: translateY(-10px) translateX(5px) rotate(90deg);
+        }
+        50% { 
+            transform: translateY(-5px) translateX(-5px) rotate(180deg);
+        }
+        75% { 
+            transform: translateY(-15px) translateX(3px) rotate(270deg);
+        }
     }
     
     .floating-icon {
@@ -1055,7 +1345,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Create form
+# Create diabetes assessment form
 with st.form("diabetes_assessment_form"):
     st.markdown(
         """
@@ -1074,9 +1364,7 @@ with st.form("diabetes_assessment_form"):
         </div>
         """,
         unsafe_allow_html=True
-    )
-    
-    # Section 1: Basic Health Indicators
+    )    # Section 1: Basic Health Indicators
     if doctor_1_base64:
         section_bg_style = f"background-image: url('data:image/png;base64,{doctor_1_base64}'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;"
     else:
@@ -1367,30 +1655,145 @@ with st.form("diabetes_assessment_form"):
         unsafe_allow_html=True
     )
     
-    # Submit button
+    # Submit button với styling đặc biệt
+    st.markdown(
+        """
+        <style>
+        .stButton > button {
+            background: linear-gradient(135deg, #0066cc 0%, #0080ff 50%, #4da6ff 100%) !important;
+            color: white !important;
+            border: none !important;
+            padding: 1rem 3rem !important;
+            border-radius: 25px !important;
+            font-weight: 700 !important;
+            font-size: 1.2rem !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 8px 25px rgba(0, 102, 204, 0.3) !important;
+            position: relative !important;
+            overflow: hidden !important;
+            margin: 1rem auto !important;
+            display: block !important;
+            width: auto !important;
+            min-width: 300px !important;
+        }
+        
+        .stButton > button:hover {
+            transform: translateY(-3px) scale(1.05) !important;
+            box-shadow: 0 12px 35px rgba(0, 102, 204, 0.4) !important;
+            background: linear-gradient(135deg, #0080ff 0%, #4da6ff 50%, #66b3ff 100%) !important;
+        }
+        
+        .stButton > button::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: -100% !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent) !important;
+            transition: left 0.5s ease !important;
+        }
+        
+        .stButton > button:hover::before {
+            left: 100% !important;
+        }
+        
+        .stButton > button:active {
+            transform: translateY(-1px) scale(1.02) !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+        )
+        
     submitted = st.form_submit_button("🔍 Phân tích nguy cơ tiểu đường")
 
-# Process form submission
-if submitted:
-    # Prepare data for prediction
-    user_data = {
-        'HighBP': high_bp,
-        'HighChol': high_chol,
-        'CholCheck': chol_check,
-        'BMI': bmi,
-        'Smoker': smoker,
-        'Stroke': stroke,
-        'HeartDiseaseorAttack': heart_disease,
-        'PhysActivity': phys_activity,
-        'Fruits': fruits,
-        'Veggies': veggies,
-        'HvyAlcoholConsump': hvy_alcohol,
-        'AnyHealthcare': any_healthcare,
-        'NoDocbcCost': no_doc_cost,
-        'GenHlth': gen_hlth
-    }
-    
-    with st.spinner('🔬 Đang phân tích dữ liệu y tế...'):
+    # Process form submission (outside the form but inside the patient info check)
+    if submitted:
+        # Prepare data for prediction
+        user_data = {
+            'HighBP': high_bp,
+            'HighChol': high_chol,
+            'CholCheck': chol_check,
+            'BMI': bmi,
+            'Smoker': smoker,
+            'Stroke': stroke,
+            'HeartDiseaseorAttack': heart_disease,
+            'PhysActivity': phys_activity,
+            'Fruits': fruits,
+            'Veggies': veggies,
+            'HvyAlcoholConsump': hvy_alcohol,
+            'AnyHealthcare': any_healthcare,
+            'NoDocbcCost': no_doc_cost,
+            'GenHlth': gen_hlth
+        }
+        
+        # Custom loading animation
+        st.markdown(
+            """
+            <style>
+            .medical-loading {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 2rem;
+                background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(77, 166, 255, 0.05) 100%);
+                border-radius: 15px;
+                margin: 2rem 0;
+                border: 2px solid rgba(0, 102, 204, 0.2);
+            }
+            
+            .loading-icon {
+                font-size: 3rem;
+                animation: medicalRotate 2s linear infinite;
+                margin-bottom: 1rem;
+            }
+            
+            .loading-text {
+                color: #0066cc;
+                font-weight: 600;
+                font-size: 1.1rem;
+                animation: pulse 2s ease-in-out infinite;
+            }
+            
+            .loading-dots {
+                display: inline-block;
+                animation: dots 1.5s infinite;
+            }
+            
+            @keyframes medicalRotate {
+                0% { transform: rotate(0deg) scale(1); }
+                50% { transform: rotate(180deg) scale(1.1); }
+                100% { transform: rotate(360deg) scale(1); }
+            }
+            
+            @keyframes dots {
+                0%, 20% { content: ''; }
+                40% { content: '.'; }
+                60% { content: '..'; }
+                80%, 100% { content: '...'; }
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+        
+        # Show custom loading
+        loading_placeholder = st.empty()
+        loading_placeholder.markdown(
+            """
+            <div class="medical-loading">
+                <div class="loading-icon">🔬</div>
+                <div class="loading-text">Đang phân tích dữ liệu y tế<span class="loading-dots"></span></div>
+                <div style="margin-top: 1rem; color: #6b7280; font-size: 0.9rem;">
+                    AI đang xử lý các chỉ số sức khỏe của bạn
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        
         try:
             # Send request to server
             response = requests.post(
@@ -1399,100 +1802,93 @@ if submitted:
                 timeout=30
             )
             
+            # Clear loading animation
+            loading_placeholder.empty()
+            
             if response.status_code == 200:
                 result = response.json()
                 prediction = result['prediction']
                 probability = result['probability']
                 
-                # Display results
-                if prediction == 1:
-                    st.markdown(
-                        f"""
-                        <div class="prediction-card high-risk">
-                            <div class="risk-icon">⚠️</div>
-                            <div class="prediction-text" style="color: #dc2626;">
-                                Nguy cơ cao mắc bệnh tiểu đường
-                            </div>
-                            <div class="confidence-bar">
-                                <div class="confidence-fill" style="width: {probability*100:.1f}%; background: linear-gradient(90deg, #ef4444, #dc2626);"></div>
-                            </div>
-                            <p style="color: #7f1d1d; margin: 0;">Độ tin cậy: {probability*100:.1f}%</p>
-                        </div>
-                        """,
-                        unsafe_allow_html=True
-                    )
-                    
-                    st.markdown(
-                        """
-                        <div class="medical-advice">
-                            <h4 style="color: #ffffff; margin: 0 0 1rem 0; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">🏥 Khuyến nghị y tế:</h4>
-                            <ul style="color: #ffffff; margin: 0; padding-left: 1.5rem; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">
-                                <li>Nên đến gặp bác sĩ chuyên khoa nội tiết để kiểm tra chi tiết</li>
-                                <li>Thực hiện xét nghiệm đường huyết đói và HbA1c</li>
-                                <li>Điều chỉnh chế độ ăn uống, tăng cường vận động</li>
-                                <li>Theo dõi cân nặng và huyết áp thường xuyên</li>
-                                <li>Tránh stress và duy trì lối sống lành mạnh</li>
-                            </ul>
-                        </div>
-                        """,
-                        unsafe_allow_html=True
-                    )
-                else:
-                    st.markdown(
-                        f"""
-                        <div class="prediction-card low-risk">
-                            <div class="risk-icon">✅</div>
-                            <div class="prediction-text" style="color: #16a34a;">
-                                Nguy cơ thấp mắc bệnh tiểu đường
-                            </div>
-                            <div class="confidence-bar">
-                                <div class="confidence-fill" style="width: {(1-probability)*100:.1f}%; background: linear-gradient(90deg, #22c55e, #16a34a);"></div>
-                            </div>
-                            <p style="color: #14532d; margin: 0;">Độ tin cậy: {(1-probability)*100:.1f}%</p>
-                        </div>
-                        """,
-                        unsafe_allow_html=True
-                    )
-                    
-                    st.markdown(
-                        """
-                        <div class="medical-advice">
-                            <h4 style="color: #ffffff; margin: 0 0 1rem 0; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">🌟 Khuyến nghị duy trì sức khỏe:</h4>
-                            <ul style="color: #ffffff; margin: 0; padding-left: 1.5rem; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">
-                                <li>Tiếp tục duy trì lối sống lành mạnh hiện tại</li>
-                                <li>Kiểm tra sức khỏe định kỳ 6-12 tháng/lần</li>
-                                <li>Duy trì BMI trong khoảng bình thường (18.5-24.9)</li>
-                                <li>Tập thể dục ít nhất 150 phút/tuần</li>
-                                <li>Ăn nhiều rau xanh, trái cây và hạn chế đường</li>
-                            </ul>
-                        </div>
-                        """,
-                        unsafe_allow_html=True
-                    )
+                # Create professional medical result popup using components
+                risk_status = "cao" if prediction == 1 else "thấp"
+                risk_color = "#ff4444" if prediction == 1 else "#00cc66"
+                risk_bg_color = "#ffe6e6" if prediction == 1 else "#e6ffe6"
+                risk_icon = "⚠️" if prediction == 1 else "✅"
+                confidence = probability*100 if prediction == 1 else (1-probability)*100
                 
-                # Feature importance explanation
-                st.markdown(
-                    """
-                    <div class="feature-importance">
-                        <h4 style="color: #ffffff; margin: 0 0 1rem 0; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">📊 Các yếu tố quan trọng trong đánh giá:</h4>
-                        <p style="color: #ffffff; margin: 0; line-height: 1.8; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">
-                            Model AI đã phân tích các yếu tố chính: <strong>BMI, tình trạng sức khỏe tổng quát, 
-                            cao huyết áp, cholesterol cao, hoạt động thể chất</strong> và các yếu tố khác 
-                            để đưa ra kết quả dự đoán chính xác nhất.
-                        </p>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
+                # Create success message first
+                if prediction == 1:
+                    st.error(f"⚠️ **Nguy cơ cao mắc bệnh tiểu đường** - Độ tin cậy: {confidence:.1f}%")
+                else:
+                    st.success(f"✅ **Nguy cơ thấp mắc bệnh tiểu đường** - Độ tin cậy: {confidence:.1f}%")
+                
+                # Display results in organized containers
+                with st.container():
+                    st.markdown("### 📋 Thông tin bệnh nhân")
+                    
+                    col1, col2, col3 = st.columns(3)
+                    with col1:
+                        st.metric("BMI", f"{bmi:.1f}")
+                        st.write(f"**Cao huyết áp:** {'Có' if high_bp else 'Không'}")
+                    with col2:
+                        st.write(f"**Cholesterol cao:** {'Có' if high_chol else 'Không'}")
+                        st.write(f"**Hút thuốc:** {'Có' if smoker else 'Không'}")
+                    with col3:
+                        st.write(f"**Hoạt động thể chất:** {'Có' if phys_activity else 'Không'}")
+                        st.write(f"**Sức khỏe:** {['', 'Xuất sắc', 'Rất tốt', 'Tốt', 'Khá', 'Kém'][gen_hlth]}")
+                
+                # Recommendations
+                with st.container():
+                    st.markdown("### 💡 Khuyến nghị y tế")
+                    
+                    if prediction == 1:
+                        recommendations = [
+                            "🏥 Nên đến gặp bác sĩ chuyên khoa nội tiết để kiểm tra chi tiết",
+                            "🔬 Thực hiện xét nghiệm đường huyết đói và HbA1c", 
+                            "🥗 Điều chỉnh chế độ ăn uống, tăng cường vận động",
+                            "📊 Theo dõi cân nặng và huyết áp thường xuyên",
+                            "😌 Tránh stress và duy trì lối sống lành mạnh"
+                        ]
+                    else:
+                        recommendations = [
+                            "✅ Tiếp tục duy trì lối sống lành mạnh hiện tại",
+                            "📅 Kiểm tra sức khỏe định kỳ 6-12 tháng/lần",
+                            "⚖️ Duy trì BMI trong khoảng bình thường (18.5-24.9)",
+                            "🏃‍♂️ Tập thể dục ít nhất 150 phút/tuần",
+                            "🥬 Ăn nhiều rau xanh, trái cây và hạn chế đường"
+                        ]
+                    
+                    for rec in recommendations:
+                        st.write(f"- {rec}")
+                
+                # Progress bar for confidence
+                st.markdown("### 📊 Độ tin cậy dự đoán")
+                st.progress(confidence/100)
+                st.write(f"**{confidence:.1f}%** - Độ tin cậy của mô hình AI")
+                
+                # Warning message
+                st.warning("⚠️ **Lưu ý quan trọng:** Kết quả này chỉ mang tính chất tham khảo. Không thay thế cho việc thăm khám và tư vấn trực tiếp từ bác sĩ chuyên khoa.")
+                
+                # Medical footer
+                st.markdown("""
+                <div style="text-align: center; margin-top: 2rem; padding: 1rem; background: linear-gradient(135deg, rgba(0, 102, 204, 0.1), rgba(77, 166, 255, 0.05)); border-radius: 10px;">
+                    <p style="font-size: 1.5rem; margin: 0;">🏥 👨‍⚕️ 👩‍⚕️ 💊 🔬</p>
+                    <p style="color: #0066cc; font-weight: 600; margin: 0.5rem 0;">Diabetes Doctor - Powered by AI & Medical Expertise</p>
+                </div>
+                """, unsafe_allow_html=True)
                 
             else:
                 st.error(f"❌ Lỗi khi gửi dữ liệu: {response.status_code}")
                 
         except requests.exceptions.ConnectionError:
+            loading_placeholder.empty()
             st.error("❌ Không thể kết nối đến server. Vui lòng đảm bảo server đang chạy trên port 5002.")
         except requests.exceptions.Timeout:
+            loading_placeholder.empty()
             st.error("❌ Quá thời gian chờ phản hồi. Vui lòng thử lại.")
         except Exception as e:
+            loading_placeholder.empty()
             st.error(f"❌ Lỗi không xác định: {str(e)}")
 
 # Footer with enhanced styling
@@ -1517,5 +1913,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+
 
 st.markdown('</div>', unsafe_allow_html=True)
