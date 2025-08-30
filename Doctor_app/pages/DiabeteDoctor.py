@@ -9,7 +9,7 @@ from datetime import datetime
 st.set_page_config(
     page_title="Diabetes Doctor - AI Health Consultant",
     page_icon="🩺",
-    layout="wide",
+    layout="centered",
     initial_sidebar_state="expanded"
 )
 
@@ -56,6 +56,15 @@ st.markdown(
     f"""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+    /* Hide Streamlit UI Elements */
+    #MainMenu {{visibility: hidden;}}
+    footer {{visibility: hidden;}}
+    header {{visibility: hidden;}}
+    .stDeployButton {{display: none;}}
+    [data-testid="stToolbar"] {{display: none;}}
+    [data-testid="stDecoration"] {{display: none;}}
+    [data-testid="stStatusWidget"] {{display: none;}}
+    [data-testid="manage-app-button"] {{display: none;}}
     
     .stApp {{
         {background_style}

@@ -7,7 +7,7 @@ import base64
 st.set_page_config(
     page_title="Doctor App - Trang Chủ",
     page_icon="🏥",
-    layout="wide",
+    layout="centered",
     initial_sidebar_state="expanded"
 )
 
@@ -20,7 +20,7 @@ def get_base64_image(image_path):
         return None
 
 # Get images for styling
-doctor_image_path = "/Users/apple/Desktop/LLM-apps/image/Doctor.png"
+doctor_image_path = "/Users/apple/Desktop/LLM-apps/image/Homepage.png"
 doctor_base64 = get_base64_image(doctor_image_path)
 
 vinbig_logo_path = "/Users/apple/Desktop/LLM-apps/image/logo_vinbig.png"
@@ -36,6 +36,19 @@ st.markdown(
     f"""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+    /* Hide Streamlit UI Elements */
+    #MainMenu {{visibility: hidden;}}
+    footer {{visibility: hidden;}}
+    header {{visibility: hidden;}}
+    .stDeployButton {{display: none;}}
+    [data-testid="stToolbar"] {{display: none;}}
+    [data-testid="stDecoration"] {{display: none;}}
+    [data-testid="stStatusWidget"] {{display: none;}}
+    [data-testid="manage-app-button"] {{display: none;}}
+    /* Global Scroll Animation Setup */
+    html {{
+        scroll-behavior: smooth;
+    }}
     
     .stApp {{
         {background_style}
@@ -46,6 +59,7 @@ st.markdown(
         font-family: 'Outfit', 'Inter', sans-serif;
         min-height: 100vh;
         position: relative;
+        overflow-x: hidden;
     }}
     
     .stApp::before {{
@@ -63,7 +77,117 @@ st.markdown(
             rgba(177, 224, 255, 0.85) 100%);
         z-index: 0;
         pointer-events: none;
+        animation: backgroundShift 20s ease-in-out infinite;
     }}
+    
+    @keyframes backgroundShift {{
+        0%, 100% {{ 
+            background: linear-gradient(135deg, 
+                rgba(240, 248, 255, 0.85) 0%, 
+                rgba(225, 242, 255, 0.8) 25%,
+                rgba(209, 236, 255, 0.75) 50%,
+                rgba(193, 230, 255, 0.8) 75%,
+                rgba(177, 224, 255, 0.85) 100%);
+        }}
+        50% {{ 
+            background: linear-gradient(135deg, 
+                rgba(177, 224, 255, 0.85) 0%, 
+                rgba(193, 230, 255, 0.8) 25%,
+                rgba(209, 236, 255, 0.75) 50%,
+                rgba(225, 242, 255, 0.8) 75%,
+                rgba(240, 248, 255, 0.85) 100%);
+        }}
+    }}
+    
+    /* Advanced Animation Classes */
+    .animate-on-scroll {{
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }}
+    
+    .animate-on-scroll.animate {{
+        opacity: 1;
+        transform: translateY(0);
+    }}
+    
+    .slide-in-left {{
+        opacity: 0;
+        transform: translateX(-100px);
+        animation: slideInLeft 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }}
+    
+    .slide-in-right {{
+        opacity: 0;
+        transform: translateX(100px);
+        animation: slideInRight 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }}
+    
+    .fade-in-up {{
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }}
+    
+    .scale-in {{
+        opacity: 0;
+        transform: scale(0.8);
+        animation: scaleIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }}
+    
+    @keyframes slideInLeft {{
+        0% {{
+            opacity: 0;
+            transform: translateX(-100px);
+        }}
+        100% {{
+            opacity: 1;
+            transform: translateX(0);
+        }}
+    }}
+    
+    @keyframes slideInRight {{
+        0% {{
+            opacity: 0;
+            transform: translateX(100px);
+        }}
+        100% {{
+            opacity: 1;
+            transform: translateX(0);
+        }}
+    }}
+    
+    @keyframes fadeInUp {{
+        0% {{
+            opacity: 0;
+            transform: translateY(30px);
+        }}
+        100% {{
+            opacity: 1;
+            transform: translateY(0);
+        }}
+    }}
+    
+    @keyframes scaleIn {{
+        0% {{
+            opacity: 0;
+            transform: scale(0.8);
+        }}
+        100% {{
+            opacity: 1;
+            transform: scale(1);
+        }}
+    }}
+    
+    /* Staggered Animation Delays */
+    .delay-100 {{ animation-delay: 0.1s; }}
+    .delay-200 {{ animation-delay: 0.2s; }}
+    .delay-300 {{ animation-delay: 0.3s; }}
+    .delay-400 {{ animation-delay: 0.4s; }}
+    .delay-500 {{ animation-delay: 0.5s; }}
+    .delay-600 {{ animation-delay: 0.6s; }}
+    .delay-700 {{ animation-delay: 0.7s; }}
+    .delay-800 {{ animation-delay: 0.8s; }}
     
     .main-container {{
         position: relative;
@@ -90,6 +214,7 @@ st.markdown(
         background-clip: padding-box;
         backdrop-filter: blur(10px);
         transition: all 0.3s ease;
+        overflow: hidden;
     }}
     
     .hero-section::before {{
@@ -137,6 +262,150 @@ st.markdown(
         line-height: 1.5;
     }}
     
+    /* Enhanced Medical Icons with Advanced Animations */
+    .medical-icons {{
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin: 2rem 0;
+        font-size: 2.5rem;
+    }}
+    
+    .medical-icon {{
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        filter: grayscale(30%);
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+    }}
+    
+    .medical-icon::after {{
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.3s ease;
+        z-index: -1;
+    }}
+    
+    .medical-icon:hover {{
+        transform: translateY(-10px) scale(1.2) rotate(10deg);
+        filter: grayscale(0%) brightness(1.2);
+        text-shadow: 0 0 20px currentColor;
+    }}
+    
+    .medical-icon:hover::after {{
+        width: 60px;
+        height: 60px;
+    }}
+    
+    .medical-icon:nth-child(1) {{ 
+        color: #e74c3c;
+        animation: iconFloat 3s ease-in-out infinite;
+    }}
+    .medical-icon:nth-child(2) {{ 
+        color: #f39c12;
+        animation: iconFloat 3s ease-in-out infinite 0.6s;
+    }}
+    .medical-icon:nth-child(3) {{ 
+        color: #3498db;
+        animation: iconFloat 3s ease-in-out infinite 1.2s;
+    }}
+    .medical-icon:nth-child(4) {{ 
+        color: #27ae60;
+        animation: iconFloat 3s ease-in-out infinite 1.8s;
+    }}
+    .medical-icon:nth-child(5) {{ 
+        color: #9b59b6;
+        animation: iconFloat 3s ease-in-out infinite 2.4s;
+    }}
+    
+    @keyframes iconFloat {{
+        0%, 100% {{ transform: translateY(0) rotate(0deg); }}
+        50% {{ transform: translateY(-10px) rotate(5deg); }}
+    }}
+    
+    /* Scroll-triggered Info Cards */
+    .info-card {{
+        background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.9) 0%, 
+            rgba(248, 252, 255, 0.85) 100%);
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 15px 30px rgba(0, 102, 204, 0.1);
+        border: 1px solid rgba(0, 102, 204, 0.1);
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }}
+    
+    .info-card::before {{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, 
+            transparent, 
+            rgba(255, 255, 255, 0.4), 
+            transparent);
+        transition: left 0.6s ease;
+    }}
+    
+    .info-card:hover {{
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 25px 50px rgba(0, 102, 204, 0.2);
+        border-color: rgba(0, 188, 212, 0.3);
+    }}
+    
+    .info-card:hover::before {{
+        left: 100%;
+    }}
+    
+    .card-icon {{
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        display: block;
+        transition: all 0.3s ease;
+    }}
+    
+    .info-card:hover .card-icon {{
+        transform: scale(1.1) rotate(5deg);
+        filter: drop-shadow(0 0 10px currentColor);
+    }}
+    
+    .card-title {{
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #003366;
+        margin-bottom: 1rem;
+        transition: color 0.3s ease;
+    }}
+    
+    .info-card:hover .card-title {{
+        color: #0066cc;
+    }}
+    
+    .card-content {{
+        color: #0066cc;
+        line-height: 1.6;
+        font-size: 1rem;
+        transition: color 0.3s ease;
+    }}
+    
+    .info-card:hover .card-content {{
+        color: #003366;
+    }}
+    
+    /* Advanced Form Animations */
     .form-container {{
         background: linear-gradient(135deg, 
             rgba(255, 255, 255, 0.95) 0%, 
@@ -150,6 +419,31 @@ st.markdown(
         border: 2px solid rgba(0, 102, 204, 0.1);
         backdrop-filter: blur(15px);
         margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+    }}
+    
+    .form-container::before {{
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(
+            transparent,
+            rgba(0, 188, 212, 0.1),
+            transparent,
+            rgba(0, 102, 204, 0.1),
+            transparent
+        );
+        animation: formRotate 20s linear infinite;
+        z-index: -1;
+    }}
+    
+    @keyframes formRotate {{
+        0% {{ transform: rotate(0deg); }}
+        100% {{ transform: rotate(360deg); }}
     }}
     
     .form-title {{
@@ -171,6 +465,12 @@ st.markdown(
         height: 3px;
         background: linear-gradient(45deg, #0066cc, #4da6ff);
         border-radius: 2px;
+        animation: titleUnderline 2s ease-in-out infinite;
+    }}
+    
+    @keyframes titleUnderline {{
+        0%, 100% {{ width: 100px; }}
+        50% {{ width: 150px; }}
     }}
     
     .success-message {{
@@ -184,6 +484,22 @@ st.markdown(
         font-size: 1.1rem;
         box-shadow: 0 15px 30px rgba(76, 175, 80, 0.3);
         animation: successPulse 2s ease-in-out infinite;
+        position: relative;
+        overflow: hidden;
+    }}
+    
+    .success-message::before {{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, 
+            transparent, 
+            rgba(255, 255, 255, 0.3), 
+            transparent);
+        animation: successShine 3s ease-in-out infinite;
     }}
     
     @keyframes successPulse {{
@@ -191,65 +507,9 @@ st.markdown(
         50% {{ transform: scale(1.02); }}
     }}
     
-    .medical-icons {{
-        display: flex;
-        justify-content: center;
-        gap: 2rem;
-        margin: 2rem 0;
-        font-size: 2.5rem;
-    }}
-    
-    .medical-icon {{
-        transition: all 0.3s ease;
-        filter: grayscale(30%);
-    }}
-    
-    .medical-icon:hover {{
-        transform: translateY(-5px) scale(1.1);
-        filter: grayscale(0%);
-    }}
-    
-    .medical-icon:nth-child(1) {{ color: #e74c3c; }}
-    .medical-icon:nth-child(2) {{ color: #f39c12; }}
-    .medical-icon:nth-child(3) {{ color: #3498db; }}
-    .medical-icon:nth-child(4) {{ color: #27ae60; }}
-    .medical-icon:nth-child(5) {{ color: #9b59b6; }}
-    
-    .info-card {{
-        background: linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.9) 0%, 
-            rgba(248, 252, 255, 0.85) 100%);
-        border-radius: 15px;
-        padding: 2rem;
-        margin-bottom: 1.5rem;
-        box-shadow: 0 15px 30px rgba(0, 102, 204, 0.1);
-        border: 1px solid rgba(0, 102, 204, 0.1);
-        transition: all 0.3s ease;
-        text-align: center;
-    }}
-    
-    .info-card:hover {{
-        transform: translateY(-5px);
-        box-shadow: 0 25px 50px rgba(0, 102, 204, 0.2);
-    }}
-    
-    .card-icon {{
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        display: block;
-    }}
-    
-    .card-title {{
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: #003366;
-        margin-bottom: 1rem;
-    }}
-    
-    .card-content {{
-        color: #0066cc;
-        line-height: 1.6;
-        font-size: 1rem;
+    @keyframes successShine {{
+        0% {{ left: -100%; }}
+        100% {{ left: 100%; }}
     }}
     
     /* Beautiful Sidebar Styling - Simplified */
@@ -310,7 +570,115 @@ st.markdown(
         color: #ffffff !important;
         font-weight: 500 !important;
     }}
+    
+    /* Advanced JavaScript Scroll Animations */
+    .scroll-fade-in {{
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }}
+    
+    .scroll-fade-in.active {{
+        opacity: 1;
+        transform: translateY(0);
+    }}
+    
+    .scroll-slide-left {{
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }}
+    
+    .scroll-slide-left.active {{
+        opacity: 1;
+        transform: translateX(0);
+    }}
+    
+    .scroll-slide-right {{
+        opacity: 0;
+        transform: translateX(50px);
+        transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }}
+    
+    .scroll-slide-right.active {{
+        opacity: 1;
+        transform: translateX(0);
+    }}
+    
+    .scroll-scale-in {{
+        opacity: 0;
+        transform: scale(0.9);
+        transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }}
+    
+    .scroll-scale-in.active {{
+        opacity: 1;
+        transform: scale(1);
+    }}
     </style>
+    
+    <script>
+    // Advanced Scroll Animation Script
+    function initScrollAnimations() {{
+        const observerOptions = {{
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        }};
+        
+        const observer = new IntersectionObserver((entries) => {{
+            entries.forEach(entry => {{
+                if (entry.isIntersecting) {{
+                    entry.target.classList.add('active');
+                }}
+            }});
+        }}, observerOptions);
+        
+        // Observe elements with scroll animation classes
+        document.querySelectorAll('.scroll-fade-in, .scroll-slide-left, .scroll-slide-right, .scroll-scale-in').forEach(el => {{
+            observer.observe(el);
+        }});
+    }}
+    
+    // Enhanced Icon Hover Effects
+    function addIconEffects() {{
+        document.querySelectorAll('.medical-icon').forEach((icon, index) => {{
+            icon.addEventListener('mouseenter', function() {{
+                const randomRotation = (Math.random() * 20 - 10);
+                this.style.transform = `translateY(-15px) scale(1.3) rotate(${{randomRotation}}deg)`;
+                this.style.filter = 'grayscale(0%) brightness(1.3) drop-shadow(0 0 20px currentColor)';
+            }});
+            
+            icon.addEventListener('mouseleave', function() {{
+                this.style.transform = '';
+                this.style.filter = '';
+            }});
+        }});
+    }}
+    
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', function() {{
+        initScrollAnimations();
+        addIconEffects();
+        
+        // Add parallax effect to background
+        window.addEventListener('scroll', function() {{
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            document.querySelector('.stApp::before')?.style.setProperty('transform', `translateY(${{rate}}px)`);
+        }});
+    }});
+    
+    // Retry initialization for Streamlit's dynamic loading
+    setTimeout(() => {{
+        initScrollAnimations();
+        addIconEffects();
+    }}, 1000);
+    
+    setTimeout(() => {{
+        initScrollAnimations();
+        addIconEffects();
+    }}, 3000);
+    </script>
     """,
     unsafe_allow_html=True
 )
@@ -412,30 +780,33 @@ with st.sidebar:
 # Main container
 st.markdown('<div class="main-container">', unsafe_allow_html=True)
 
-# Enhanced Hero Section với animation và miêu tả
+# Enhanced Hero Section với animation slide-in từ trái
 st.markdown(
     """
-    <div class="hero-section">
+    <div class="hero-section slide-in-left">
         <h1 class="main-title">🏥 Doctor App - VinBig Medical Center</h1>
-        <p class="subtitle">Hệ thống quản lý thông tin bệnh nhân thông minh với công nghệ AI tiên tiến</p>
-        <div class="medical-icons">
-            <span class="medical-icon">🩺</span>
-            <span class="medical-icon">💊</span>
-            <span class="medical-icon">🏥</span>
-            <span class="medical-icon">⚕️</span>
-            <span class="medical-icon">💉</span>
+        <p class="subtitle fade-in-up delay-300">Hệ thống quản lý thông tin bệnh nhân thông minh với công nghệ AI tiên tiến</p>
+        <div class="medical-icons fade-in-up delay-500">
+            <span class="medical-icon delay-100">🩺</span>
+            <span class="medical-icon delay-200">💊</span>
+            <span class="medical-icon delay-300">🏥</span>
+            <span class="medical-icon delay-400">⚕️</span>
+            <span class="medical-icon delay-500">💉</span>
         </div>
     </div>
     """,
     unsafe_allow_html=True
 )
 
-# App Description Section
+# App Description Section với scroll animations
+st.markdown('<div class="scroll-fade-in">', unsafe_allow_html=True)
 st.markdown("## 🎯 Giới thiệu về ứng dụng")
+st.markdown('</div>', unsafe_allow_html=True)
 
 col1, col2 = st.columns([2, 1])
 
 with col1:
+    st.markdown('<div class="scroll-slide-left">', unsafe_allow_html=True)
     st.markdown("""
     ### 🌟 **Doctor App** - Giải pháp y tế thông minh của tương lai
     
@@ -452,8 +823,10 @@ with col1:
     Chúng tôi cam kết mang đến giải pháp y tế **an toàn**, **chính xác** và **hiệu quả** 
     để bác sĩ có thể đưa ra quyết định điều trị tốt nhất cho bệnh nhân.
     """)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 with col2:
+    st.markdown('<div class="scroll-slide-right">', unsafe_allow_html=True)
     st.info("""
     📊 **Thống kê ấn tượng:**
     
@@ -468,21 +841,27 @@ with col2:
     • HIPAA Compliant - Tuân thủ y tế
     • GDPR Ready - Bảo vệ dữ liệu
     """)
+    st.markdown('</div>', unsafe_allow_html=True)
 
-# Detailed User Guide Section
+# Detailed User Guide Section với animations
 st.markdown("---")
+st.markdown('<div class="scroll-fade-in">', unsafe_allow_html=True)
 st.markdown("## 📚 Hướng dẫn sử dụng chi tiết")
+st.markdown('</div>', unsafe_allow_html=True)
 
+st.markdown('<div class="scroll-scale-in">', unsafe_allow_html=True)
 st.markdown("""
 ### 🚀 **Quy trình hoàn chỉnh từ A đến Z**
 
 Để sử dụng **Doctor App** một cách hiệu quả, vui lòng làm theo các bước sau:
 """)
+st.markdown('</div>', unsafe_allow_html=True)
 
-# Step-by-step guide with enhanced styling
+# Step-by-step guide with enhanced styling và animations
 step_col1, step_col2 = st.columns(2)
 
 with step_col1:
+    st.markdown('<div class="scroll-slide-left">', unsafe_allow_html=True)
     st.markdown("""
     #### **🔹 BƯỚC 1: Chuẩn bị thông tin**
     """)
@@ -510,8 +889,10 @@ with step_col1:
     
     🔐 **Bảo mật:** Tuân thủ chuẩn quốc tế
     """)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 with step_col2:
+    st.markdown('<div class="scroll-slide-right">', unsafe_allow_html=True)
     st.markdown("""
     #### **🔹 BƯỚC 2: Điền form thông tin**
     """)
@@ -539,17 +920,20 @@ with step_col2:
     
     ⚕️ **Kết quả:** Điều trị hiệu quả và an toàn
     """)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown("---")
 
-# Patient Information Form
-# st.markdown('<div class="form-container">', unsafe_allow_html=True)
+# Patient Information Form với advanced animations
+st.markdown('<div class="scroll-fade-in">', unsafe_allow_html=True)
 st.markdown('<h2 class="form-title">📋 Thông tin bệnh nhân</h2>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # Initialize session state for form success
 if 'form_submitted' not in st.session_state:
     st.session_state.form_submitted = False
 
+st.markdown('<div class="scroll-scale-in">', unsafe_allow_html=True)
 with st.form("patient_info_form"):
     col1, col2 = st.columns(2)
     
@@ -750,15 +1134,19 @@ with st.form("patient_info_form"):
                 
             except Exception as e:
                 st.error(f"❌ Lỗi khi lưu dữ liệu: {str(e)}")
+st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Information Cards using Streamlit columns
+# Information Cards using Streamlit columns với animations
+st.markdown('<div class="scroll-fade-in">', unsafe_allow_html=True)
 st.markdown("### 🏥 Dịch vụ của chúng tôi")
+st.markdown('</div>', unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
 
 with col1:
+    st.markdown('<div class="scroll-slide-left">', unsafe_allow_html=True)
     st.markdown(
         """
         <div class="info-card">
@@ -784,8 +1172,10 @@ with col1:
         """,
         unsafe_allow_html=True
     )
+    st.markdown('</div>', unsafe_allow_html=True)
 
 with col2:
+    st.markdown('<div class="scroll-slide-right">', unsafe_allow_html=True)
     st.markdown(
         """
         <div class="info-card">
@@ -811,16 +1201,20 @@ with col2:
         """,
         unsafe_allow_html=True
     )
+    st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Enhanced Footer
+# Enhanced Footer với animations
 st.markdown("---")
+st.markdown('<div class="scroll-fade-in">', unsafe_allow_html=True)
 st.markdown("## 🌐 Thông tin tổ chức")
+st.markdown('</div>', unsafe_allow_html=True)
 
 footer_col1, footer_col2, footer_col3 = st.columns(3)
 
 with footer_col1:
+    st.markdown('<div class="scroll-slide-left">', unsafe_allow_html=True)
     st.markdown("""
     ### 🏢 **VinBig AI**
     """)
@@ -836,8 +1230,10 @@ with footer_col1:
     
     **Website:** vinbig.ai
     """)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 with footer_col2:
+    st.markdown('<div class="scroll-scale-in">', unsafe_allow_html=True)
     st.markdown("""
     ### 📞 **Liên hệ nhanh**
     """)
@@ -855,8 +1251,10 @@ with footer_col2:
     📷 Instagram: @vinbig_ai
     🐦 Twitter: @VinBigAI
     """)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 with footer_col3:
+    st.markdown('<div class="scroll-slide-right">', unsafe_allow_html=True)
     st.markdown("""
     ### 🎯 **Tầm nhìn & Sứ mệnh**
     """)
@@ -874,8 +1272,10 @@ with footer_col3:
     • Chất lượng vượt trội
     • Trách nhiệm xã hội
     """)
+    st.markdown('</div>', unsafe_allow_html=True)
 
-# Copyright and legal footer
+# Copyright and legal footer với animation
+st.markdown('<div class="scroll-fade-in">', unsafe_allow_html=True)
 st.markdown(
     """
     <div style="
@@ -886,18 +1286,29 @@ st.markdown(
         border-radius: 15px;
         margin-top: 2rem;
         box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        position: relative;
+        overflow: hidden;
     ">
-        <h3 style="margin-bottom: 1rem; color: white;">🏥 Doctor App - VinBig Medical Center</h3>
-        <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+        <div style="
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: footerShine 3s ease-in-out infinite;
+        "></div>
+        <h3 style="margin-bottom: 1rem; color: white; position: relative; z-index: 1;">🏥 Doctor App - VinBig Medical Center</h3>
+        <p style="font-size: 1.1rem; margin-bottom: 1rem; position: relative; z-index: 1;">
             Hệ thống quản lý bệnh nhân thông minh với công nghệ AI tiên tiến
         </p>
-        <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1rem;">
+        <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1rem; position: relative; z-index: 1;">
             <span>📞 Hotline: 1900-555-888</span>
             <span>📧 Email: support@vinbig-doctor.vn</span>
             <span>🌐 Website: vinbig.ai</span>
         </div>
         <hr style="border: 1px solid rgba(255,255,255,0.3); margin: 1rem 0;">
-        <div style="font-size: 0.9rem; opacity: 0.8;">
+        <div style="font-size: 0.9rem; opacity: 0.8; position: relative; z-index: 1;">
             <p>© 2025 VinBig AI Corporation. All rights reserved.</p>
             <p>Bảo mật dữ liệu • Tuân thủ GDPR • Chứng nhận ISO 27001</p>
             <p style="font-style: italic;">
@@ -908,3 +1319,4 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+st.markdown('</div>', unsafe_allow_html=True)
