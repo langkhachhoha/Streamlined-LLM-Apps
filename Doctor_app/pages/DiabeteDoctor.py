@@ -13,6 +13,9 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Check if patient data exists from Homepage
+current_patient = st.session_state.get('current_patient', None)
+
 # Function to encode image to base64
 def get_base64_image(image_path):
     try:
@@ -1346,6 +1349,66 @@ else:
 
 st.markdown('<h1 class="medical-title">🩺 Diabetes Doctor</h1>', unsafe_allow_html=True)
 st.markdown('<p class="subtitle">AI-Powered Diabetes Risk Assessment | Trusted Medical Consultation</p>', unsafe_allow_html=True)
+
+# Display patient information if available from Homepage
+if current_patient:
+    st.markdown("---")
+    st.markdown("### 👤 Thông tin bệnh nhân")
+    
+    # Create a nice info box for patient data
+    patient_info = current_patient.get('personal_info', {})
+    cccd_info = current_patient.get('cccd_info', {})
+    
+    col_info1, col_info2 = st.columns(2)
+    
+    with col_info1:
+        st.markdown(f"""
+        <div style="background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); 
+                    padding: 15px; border-radius: 10px; border-left: 4px solid #0066cc;">
+            <h4 style="color: #0066cc; margin-bottom: 10px;">📋 Thông tin cơ bản</h4>
+            <p style="margin: 5px 0;"><strong>👤 Họ tên:</strong> {patient_info.get('full_name', 'N/A')}</p>
+            <p style="margin: 5px 0;"><strong>🎂 Ngày sinh:</strong> {patient_info.get('birth_date', 'N/A')}</p>
+            <p style="margin: 5px 0;"><strong>⚥ Giới tính:</strong> {patient_info.get('gender', 'N/A')}</p>
+            <p style="margin: 5px 0;"><strong>📱 Điện thoại:</strong> {patient_info.get('phone', 'N/A')}</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col_info2:
+        st.markdown(f"""
+        <div style="background: linear-gradient(135deg, #f3e5f5 0%, #e8f5e8 100%); 
+                    padding: 15px; border-radius: 10px; border-left: 4px solid #4caf50;">
+            <h4 style="color: #4caf50; margin-bottom: 10px;">🆔 Thông tin CCCD</h4>
+            <p style="margin: 5px 0;"><strong>🔢 Số CCCD:</strong> {patient_info.get('id_number', 'N/A')}</p>
+            <p style="margin: 5px 0;"><strong>🏠 Địa chỉ:</strong> {patient_info.get('address', 'N/A')[:50]}{'...' if len(patient_info.get('address', '')) > 50 else ''}</p>
+            <p style="margin: 5px 0;"><strong>🤖 Từ CCCD:</strong> {'✅ Có' if cccd_info.get('extracted_from_image') else '❌ Không'}</p>
+            <p style="margin: 5px 0;"><strong>🆔 Mã BN:</strong> {current_patient.get('patient_id', 'N/A')}</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Quick access to medical history if available
+    medical_analysis = current_patient.get('medical_analysis', {})
+    if medical_analysis.get('current_symptoms') or medical_analysis.get('family_history'):
+        with st.expander("🩺 Thông tin y tế có sẵn", expanded=False):
+            if medical_analysis.get('current_symptoms'):
+                st.write(f"**🩺 Triệu chứng hiện tại:** {medical_analysis.get('current_symptoms')}")
+            if medical_analysis.get('family_history'):
+                st.write(f"**👨‍👩‍👧‍👦 Tiền sử gia đình:** {medical_analysis.get('family_history')}")
+            if medical_analysis.get('lifestyle_habits'):
+                st.write(f"**🏃‍♂️ Thói quen sống:** {medical_analysis.get('lifestyle_habits')}")
+    
+    st.success("✅ Thông tin bệnh nhân đã được tải từ trang đăng ký. Tiếp tục với chẩn đoán tiểu đường.")
+    
+else:
+    # Show message if no patient data
+    st.info("""
+    ℹ️ **Thông báo:** Chưa có thông tin bệnh nhân. 
+    
+    Bạn có thể:
+    - 🔙 [Quay lại trang chủ để đăng ký thông tin bệnh nhân](/Doctor_app/Homepage.py)
+    - 📝 Hoặc tiếp tục với chẩn đoán tiểu đường bên dưới
+    """)
+
+st.markdown("---")
 
 # Sidebar với thông tin liên hệ và animation bác sĩ
 with st.sidebar:

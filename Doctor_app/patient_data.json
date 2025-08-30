@@ -1,70 +1,40 @@
 {
   "patients": [
     {
-      "patient_id": "BN_20250829_222527",
+      "patient_id": "BN_20250830_192952",
       "personal_info": {
-        "full_name": "s",
-        "birth_date": "2025-08-29",
+        "full_name": "Hà Minh Hiếu",
+        "birth_date": "2004-05-10",
         "gender": "Nam",
-        "phone": "s",
-        "id_number": "s",
-        "address": "s",
-        "emergency_contact": "s",
-        "insurance_number": "s"
+        "phone": "0916061368",
+        "id_number": "038204001950",
+        "address": "Lô 187 LK4, MB 121, Đông Vệ, TP Thanh Hóa",
+        "emergency_contact": "h",
+        "insurance_number": "0987654"
       },
-      "medical_history": {
-        "allergies": "s",
-        "chronic_diseases": "s",
-        "current_medications": "s",
-        "notes": "s"
-      },
-      "created_at": "2025-08-29 22:25:27",
-      "updated_at": "2025-08-29 22:25:27"
-    },
-    {
-      "patient_id": "BN_20250829_222610",
-      "personal_info": {
-        "full_name": "s",
-        "birth_date": "2025-08-29",
-        "gender": "Nam",
-        "phone": "s",
-        "id_number": "s",
-        "address": "s",
-        "emergency_contact": "s",
-        "insurance_number": "s"
-      },
-      "medical_history": {
-        "allergies": "s",
-        "chronic_diseases": "s",
-        "current_medications": "s",
-        "notes": "s"
-      },
-      "created_at": "2025-08-29 22:26:10",
-      "updated_at": "2025-08-29 22:26:10"
-    },
-    {
-      "patient_id": "BN_20250830_150736",
-      "personal_info": {
-        "full_name": "a",
-        "birth_date": "2025-08-30",
-        "gender": "Nam",
-        "phone": "a",
-        "id_number": "a",
-        "address": "a",
-        "emergency_contact": "a",
-        "insurance_number": "a"
+      "cccd_info": {
+        "extracted_from_image": true,
+        "so_cccd": "038204001950",
+        "ho_ten": "Hà Minh Hiếu",
+        "ngay_sinh": "10/05/2004",
+        "gioi_tinh": "Nam",
+        "quoc_tich": "Việt Nam",
+        "que_quan": "Hoàng Trinh, Hoàng Hóa, Thanh Hóa",
+        "noi_thuong_tru": "Lô 187 LK4, MB 121, Đông Vệ, TP Thanh Hóa",
+        "nationality": "Việt Nam",
+        "place_origin": "Hoàng Trinh, Hoàng Hóa, Thanh Hóa"
       },
       "medical_analysis": {
-        "current_symptoms": "a",
+        "current_symptoms": "d",
         "sleep_quality": "Rất tốt - ngủ sâu giấc 7-8 tiếng",
-        "family_history": "a",
-        "lifestyle_habits": "a",
+        "family_history": "d",
+        "lifestyle_habits": "d",
         "work_environment": "Văn phòng - ít vận động",
         "stress_anxiety_level": "Rất thấp - cuộc sống bình yên",
-        "additional_info": "a"
+        "additional_info": "d"
       },
-      "created_at": "2025-08-30 15:07:36",
-      "updated_at": "2025-08-30 15:07:36"
+      "created_at": "2025-08-30 19:29:52",
+      "updated_at": "2025-08-30 19:29:52"
     }
   ]
 }
