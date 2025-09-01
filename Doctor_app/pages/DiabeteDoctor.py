@@ -1369,7 +1369,6 @@ if current_patient:
             <p style="margin: 5px 0;"><strong>👤 Họ tên:</strong> {patient_info.get('full_name', 'N/A')}</p>
             <p style="margin: 5px 0;"><strong>🎂 Ngày sinh:</strong> {patient_info.get('birth_date', 'N/A')}</p>
             <p style="margin: 5px 0;"><strong>⚥ Giới tính:</strong> {patient_info.get('gender', 'N/A')}</p>
-            <p style="margin: 5px 0;"><strong>📱 Điện thoại:</strong> {patient_info.get('phone', 'N/A')}</p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -1872,6 +1871,22 @@ with st.form("diabetes_assessment_form"):
         unsafe_allow_html=True
         )
         
+    # Information about data saving
+    st.markdown("""
+    <div style="
+        background: linear-gradient(135deg, #e8f5e8 0%, #f0f8ff 100%); 
+        padding: 15px; 
+        border-radius: 10px; 
+        margin: 15px 0; 
+        border-left: 4px solid #0066cc;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    ">
+        <p style="margin: 0; color: #2e7d32; font-size: 14px;">
+            💾 <strong>Lưu ý:</strong> Kết quả phân tích và các triệu chứng của bạn sẽ được lưu tự động vào hồ sơ bệnh nhân để theo dõi sức khỏe dài hạn.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
     submitted = st.form_submit_button("🔍 Phân tích nguy cơ tiểu đường")
 
     # Process form submission (outside the form but inside the patient info check)
@@ -1975,6 +1990,105 @@ with st.form("diabetes_assessment_form"):
                 result = response.json()
                 prediction = result['prediction']
                 probability = result['probability']
+                
+                # Save diabetes analysis results to patient data
+                try:
+                    # Load existing patient data
+                    json_file_path = "/Users/apple/Desktop/LLM-apps/Doctor_app/patient_data.json"
+                    
+                    if os.path.exists(json_file_path):
+                        with open(json_file_path, 'r', encoding='utf-8') as f:
+                            existing_data = json.load(f)
+                    else:
+                        existing_data = {"patients": []}
+                    
+                    # Find current patient and update with diabetes analysis
+                    if current_patient and 'patient_id' in current_patient:
+                        patient_id = current_patient['patient_id']
+                        
+                        # Create diabetes analysis data
+                        diabetes_analysis = {
+                            "analysis_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                            "patient_demographics": {
+                                "gender": current_patient.get('personal_info', {}).get('gender', None) if current_patient else None,
+                                "full_name": current_patient.get('personal_info', {}).get('full_name', None) if current_patient else None,
+                                "birth_date": current_patient.get('personal_info', {}).get('birth_date', None) if current_patient else None
+                            },
+                            "symptoms_data": {
+                                "high_bp": high_bp,
+                                "high_chol": high_chol,
+                                "chol_check": chol_check,
+                                "bmi": bmi,
+                                "smoker": smoker,
+                                "stroke": stroke,
+                                "heart_disease": heart_disease,
+                                "phys_activity": phys_activity,
+                                "fruits": fruits,
+                                "veggies": veggies,
+                                "hvy_alcohol": hvy_alcohol,
+                                "any_healthcare": any_healthcare,
+                                "no_doc_cost": no_doc_cost,
+                                "gen_hlth": gen_hlth,
+                                "height": height,
+                                "weight": weight
+                            },
+                            "ai_diagnosis": {
+                                "prediction": prediction,
+                                "probability": probability,
+                                "risk_level": "cao" if prediction == 1 else "thấp",
+                                "confidence": probability*100 if prediction == 1 else (1-probability)*100
+                            },
+                            "doctor_notes": {
+                                "risk_assessment": f"Nguy cơ {'cao' if prediction == 1 else 'thấp'} mắc bệnh tiểu đường",
+                                "recommendations": [
+                                    "🏥 Khẩn cấp: Đặt lịch khám bác sĩ chuyên khoa nội tiết trong vòng 1-2 tuần",
+                                    "🔬 Xét nghiệm: Glucose máu đói, HbA1c, GTT (test dung nạp glucose)",
+                                    "🍎 Dinh dưỡng: Giảm 10-15% cân nặng, hạn chế carbs tinh chế và đường",
+                                    "🏃‍♂️ Vận động: Tập aerobic 30 phút/ngày, 5 ngày/tuần + kháng lực 2 lần/tuần",
+                                    "📊 Theo dõi: Đo glucose, huyết áp hàng ngày, cân nặng mỗi tuần",
+                                    "💊 Thuốc: Có thể cần metformin hoặc thuốc tiểu đường theo chỉ định bác sĩ",
+                                    "😌 Tâm lý: Quản lý stress qua thiền, yoga, đủ giấc ngủ 7-8 giờ/đêm",
+                                    "👨‍👩‍👧‍ Gia đình: Tư vấn di truyền nếu có tiền sử gia đình mắc tiểu đường"
+                                ] if prediction == 1 else [
+                                    "✅ Duy trì: Tiếp tục lối sống lành mạnh hiện tại - bạn đang làm rất tốt!",
+                                    "📅 Kiểm tra: Khám sức khỏe tổng quát 6-12 tháng/lần, xét nghiệm glucose hàng năm",
+                                    "⚖️ Cân nặng: Giữ BMI 18.5-24.9, biến động không quá ±5% trong năm",
+                                    "🏃‍♂️ Thể dục: 150 phút aerobic + 75 phút vận động cường độ cao/tuần",
+                                    "🥗 Dinh dưỡng: Địa Trung Hải hoặc DASH diet, 5 portions rau củ/ngày",
+                                    "💧 Hydration: 8-10 ly nước/ngày, hạn chế đồ uống có đường",
+                                    "🧘‍♀️ Wellness: Thiền, yoga, đọc sách để giảm stress và cải thiện tâm trạng",
+                                    "🏆 Mục tiêu: Tham gia hoạt động thể thao, thử thách sức khỏe để duy trì động lực"
+                                ]
+                            }
+                        }
+                        
+                        # Find and update the specific patient
+                        patient_found = False
+                        for patient in existing_data["patients"]:
+                            if patient.get("patient_id") == patient_id:
+                                # Add diabetes analysis to existing patient data
+                                if "diabetes_analyses" not in patient:
+                                    patient["diabetes_analyses"] = []
+                                patient["diabetes_analyses"].append(diabetes_analysis)
+                                patient["updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                                patient_found = True
+                                break
+                        
+                        # If patient not found in file but exists in session, add them
+                        if not patient_found:
+                            current_patient["diabetes_analyses"] = [diabetes_analysis]
+                            current_patient["updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                            existing_data["patients"].append(current_patient)
+                        
+                        # Save updated data back to file
+                        with open(json_file_path, 'w', encoding='utf-8') as f:
+                            json.dump(existing_data, f, ensure_ascii=False, indent=2)
+                        
+                        # Show success message for data saving
+                        st.success(f"💾 **Kết quả phân tích đã được lưu vào hồ sơ bệnh nhân** (Mã: {patient_id})")
+                    
+                except Exception as e:
+                    st.warning(f"⚠️ Không thể lưu kết quả vào hồ sơ: {str(e)}")
                 
                 # Create professional medical result popup using components
                 risk_status = "cao" if prediction == 1 else "thấp"

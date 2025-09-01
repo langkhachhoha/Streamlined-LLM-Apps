@@ -1,40 +1,164 @@
 {
   "patients": [
     {
-      "patient_id": "BN_20250830_192952",
+      "patient_id": "BN_20250901_181435",
       "personal_info": {
-        "full_name": "Hà Minh Hiếu",
-        "birth_date": "2004-05-10",
+        "full_name": "Hà Minh Hoàng",
+        "birth_date": "2009-11-12",
         "gender": "Nam",
-        "phone": "0916061368",
-        "id_number": "038204001950",
-        "address": "Lô 187 LK4, MB 121, Đông Vệ, TP Thanh Hóa",
-        "emergency_contact": "h",
-        "insurance_number": "0987654"
+        "id_number": "038209009486",
+        "address": "Phổ Thành Mai, Quảng Thành, TP. Thanh Hóa, Thanh Hóa",
+        "nationality": "Thanh Hoá ",
+        "place_origin": "Hoàng Trinh, Hoàng Hóa, Thanh Hóa"
       },
       "cccd_info": {
         "extracted_from_image": true,
-        "so_cccd": "038204001950",
-        "ho_ten": "Hà Minh Hiếu",
-        "ngay_sinh": "10/05/2004",
+        "so_cccd": "038209009486",
+        "ho_ten": "Hà Minh Hoàng",
+        "ngay_sinh": "12/11/2009",
         "gioi_tinh": "Nam",
         "quoc_tich": "Việt Nam",
         "que_quan": "Hoàng Trinh, Hoàng Hóa, Thanh Hóa",
-        "noi_thuong_tru": "Lô 187 LK4, MB 121, Đông Vệ, TP Thanh Hóa",
+        "noi_thuong_tru": "Phổ Thành Mai, Quảng Thành, TP. Thanh Hóa, Thanh Hóa"
+      },
+      "medical_analysis": {
+        "current_symptoms": "a",
+        "sleep_quality": "Rất tốt - ngủ sâu giấc 7-8 tiếng",
+        "family_history": "a",
+        "lifestyle_habits": "a",
+        "work_environment": "Văn phòng - ít vận động",
+        "stress_anxiety_level": "Rất thấp - cuộc sống bình yên",
+        "additional_info": "a"
+      },
+      "created_at": "2025-09-01 18:14:35",
+      "updated_at": "2025-09-01 18:20:18",
+      "diabetes_analyses": [
+        {
+          "analysis_date": "2025-09-01 18:20:18",
+          "patient_demographics": {
+            "gender": "Nam",
+            "full_name": "Hà Minh Hoàng",
+            "birth_date": "2009-11-12"
+          },
+          "symptoms_data": {
+            "high_bp": 0,
+            "high_chol": 0,
+            "chol_check": 0,
+            "bmi": 22.49134948096886,
+            "smoker": 0,
+            "stroke": 0,
+            "heart_disease": 0,
+            "phys_activity": 0,
+            "fruits": 0,
+            "veggies": 0,
+            "hvy_alcohol": 0,
+            "any_healthcare": 0,
+            "no_doc_cost": 0,
+            "gen_hlth": 1,
+            "height": 170.0,
+            "weight": 65.0
+          },
+          "ai_diagnosis": {
+            "prediction": 0,
+            "probability": 0.06521739130434782,
+            "risk_level": "thấp",
+            "confidence": 93.47826086956522
+          },
+          "doctor_notes": {
+            "risk_assessment": "Nguy cơ thấp mắc bệnh tiểu đường",
+            "recommendations": [
+              "✅ Duy trì: Tiếp tục lối sống lành mạnh hiện tại - bạn đang làm rất tốt!",
+              "📅 Kiểm tra: Khám sức khỏe tổng quát 6-12 tháng/lần, xét nghiệm glucose hàng năm",
+              "⚖️ Cân nặng: Giữ BMI 18.5-24.9, biến động không quá ±5% trong năm",
+              "🏃‍♂️ Thể dục: 150 phút aerobic + 75 phút vận động cường độ cao/tuần",
+              "🥗 Dinh dưỡng: Địa Trung Hải hoặc DASH diet, 5 portions rau củ/ngày",
+              "💧 Hydration: 8-10 ly nước/ngày, hạn chế đồ uống có đường",
+              "🧘‍♀️ Wellness: Thiền, yoga, đọc sách để giảm stress và cải thiện tâm trạng",
+              "🏆 Mục tiêu: Tham gia hoạt động thể thao, thử thách sức khỏe để duy trì động lực"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "patient_id": "BN_20250901_182114",
+      "personal_info": {
+        "full_name": "Hà Minh Hoàng",
+        "birth_date": "2009-11-12",
+        "gender": "Nam",
+        "id_number": "038209009486",
+        "address": "Phổ Thành Mai, Quảng Thành, TP. Thanh Hóa, Thanh Hóa",
         "nationality": "Việt Nam",
         "place_origin": "Hoàng Trinh, Hoàng Hóa, Thanh Hóa"
       },
+      "cccd_info": {
+        "extracted_from_image": true,
+        "so_cccd": "038209009486",
+        "ho_ten": "Hà Minh Hoàng",
+        "ngay_sinh": "12/11/2009",
+        "gioi_tinh": "Nam",
+        "quoc_tich": "Việt Nam",
+        "que_quan": "Hoàng Trinh, Hoàng Hóa, Thanh Hóa",
+        "noi_thuong_tru": "Phổ Thành Mai, Quảng Thành, TP. Thanh Hóa, Thanh Hóa"
+      },
       "medical_analysis": {
-        "current_symptoms": "d",
+        "current_symptoms": "shdjshs",
         "sleep_quality": "Rất tốt - ngủ sâu giấc 7-8 tiếng",
-        "family_history": "d",
-        "lifestyle_habits": "d",
+        "family_history": "sdsdsd",
+        "lifestyle_habits": "hsdjhdsjs",
         "work_environment": "Văn phòng - ít vận động",
         "stress_anxiety_level": "Rất thấp - cuộc sống bình yên",
-        "additional_info": "d"
+        "additional_info": "dssdss"
       },
-      "created_at": "2025-08-30 19:29:52",
-      "updated_at": "2025-08-30 19:29:52"
+      "created_at": "2025-09-01 18:21:14",
+      "updated_at": "2025-09-01 18:21:32",
+      "diabetes_analyses": [
+        {
+          "analysis_date": "2025-09-01 18:21:32",
+          "patient_demographics": {
+            "gender": "Nam",
+            "full_name": "Hà Minh Hoàng",
+            "birth_date": "2009-11-12"
+          },
+          "symptoms_data": {
+            "high_bp": 0,
+            "high_chol": 0,
+            "chol_check": 0,
+            "bmi": 22.49134948096886,
+            "smoker": 0,
+            "stroke": 0,
+            "heart_disease": 0,
+            "phys_activity": 0,
+            "fruits": 1,
+            "veggies": 1,
+            "hvy_alcohol": 0,
+            "any_healthcare": 0,
+            "no_doc_cost": 0,
+            "gen_hlth": 1,
+            "height": 170.0,
+            "weight": 65.0
+          },
+          "ai_diagnosis": {
+            "prediction": 0,
+            "probability": 0.010869565217391304,
+            "risk_level": "thấp",
+            "confidence": 98.91304347826086
+          },
+          "doctor_notes": {
+            "risk_assessment": "Nguy cơ thấp mắc bệnh tiểu đường",
+            "recommendations": [
+              "✅ Duy trì: Tiếp tục lối sống lành mạnh hiện tại - bạn đang làm rất tốt!",
+              "📅 Kiểm tra: Khám sức khỏe tổng quát 6-12 tháng/lần, xét nghiệm glucose hàng năm",
+              "⚖️ Cân nặng: Giữ BMI 18.5-24.9, biến động không quá ±5% trong năm",
+              "🏃‍♂️ Thể dục: 150 phút aerobic + 75 phút vận động cường độ cao/tuần",
+              "🥗 Dinh dưỡng: Địa Trung Hải hoặc DASH diet, 5 portions rau củ/ngày",
+              "💧 Hydration: 8-10 ly nước/ngày, hạn chế đồ uống có đường",
+              "🧘‍♀️ Wellness: Thiền, yoga, đọc sách để giảm stress và cải thiện tâm trạng",
+              "🏆 Mục tiêu: Tham gia hoạt động thể thao, thử thách sức khỏe để duy trì động lực"
+            ]
+          }
+        }
+      ]
     }
   ]
 }

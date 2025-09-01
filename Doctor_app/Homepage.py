@@ -43,15 +43,7 @@ st.markdown(
     f"""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
-    /* Hide Streamlit UI Elements */
-    #MainMenu {{visibility: hidden;}}
-    footer {{visibility: hidden;}}
-    header {{visibility: hidden;}}
-    .stDeployButton {{display: none;}}
-    [data-testid="stToolbar"] {{display: none;}}
-    [data-testid="stDecoration"] {{display: none;}}
-    [data-testid="stStatusWidget"] {{display: none;}}
-    [data-testid="manage-app-button"] {{display: none;}}
+
     /* Global Scroll Animation Setup */
     html {{
         scroll-behavior: smooth;
@@ -104,6 +96,11 @@ st.markdown(
                 rgba(225, 242, 255, 0.8) 75%,
                 rgba(240, 248, 255, 0.85) 100%);
         }}
+    }}
+
+    @keyframes shimmer {{
+        0% {{ transform: translateX(-100%); }}
+        100% {{ transform: translateX(100%); }}
     }}
     
     /* Advanced Animation Classes */
@@ -875,10 +872,8 @@ with step_col1:
     st.success("""
     📋 **Tài liệu cần có:**
     • CCCD/CMND của bệnh nhân
-    • Thẻ bảo hiểm y tế (nếu có)
     • Hồ sơ bệnh án cũ (nếu có)
     • Danh sách thuốc đang sử dụng
-    • Thông tin liên hệ khẩn cấp
     
     ⏱️ **Thời gian:** 2-3 phút chuẩn bị
     """)
@@ -931,191 +926,193 @@ with step_col2:
 
 st.markdown("---")
 
-# CCCD Upload Section
-st.markdown('<div class="scroll-fade-in">', unsafe_allow_html=True)
-st.markdown('<h2 class="form-title">📷 Trích xuất thông tin từ CCCD</h2>', unsafe_allow_html=True)
-st.markdown("""
-<div style="background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); 
-            padding: 20px; border-radius: 15px; margin: 20px 0; border-left: 5px solid #0066cc;">
-    <h4 style="color: #0066cc; margin-bottom: 15px;">🚀 Tính năng mới: Tự động điền thông tin từ ảnh CCCD</h4>
-    <p style="margin: 10px 0; color: #333;">
-        • Upload ảnh căn cước công dân để tự động trích xuất thông tin<br>
-        • AI sẽ tự động điền các trường thông tin bệnh nhân<br>
-        • Hỗ trợ các định dạng: JPG, PNG, JPEG
-    </p>
-</div>
-""", unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
-
 # Initialize session state for CCCD data
 if 'cccd_extracted_data' not in st.session_state:
     st.session_state.cccd_extracted_data = {}
 
-if CCCD_OCR_AVAILABLE:
-    # Server status check
-    with st.expander("🔧 Kiểm tra server OCR", expanded=False):
-        if st.button("🔄 Kiểm tra kết nối server"):
-            start_ocr_server_if_needed()
-    
-    # CCCD Upload
-    st.markdown('<div class="scroll-slide-right">', unsafe_allow_html=True)
-    uploaded_file = st.file_uploader(
-        "📤 **Chọn ảnh CCCD để trích xuất thông tin**",
-        type=['png', 'jpg', 'jpeg'],
-        help="Hỗ trợ định dạng: PNG, JPG, JPEG. Kích thước tối đa: 16MB"
-    )
-    
-    if uploaded_file is not None:
-        # Display uploaded image
-        col_img1, col_img2, col_img3 = st.columns([1, 2, 1])
-        
-        with col_img2:
-            st.image(uploaded_file, caption=f"Ảnh CCCD: {uploaded_file.name}", use_column_width=True)
-        
-        # Extract button
-        if st.button("🤖 Trích xuất thông tin từ CCCD", type="primary", use_container_width=True):
-            with st.spinner("🔄 Đang xử lý ảnh và trích xuất thông tin..."):
-                # Call OCR API
-                result = ocr_client.extract_from_uploaded_file(uploaded_file)
-                
-                if result['success']:
-                    st.session_state.cccd_extracted_data = result['data']
-                    st.success("✅ Trích xuất thông tin thành công!")
-                    
-                    # Display extracted info
-                    display_extracted_info(result['data'])
-                    
-                    st.info("📝 Thông tin đã được lưu tạm thời. Cuộn xuống để xem thông tin tự động điền vào form!")
-                    
-                else:
-                    st.error(f"❌ Lỗi: {result['message']}")
-                    if "server" in result['message'].lower():
-                        st.markdown("""
-                        **🔧 Hướng dẫn khởi động server:**
-                        ```bash
-                        # Mở terminal mới và chạy:
-                        cd /Users/apple/Desktop/LLM-apps/Doctor_app
-                        python cccd_ocr_server.py
-                        ```
-                        """)
-    
-    st.markdown('</div>', unsafe_allow_html=True)
-    
-else:
-    st.warning("⚠️ Tính năng OCR CCCD chưa được cài đặt. Vui lòng kiểm tra file cccd_client.py")
-
-st.markdown("---")
-
-# Patient Information Form với advanced animations
+# Patient Information Section with CCCD Upload Side by Side
 st.markdown('<div class="scroll-fade-in">', unsafe_allow_html=True)
-st.markdown('<h2 class="form-title">📋 Thông tin bệnh nhân</h2>', unsafe_allow_html=True)
+st.markdown('<h2 class="form-title">� Thông tin bệnh nhân</h2>', unsafe_allow_html=True)
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Initialize session state for form success
-if 'form_submitted' not in st.session_state:
-    st.session_state.form_submitted = False
+# Create two main columns: CCCD Upload (left) and Patient Form (right)
+cccd_col, form_col = st.columns([1, 2])
 
-st.markdown('<div class="scroll-scale-in">', unsafe_allow_html=True)
-with st.form("patient_info_form"):
-    # Get extracted CCCD data for auto-fill
-    cccd_data = st.session_state.cccd_extracted_data
+# Left Column - CCCD Upload Section
+with cccd_col:
+    st.markdown('<div class="scroll-slide-left">', unsafe_allow_html=True)
     
-    # Show auto-fill status
-    if cccd_data:
-        st.success("🤖 **Thông tin tự động điền từ CCCD** - Bạn có thể chỉnh sửa nếu cần")
+    # Enhanced CCCD Upload UI
+    st.markdown("""
+    <div style="
+        background: linear-gradient(135deg, #f8f9ff 0%, #e8f4fd 100%); 
+        padding: 25px; 
+        border-radius: 20px; 
+        margin: 10px 0; 
+        border: 2px solid #e3f2fd;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+    ">
+        <div style="
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        "></div>
+        <div style="position: relative; z-index: 1;">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <h3 style="color: #1976d2; margin-bottom: 10px; font-weight: 600;">📷 Trích xuất thông tin từ CCCD</h3>
+                <p style="color: #666; font-size: 14px; margin: 0;">
+                    Upload ảnh căn cước công dân để tự động điền thông tin bệnh nhân
+                </p>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
     
-    col1, col2 = st.columns(2)
+    if CCCD_OCR_AVAILABLE:
+        # Server status check (compact)
+        with st.expander("🔧 Cài đặt server", expanded=False):
+            if st.button("🔄 Kiểm tra kết nối", key="check_server"):
+                start_ocr_server_if_needed()
+        
+        # CCCD Upload
+        uploaded_file = st.file_uploader(
+            "Chọn ảnh CCCD",
+            type=['png', 'jpg', 'jpeg'],
+            help="Định dạng hỗ trợ: PNG, JPG, JPEG",
+            label_visibility="collapsed"
+        )
+        
+        if uploaded_file is not None:
+            # Display uploaded image (compact)
+            st.image(uploaded_file, caption=f"📎 {uploaded_file.name}", use_column_width=True)
+            
+            # Extract button
+            if st.button("🤖 Trích xuất thông tin", type="primary", use_container_width=True):
+                with st.spinner("🔄 Đang xử lý..."):
+                    # Call OCR API
+                    result = ocr_client.extract_from_uploaded_file(uploaded_file)
+                    
+                    if result['success']:
+                        st.session_state.cccd_extracted_data = result['data']
+                        st.success("✅ Trích xuất thành công!")
+                        
+                        # Compact display of extracted info
+                        st.markdown("**📋 Thông tin đã trích xuất:**")
+                        data = result['data']
+                        if data.get('ho_ten'):
+                            st.write(f"👤 **{data.get('ho_ten')}**")
+                        if data.get('ngay_sinh'):
+                            st.write(f"🎂 {data.get('ngay_sinh')}")
+                        if data.get('gioi_tinh'):
+                            st.write(f"⚥ {data.get('gioi_tinh')}")
+                        
+                        st.info("➡️ Thông tin sẽ tự động điền vào form!")
+                        
+                    else:
+                        st.error(f"❌ {result['message']}")
+                        if "server" in result['message'].lower():
+                            st.code("cd Doctor_app && python cccd_ocr_server.py", language="bash")
+        
+    else:
+        st.warning("⚠️ Tính năng OCR chưa sẵn sàng")
     
-    with col1:
-        full_name = st.text_input(
-            "**👤 Họ và tên**",
-            value=cccd_data.get('ho_ten', ''),
-            placeholder="Nhập họ và tên đầy đủ",
-            help="Vui lòng nhập họ và tên đầy đủ của bệnh nhân"
-        )
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# Right Column - Patient Information Form
+with form_col:
+    # Initialize session state for form success
+    if 'form_submitted' not in st.session_state:
+        st.session_state.form_submitted = False
+
+    st.markdown('<div class="scroll-scale-in">', unsafe_allow_html=True)
+    with st.form("patient_info_form"):
+        # Get extracted CCCD data for auto-fill
+        cccd_data = st.session_state.cccd_extracted_data
         
-        phone = st.text_input(
-            "**📱 Số điện thoại**",
-            placeholder="0xxxxxxxxx",
-            help="Số điện thoại liên hệ"
-        )
-        
-        # Auto-fill address from CCCD
-        default_address = cccd_data.get('noi_thuong_tru', '')
-        if not default_address and cccd_data.get('que_quan'):
-            default_address = cccd_data.get('que_quan', '')
-        
-        address = st.text_area(
-            "**🏠 Địa chỉ**",
-            value=default_address,
-            placeholder="Nhập địa chỉ đầy đủ",
-            help="Địa chỉ nơi ở hiện tại"
-        )
-        
-        emergency_contact = st.text_input(
-            "**🚨 Người liên hệ khẩn cấp**",
-            placeholder="Tên và số điện thoại",
-            help="Thông tin người thân để liên hệ khi cần thiết"
-        )
-    
-    with col2:
-        # Auto-fill birth date from CCCD
-        default_birth_date = None
-        if cccd_data.get('ngay_sinh'):
-            try:
-                from datetime import datetime
-                # Try different date formats
-                date_str = cccd_data.get('ngay_sinh', '')
-                for fmt in ['%d/%m/%Y', '%Y-%m-%d', '%d-%m-%Y']:
-                    try:
-                        default_birth_date = datetime.strptime(date_str, fmt).date()
-                        break
-                    except:
-                        continue
-            except:
-                pass
-        
-        birth_date = st.date_input(
-            "**🎂 Ngày sinh**",
-            value=default_birth_date,
-            help="Chọn ngày sinh của bệnh nhân"
-        )
-        
-        # Auto-fill gender from CCCD
-        gender_options = ["Nam", "Nữ", "Khác"]
-        default_gender_index = 0  # Default to Nam
-        if cccd_data.get('gioi_tinh'):
-            gender_cccd = cccd_data.get('gioi_tinh', '').lower()
-            if 'nữ' in gender_cccd or 'female' in gender_cccd:
-                default_gender_index = 1
-            elif 'nam' in gender_cccd or 'male' in gender_cccd:
-                default_gender_index = 0
-        
-        gender = st.selectbox(
-            "**⚥ Giới tính**",
-            options=gender_options,
-            index=default_gender_index,
-            help="Chọn giới tính"
-        )
-        
-        id_number = st.text_input(
-            "**🆔 CCCD/CMND**",
-            value=cccd_data.get('so_cccd', ''),
-            placeholder="Số căn cước công dân",
-            help="Số căn cước công dân hoặc chứng minh nhân dân"
-        )
-        
-        insurance_number = st.text_input(
-            "**🏥 Số thẻ bảo hiểm y tế**",
-            placeholder="Mã số BHYT",
-            help="Mã số thẻ bảo hiểm y tế (nếu có)"
-        )
-        
-        # Add nationality and place of origin from CCCD
+        # Show auto-fill status
         if cccd_data:
+            st.success("🤖 **Thông tin tự động điền từ CCCD** - Bạn có thể chỉnh sửa nếu cần")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            full_name = st.text_input(
+                "**👤 Họ và tên**",
+                value=cccd_data.get('ho_ten', ''),
+                placeholder="Nhập họ và tên đầy đủ",
+                help="Vui lòng nhập họ và tên đầy đủ của bệnh nhân"
+            )
+            
+            # Auto-fill birth date from CCCD
+            default_birth_date = None
+            if cccd_data.get('ngay_sinh'):
+                try:
+                    from datetime import datetime
+                    # Try different date formats
+                    date_str = cccd_data.get('ngay_sinh', '')
+                    for fmt in ['%d/%m/%Y', '%Y-%m-%d', '%d-%m-%Y']:
+                        try:
+                            default_birth_date = datetime.strptime(date_str, fmt).date()
+                            break
+                        except:
+                            continue
+                except:
+                    pass
+            
+            birth_date = st.date_input(
+                "**🎂 Ngày sinh**",
+                value=default_birth_date,
+                help="Chọn ngày sinh của bệnh nhân"
+            )
+            
+            # Auto-fill address from CCCD
+            default_address = cccd_data.get('noi_thuong_tru', '')
+            if not default_address and cccd_data.get('que_quan'):
+                default_address = cccd_data.get('que_quan', '')
+            
+            address = st.text_area(
+                "**🏠 Địa chỉ**",
+                value=default_address,
+                placeholder="Nhập địa chỉ đầy đủ",
+                help="Địa chỉ nơi ở hiện tại"
+            )
+        
+        with col2:
+            # Auto-fill gender from CCCD
+            gender_options = ["Nam", "Nữ", "Khác"]
+            default_gender_index = 0  # Default to Nam
+            if cccd_data.get('gioi_tinh'):
+                gender_cccd = cccd_data.get('gioi_tinh', '').lower()
+                if 'nữ' in gender_cccd or 'female' in gender_cccd:
+                    default_gender_index = 1
+                elif 'nam' in gender_cccd or 'male' in gender_cccd:
+                    default_gender_index = 0
+            
+            gender = st.selectbox(
+                "**⚥ Giới tính**",
+                options=gender_options,
+                index=default_gender_index,
+                help="Chọn giới tính"
+            )
+            
+            id_number = st.text_input(
+                "**🆔 CCCD/CMND**",
+                value=cccd_data.get('so_cccd', ''),
+                placeholder="Số căn cước công dân",
+                help="Số căn cước công dân hoặc chứng minh nhân dân"
+            )
+            
+            # Add nationality and place of origin from CCCD
             nationality = st.text_input(
                 "**🏁 Quốc tịch**",
-                value=cccd_data.get('quoc_tich', ''),
+                value=cccd_data.get('quoc_tich', 'Việt Nam'),
                 help="Quốc tịch từ CCCD"
             )
             
@@ -1124,196 +1121,169 @@ with st.form("patient_info_form"):
                 value=cccd_data.get('que_quan', ''),
                 help="Quê quán từ CCCD"
             )
-    
-    # Medical Analysis Section - AI Personalization Data
-    st.markdown("---")
-    st.markdown("### 🧬 Thông tin phân tích AI")
-    
-    col3, col4 = st.columns(2)
-    
-    with col3:
-        current_symptoms = st.text_area(
-            "**� Triệu chứng hiện tại**",
-            placeholder="Mô tả chi tiết các triệu chứng: đau đầu, sốt, ho, khó thở, đau bụng...",
-            help="Thông tin này giúp AI phân tích và đề xuất chẩn đoán ban đầu"
-        )
         
-        pain_level = st.selectbox(
-            "**� Chất lượng giấc ngủ**",
-            options=[
-                "Rất tốt - ngủ sâu giấc 7-8 tiếng",
-                "Tốt - ngủ đủ giấc, thỉnh thoảng thức giữa đêm",
-                "Trung bình - ngủ được nhưng không sâu giấc",
-                "Kém - thường xuyên mất ngủ, ngủ không đủ giấc",
-                "Rất kém - mất ngủ triền miên, ngủ dưới 5 tiếng"
-            ],
-            help="Chất lượng giấc ngủ ảnh hưởng trực tiếp đến sức khỏe tổng thể"
-        )
+        # Medical Analysis Section - AI Personalization Data
+        st.markdown("---")
+        st.markdown("### 🧬 Thông tin phân tích AI")
         
-        family_history = st.text_area(
-            "**👨‍👩‍👧‍👦 Tiền sử gia đình**",
-            placeholder="Bệnh di truyền, ung thư, tim mạch, tiểu đường trong gia đình...",
-            help="Thông tin di truyền giúp AI đánh giá yếu tố nguy cơ"
-        )
-    
-    with col4:
-        lifestyle_habits = st.text_area(
-            "**🏃‍♂️ Thói quen sống**",
-            placeholder="Hút thuốc, uống rượu, tập thể dục, chế độ ăn, giấc ngủ...",
-            help="Lối sống ảnh hưởng lớn đến sức khỏe và khả năng hồi phục"
-        )
+        col3, col4 = st.columns(2)
         
-        work_environment = st.selectbox(
-            "**🏢 Môi trường làm việc**",
-            options=[
-                "Văn phòng - ít vận động",
-                "Lao động chân tay",
-                "Y tế - tiếp xúc bệnh nhân",
-                "Giáo dục",
-                "Công nghiệp - hóa chất",
-                "Nông nghiệp",
-                "Dịch vụ - tiếp xúc đông người",
-                "Công nghệ thông tin",
-                "Khác"
-            ],
-            help="Môi trường làm việc có thể là nguyên nhân gây bệnh"
-        )
-        
-        stress_anxiety_level = st.selectbox(
-            "**😰 Mức độ căng thẳng/lo âu**",
-            options=[
-                "Rất thấp - cuộc sống bình yên",
-                "Thấp - thỉnh thoảng căng thẳng",
-                "Trung bình - căng thẳng công việc",
-                "Cao - thường xuyên lo lắng",
-                "Rất cao - áp lực liên tục"
-            ],
-            help="Tâm lý ảnh hưởng trực tiếp đến sức khỏe thể chất"
-        )
-        
-        additional_info = st.text_area(
-            "**💭 Thông tin thêm**",
-            placeholder="Chia sẻ bất kỳ điều gì bạn muốn bác sĩ biết: cảm xúc, lo lắng, kỳ vọng, câu hỏi...",
-            help="Không gian tự do để bạn chia sẻ những điều quan trọng khác mà bạn muốn bác sĩ biết",
-            height=100
-        )
-    
-    # Submit button
-    submitted = st.form_submit_button(
-        "💾 Lưu thông tin bệnh nhân", 
-        use_container_width=True,
-        type="primary"
-    )
-    
-    if submitted:
-        # Validate required fields
-        if not full_name or not phone or not birth_date:
-            st.error("❌ Vui lòng điền đầy đủ thông tin bắt buộc: Họ tên, Số điện thoại, Ngày sinh")
-        else:
-            # Create patient data
-            patient_data = {
-                "patient_id": f"BN_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
-                "personal_info": {
-                    "full_name": full_name,
-                    "birth_date": birth_date.strftime("%Y-%m-%d"),
-                    "gender": gender,
-                    "phone": phone,
-                    "id_number": id_number,
-                    "address": address,
-                    "emergency_contact": emergency_contact,
-                    "insurance_number": insurance_number
-                },
-                "cccd_info": {
-                    "extracted_from_image": bool(cccd_data),
-                    "so_cccd": cccd_data.get('so_cccd', id_number),
-                    "ho_ten": cccd_data.get('ho_ten', full_name),
-                    "ngay_sinh": cccd_data.get('ngay_sinh', ''),
-                    "gioi_tinh": cccd_data.get('gioi_tinh', ''),
-                    "quoc_tich": cccd_data.get('quoc_tich', ''),
-                    "que_quan": cccd_data.get('que_quan', ''),
-                    "noi_thuong_tru": cccd_data.get('noi_thuong_tru', ''),
-                    "nationality": locals().get('nationality', ''),
-                    "place_origin": locals().get('place_origin', '')
-                },
-                "medical_analysis": {
-                    "current_symptoms": current_symptoms,
-                    "sleep_quality": pain_level,
-                    "family_history": family_history,
-                    "lifestyle_habits": lifestyle_habits,
-                    "work_environment": work_environment,
-                    "stress_anxiety_level": stress_anxiety_level,
-                    "additional_info": additional_info
-                },
-                "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            }
+        with col3:
+            current_symptoms = st.text_area(
+                "**🤒 Triệu chứng hiện tại**",
+                placeholder="Mô tả chi tiết các triệu chứng: đau đầu, sốt, ho, khó thở, đau bụng...",
+                help="Thông tin này giúp AI phân tích và đề xuất chẩn đoán ban đầu"
+            )
             
-            # Save to JSON file
-            json_file_path = "/Users/apple/Desktop/LLM-apps/Doctor_app/patient_data.json"
+            pain_level = st.selectbox(
+                "**😴 Chất lượng giấc ngủ**",
+                options=[
+                    "Rất tốt - ngủ sâu giấc 7-8 tiếng",
+                    "Tốt - ngủ đủ giấc, thỉnh thoảng thức giữa đêm",
+                    "Trung bình - ngủ được nhưng không sâu giấc",
+                    "Kém - thường xuyên mất ngủ, ngủ không đủ giấc",
+                    "Rất kém - mất ngủ triền miên, ngủ dưới 5 tiếng"
+                ],
+                help="Chất lượng giấc ngủ ảnh hưởng trực tiếp đến sức khỏe tổng thể"
+            )
             
-            # Load existing data or create new
-            try:
-                if os.path.exists(json_file_path):
-                    with open(json_file_path, 'r', encoding='utf-8') as f:
-                        existing_data = json.load(f)
-                else:
+            family_history = st.text_area(
+                "**👨‍👩‍👧‍👦 Tiền sử gia đình**",
+                placeholder="Bệnh di truyền, ung thư, tim mạch, tiểu đường trong gia đình...",
+                help="Thông tin di truyền giúp AI đánh giá yếu tố nguy cơ"
+            )
+        
+        with col4:
+            lifestyle_habits = st.text_area(
+                "**🏃‍♂️ Thói quen sống**",
+                placeholder="Hút thuốc, uống rượu, tập thể dục, chế độ ăn, giấc ngủ...",
+                help="Lối sống ảnh hưởng lớn đến sức khỏe và khả năng hồi phục"
+            )
+            
+            work_environment = st.selectbox(
+                "**🏢 Môi trường làm việc**",
+                options=[
+                    "Văn phòng - ít vận động",
+                    "Lao động chân tay",
+                    "Y tế - tiếp xúc bệnh nhân",
+                    "Giáo dục",
+                    "Công nghiệp - hóa chất",
+                    "Nông nghiệp",
+                    "Dịch vụ - tiếp xúc đông người",
+                    "Công nghệ thông tin",
+                    "Khác"
+                ],
+                help="Môi trường làm việc có thể là nguyên nhân gây bệnh"
+            )
+            
+            stress_anxiety_level = st.selectbox(
+                "**😰 Mức độ căng thẳng/lo âu**",
+                options=[
+                    "Rất thấp - cuộc sống bình yên",
+                    "Thấp - thỉnh thoảng căng thẳng",
+                    "Trung bình - căng thẳng công việc",
+                    "Cao - thường xuyên lo lắng",
+                    "Rất cao - áp lực liên tục"
+                ],
+                help="Tâm lý ảnh hưởng trực tiếp đến sức khỏe thể chất"
+            )
+            
+            additional_info = st.text_area(
+                "**💭 Thông tin thêm**",
+                placeholder="Chia sẻ bất kỳ điều gì bạn muốn bác sĩ biết: cảm xúc, lo lắng, kỳ vọng, câu hỏi...",
+                help="Không gian tự do để bạn chia sẻ những điều quan trọng khác mà bạn muốn bác sĩ biết",
+                height=100
+            )
+        
+        # Submit button
+        submitted = st.form_submit_button(
+            "💾 Lưu thông tin bệnh nhân", 
+            use_container_width=True,
+            type="primary"
+        )
+        
+        if submitted:
+            # Validate required fields
+            if not full_name or not birth_date:
+                st.error("❌ Vui lòng điền đầy đủ thông tin bắt buộc: Họ tên, Ngày sinh")
+            else:
+                # Create patient data
+                patient_data = {
+                    "patient_id": f"BN_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+                    "personal_info": {
+                        "full_name": full_name,
+                        "birth_date": birth_date.strftime("%Y-%m-%d"),
+                        "gender": gender,
+                        "id_number": id_number,
+                        "address": address,
+                        "nationality": nationality,
+                        "place_origin": place_origin
+                    },
+                    "cccd_info": {
+                        "extracted_from_image": bool(cccd_data),
+                        "so_cccd": cccd_data.get('so_cccd', id_number),
+                        "ho_ten": cccd_data.get('ho_ten', full_name),
+                        "ngay_sinh": cccd_data.get('ngay_sinh', ''),
+                        "gioi_tinh": cccd_data.get('gioi_tinh', ''),
+                        "quoc_tich": cccd_data.get('quoc_tich', nationality),
+                        "que_quan": cccd_data.get('que_quan', place_origin),
+                        "noi_thuong_tru": cccd_data.get('noi_thuong_tru', ''),
+                    },
+                    "medical_analysis": {
+                        "current_symptoms": current_symptoms,
+                        "sleep_quality": pain_level,
+                        "family_history": family_history,
+                        "lifestyle_habits": lifestyle_habits,
+                        "work_environment": work_environment,
+                        "stress_anxiety_level": stress_anxiety_level,
+                        "additional_info": additional_info
+                    },
+                    "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                }
+                
+                # Save to JSON file
+                json_file_path = "/Users/apple/Desktop/LLM-apps/Doctor_app/patient_data.json"
+                
+                # Load existing data or create new
+                try:
+                    if os.path.exists(json_file_path):
+                        with open(json_file_path, 'r', encoding='utf-8') as f:
+                            existing_data = json.load(f)
+                    else:
+                        existing_data = {"patients": []}
+                except:
                     existing_data = {"patients": []}
-            except:
-                existing_data = {"patients": []}
-            
-            # Add new patient
-            existing_data["patients"].append(patient_data)
-            
-            # Save updated data
-            try:
-                with open(json_file_path, 'w', encoding='utf-8') as f:
-                    json.dump(existing_data, f, ensure_ascii=False, indent=2)
                 
-                st.session_state.form_submitted = True
-                st.success(
-                    f"""
-                    ✅ **Thông tin bệnh nhân đã được lưu thành công!**
+                # Add new patient
+                existing_data["patients"].append(patient_data)
+                
+                # Save updated data
+                try:
+                    with open(json_file_path, 'w', encoding='utf-8') as f:
+                        json.dump(existing_data, f, ensure_ascii=False, indent=2)
                     
-                    **Mã bệnh nhân:** {patient_data['patient_id']}
+                    st.session_state.form_submitted = True
+                    st.success(
+                        f"""
+                        ✅ **Thông tin bệnh nhân đã được lưu thành công!**
+                        
+                        **Mã bệnh nhân:** {patient_data['patient_id']}
+                        
+                        **Thông tin đã lưu:**
+                        - Họ tên: {full_name}
+                        - Ngày sinh: {birth_date.strftime("%d/%m/%Y")}
+                        - Ngày tạo: {patient_data['created_at']}
+                        """
+                    )
                     
-                    **Thông tin đã lưu:**
-                    - Họ tên: {full_name}
-                    - Số điện thoại: {phone}
-                    - Ngày tạo: {patient_data['created_at']}
-                    """
-                )
-                
-                # Store patient data in session for DiabeteDoctor
-                st.session_state.current_patient = patient_data
-                
-                # Navigation to DiabeteDoctor
-                st.markdown("---")
-                st.markdown("### 🎯 Tiếp theo: Chẩn đoán bệnh")
-                
-                col_nav1, col_nav2, col_nav3 = st.columns([1, 2, 1])
-                
-                with col_nav2:
-                    if st.button(
-                        "🩺 Chuyển đến Bác sĩ Tiểu đường", 
-                        type="primary", 
-                        use_container_width=True,
-                        help="Chuyển đến trang chẩn đoán tiểu đường với thông tin bệnh nhân đã lưu"
-                    ):
-                        st.switch_page("pages/DiabeteDoctor.py")
+                    # Store patient data in session for DiabeteDoctor
+                    st.session_state.current_patient = patient_data
                     
-                    st.markdown("""
-                    <div style="background: linear-gradient(135deg, #e8f5e8 0%, #f0f8ff 100%); 
-                                padding: 15px; border-radius: 10px; margin: 15px 0; text-align: center;">
-                        <p style="margin: 0; color: #2e7d32;">
-                            💡 <strong>Gợi ý:</strong> Thông tin bệnh nhân đã được lưu. 
-                            Bạn có thể tiếp tục với chẩn đoán tiểu đường hoặc quay lại sau.
-                        </p>
-                    </div>
-                    """, unsafe_allow_html=True)
-                
-            except Exception as e:
-                st.error(f"❌ Lỗi khi lưu dữ liệu: {str(e)}")
-st.markdown('</div>', unsafe_allow_html=True)
+                except Exception as e:
+                    st.error(f"❌ Lỗi khi lưu dữ liệu: {str(e)}")
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
