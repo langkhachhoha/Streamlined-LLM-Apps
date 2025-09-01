@@ -44,6 +44,7 @@ st.markdown(
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
 
+
     /* Global Scroll Animation Setup */
     html {{
         scroll-behavior: smooth;
@@ -337,13 +338,13 @@ st.markdown(
     /* Scroll-triggered Info Cards */
     .info-card {{
         background: linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.9) 0%, 
-            rgba(248, 252, 255, 0.85) 100%);
+            rgba(245, 245, 245, 0.95) 0%, 
+            rgba(235, 235, 235, 0.9) 100%);
         border-radius: 15px;
         padding: 2rem;
         margin-bottom: 1.5rem;
-        box-shadow: 0 15px 30px rgba(0, 102, 204, 0.1);
-        border: 1px solid rgba(0, 102, 204, 0.1);
+        box-shadow: 0 15px 30px rgba(0, 102, 204, 0.15);
+        border: 2px solid rgba(0, 102, 204, 0.2);
         transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         text-align: center;
         position: relative;
@@ -359,15 +360,18 @@ st.markdown(
         height: 100%;
         background: linear-gradient(90deg, 
             transparent, 
-            rgba(255, 255, 255, 0.4), 
+            rgba(255, 255, 255, 0.6), 
             transparent);
         transition: left 0.6s ease;
     }}
     
     .info-card:hover {{
         transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 25px 50px rgba(0, 102, 204, 0.2);
-        border-color: rgba(0, 188, 212, 0.3);
+        box-shadow: 0 25px 50px rgba(0, 102, 204, 0.25);
+        border-color: rgba(0, 102, 204, 0.4);
+        background: linear-gradient(135deg, 
+            rgba(250, 250, 250, 0.98) 0%, 
+            rgba(240, 240, 240, 0.95) 100%);
     }}
     
     .info-card:hover::before {{
@@ -412,15 +416,15 @@ st.markdown(
     /* Advanced Form Animations */
     .form-container {{
         background: linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.95) 0%, 
-            rgba(248, 252, 255, 0.9) 50%, 
-            rgba(240, 248, 255, 0.95) 100%);
+            rgba(245, 245, 245, 0.95) 0%, 
+            rgba(235, 235, 235, 0.9) 50%, 
+            rgba(230, 230, 230, 0.95) 100%);
         border-radius: 20px;
         padding: 2.5rem;
         box-shadow: 
-            0 20px 40px rgba(0, 102, 204, 0.15),
-            inset 0 1px 0 rgba(255, 255, 255, 0.8);
-        border: 2px solid rgba(0, 102, 204, 0.1);
+            0 20px 40px rgba(0, 102, 204, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        border: 2px solid rgba(0, 102, 204, 0.25);
         backdrop-filter: blur(15px);
         margin-bottom: 2rem;
         position: relative;
@@ -945,12 +949,12 @@ with cccd_col:
     # Enhanced CCCD Upload UI
     st.markdown("""
     <div style="
-        background: linear-gradient(135deg, #f8f9ff 0%, #e8f4fd 100%); 
+        background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%); 
         padding: 25px; 
         border-radius: 20px; 
         margin: 10px 0; 
-        border: 2px solid #e3f2fd;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        border: 2px solid #0066cc;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.15);
         backdrop-filter: blur(10px);
         position: relative;
         overflow: hidden;
@@ -961,7 +965,7 @@ with cccd_col:
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
             animation: shimmer 3s ease-in-out infinite;
         "></div>
         <div style="position: relative; z-index: 1;">
@@ -1242,26 +1246,20 @@ with form_col:
                     "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 }
                 
-                # Save to JSON file
+                # Save to JSON file - Replace old file with new patient data
                 json_file_path = "/Users/apple/Desktop/LLM-apps/Doctor_app/patient_data.json"
                 
-                # Load existing data or create new
-                try:
-                    if os.path.exists(json_file_path):
-                        with open(json_file_path, 'r', encoding='utf-8') as f:
-                            existing_data = json.load(f)
-                    else:
-                        existing_data = {"patients": []}
-                except:
-                    existing_data = {"patients": []}
+                # Create new patient data structure (replace old file completely)
+                patient_file_data = {
+                    "current_patient": patient_data,
+                    "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                }
                 
-                # Add new patient
-                existing_data["patients"].append(patient_data)
-                
-                # Save updated data
+                # Save new patient data (overwrite existing file)
                 try:
                     with open(json_file_path, 'w', encoding='utf-8') as f:
-                        json.dump(existing_data, f, ensure_ascii=False, indent=2)
+                        json.dump(patient_file_data, f, ensure_ascii=False, indent=2)
                     
                     st.session_state.form_submitted = True
                     st.success(

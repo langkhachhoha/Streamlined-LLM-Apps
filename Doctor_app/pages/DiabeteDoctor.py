@@ -16,6 +16,19 @@ st.set_page_config(
 # Check if patient data exists from Homepage
 current_patient = st.session_state.get('current_patient', None)
 
+# If no patient in session, try to load from JSON file
+if not current_patient:
+    try:
+        json_file_path = "/Users/apple/Desktop/LLM-apps/Doctor_app/patient_data.json"
+        if os.path.exists(json_file_path):
+            with open(json_file_path, 'r', encoding='utf-8') as f:
+                file_data = json.load(f)
+                if "current_patient" in file_data and file_data["current_patient"]:
+                    current_patient = file_data["current_patient"]
+                    st.session_state.current_patient = current_patient
+    except Exception as e:
+        pass  # Continue without patient data if file doesn't exist or is corrupted
+
 # Function to encode image to base64
 def get_base64_image(image_path):
     try:
@@ -334,6 +347,46 @@ st.markdown(
     @keyframes fadeInOverlay {
         from { opacity: 0; }
         to { opacity: 1; }
+    }
+    
+    @keyframes slideInFromLeft {
+        0% {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    .patient-info-section {
+        animation: slideInFromLeft 0.8s ease-out;
+    }
+    
+    .patient-info-box {
+        animation: slideInFromLeft 1s ease-out;
+        animation-fill-mode: both;
+    }
+    
+    .patient-info-box:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+    
+    .patient-info-box:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    
+    .patient-info-box:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+    
+    .patient-info-box:nth-child(4) {
+        animation-delay: 0.4s;
+    }
+    
+    .patient-info-box:nth-child(5) {
+        animation-delay: 0.5s;
     }
     
     @keyframes slideInScale {
@@ -1353,6 +1406,9 @@ st.markdown('<p class="subtitle">AI-Powered Diabetes Risk Assessment | Trusted M
 # Display patient information if available from Homepage
 if current_patient:
     st.markdown("---")
+    
+    # Add slide-in animation container
+    st.markdown('<div class="patient-info-section">', unsafe_allow_html=True)
     st.markdown("### 👤 Thông tin bệnh nhân")
     
     # Create a nice info box for patient data
@@ -1363,7 +1419,7 @@ if current_patient:
     
     with col_info1:
         st.markdown(f"""
-        <div style="background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); 
+        <div class="patient-info-box" style="background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); 
                     padding: 15px; border-radius: 10px; border-left: 4px solid #0066cc;">
             <h4 style="color: #0066cc; margin-bottom: 10px;">📋 Thông tin cơ bản</h4>
             <p style="margin: 5px 0;"><strong>👤 Họ tên:</strong> {patient_info.get('full_name', 'N/A')}</p>
@@ -1374,7 +1430,7 @@ if current_patient:
     
     with col_info2:
         st.markdown(f"""
-        <div style="background: linear-gradient(135deg, #f3e5f5 0%, #e8f5e8 100%); 
+        <div class="patient-info-box" style="background: linear-gradient(135deg, #f3e5f5 0%, #e8f5e8 100%); 
                     padding: 15px; border-radius: 10px; border-left: 4px solid #4caf50;">
             <h4 style="color: #4caf50; margin-bottom: 10px;">🆔 Thông tin CCCD</h4>
             <p style="margin: 5px 0;"><strong>🔢 Số CCCD:</strong> {patient_info.get('id_number', 'N/A')}</p>
@@ -1387,6 +1443,7 @@ if current_patient:
     # Quick access to medical history if available
     medical_analysis = current_patient.get('medical_analysis', {})
     if medical_analysis.get('current_symptoms') or medical_analysis.get('family_history'):
+        st.markdown('<div class="patient-info-box">', unsafe_allow_html=True)
         with st.expander("🩺 Thông tin y tế có sẵn", expanded=False):
             if medical_analysis.get('current_symptoms'):
                 st.write(f"**🩺 Triệu chứng hiện tại:** {medical_analysis.get('current_symptoms')}")
@@ -1394,8 +1451,25 @@ if current_patient:
                 st.write(f"**👨‍👩‍👧‍👦 Tiền sử gia đình:** {medical_analysis.get('family_history')}")
             if medical_analysis.get('lifestyle_habits'):
                 st.write(f"**🏃‍♂️ Thói quen sống:** {medical_analysis.get('lifestyle_habits')}")
+        st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Show previous diabetes diagnosis if available
+    diabetes_analysis = current_patient.get('diabetes_analysis', {})
+    if diabetes_analysis:
+        st.markdown('<div class="patient-info-box">', unsafe_allow_html=True)
+        with st.expander("🔬 Kết quả chẩn đoán tiểu đường trước đó", expanded=False):
+            ai_diagnosis = diabetes_analysis.get('ai_diagnosis', {})
+            if ai_diagnosis:
+                st.write(f"**📅 Ngày phân tích:** {diabetes_analysis.get('analysis_date', 'N/A')}")
+                st.write(f"**🎯 Mức độ nguy cơ:** {ai_diagnosis.get('risk_level', 'N/A')}")
+                st.write(f"**📊 Độ tin cậy:** {ai_diagnosis.get('confidence', 0):.1f}%")
+                st.write(f"**🔮 Dự đoán AI:** {'Có nguy cơ' if ai_diagnosis.get('prediction') == 1 else 'Nguy cơ thấp'}")
+        st.markdown('</div>', unsafe_allow_html=True)
     
     st.success("✅ Thông tin bệnh nhân đã được tải từ trang đăng ký. Tiếp tục với chẩn đoán tiểu đường.")
+    
+    # Close the animation container
+    st.markdown('</div>', unsafe_allow_html=True)
     
 else:
     # Show message if no patient data
@@ -2000,13 +2074,12 @@ with st.form("diabetes_assessment_form"):
                         with open(json_file_path, 'r', encoding='utf-8') as f:
                             existing_data = json.load(f)
                     else:
-                        existing_data = {"patients": []}
+                        existing_data = {"current_patient": None}
                     
-                    # Find current patient and update with diabetes analysis
+                    # Create diabetes analysis data
                     if current_patient and 'patient_id' in current_patient:
                         patient_id = current_patient['patient_id']
                         
-                        # Create diabetes analysis data
                         diabetes_analysis = {
                             "analysis_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                             "patient_demographics": {
@@ -2062,30 +2135,25 @@ with st.form("diabetes_assessment_form"):
                             }
                         }
                         
-                        # Find and update the specific patient
-                        patient_found = False
-                        for patient in existing_data["patients"]:
-                            if patient.get("patient_id") == patient_id:
-                                # Add diabetes analysis to existing patient data
-                                if "diabetes_analyses" not in patient:
-                                    patient["diabetes_analyses"] = []
-                                patient["diabetes_analyses"].append(diabetes_analysis)
-                                patient["updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                                patient_found = True
-                                break
-                        
-                        # If patient not found in file but exists in session, add them
-                        if not patient_found:
-                            current_patient["diabetes_analyses"] = [diabetes_analysis]
+                        # Update patient data with new diagnosis (replace old diagnosis)
+                        if "current_patient" in existing_data and existing_data["current_patient"]:
+                            # Replace the diabetes analysis (only keep the latest one)
+                            existing_data["current_patient"]["diabetes_analysis"] = diabetes_analysis
+                            existing_data["current_patient"]["updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        else:
+                            # Create new patient data with diagnosis
+                            current_patient["diabetes_analysis"] = diabetes_analysis
                             current_patient["updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                            existing_data["patients"].append(current_patient)
+                            existing_data["current_patient"] = current_patient
+                        
+                        existing_data["last_updated"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                         
                         # Save updated data back to file
                         with open(json_file_path, 'w', encoding='utf-8') as f:
                             json.dump(existing_data, f, ensure_ascii=False, indent=2)
                         
                         # Show success message for data saving
-                        st.success(f"💾 **Kết quả phân tích đã được lưu vào hồ sơ bệnh nhân** (Mã: {patient_id})")
+                        st.success(f"💾 **Kết quả phân tích đã được cập nhật vào hồ sơ bệnh nhân** (Mã: {patient_id})")
                     
                 except Exception as e:
                     st.warning(f"⚠️ Không thể lưu kết quả vào hồ sơ: {str(e)}")

@@ -1,66 +1,64 @@
 {
   "current_patient": {
-    "patient_id": "BN_20250901_213401",
+    "patient_id": "BN_20250901_123456",
     "personal_info": {
-      "full_name": "Hà Minh Hiếu",
-      "birth_date": "2004-05-10",
+      "full_name": "Nguyễn Văn A",
+      "birth_date": "1990-05-15",
       "gender": "Nam",
-      "id_number": "038204001950",
-      "address": "Lô 187 LK4, MB 121, Đông Vệ, TP Thanh Hóa",
+      "id_number": "123456789012",
+      "address": "123 Đường ABC, Quận 1, TP.HCM",
       "nationality": "Việt Nam",
-      "place_origin": "Hoàng Trinh, Hoàng Hóa, Thanh Hóa"
+      "place_origin": "TP.HCM"
     },
     "cccd_info": {
       "extracted_from_image": true,
-      "so_cccd": "038204001950",
-      "ho_ten": "Hà Minh Hiếu",
-      "ngay_sinh": "10/05/2004",
+      "so_cccd": "123456789012",
+      "ho_ten": "Nguyễn Văn A",
+      "ngay_sinh": "15/05/1990",
       "gioi_tinh": "Nam",
       "quoc_tich": "Việt Nam",
-      "que_quan": "Hoàng Trinh, Hoàng Hóa, Thanh Hóa",
-      "noi_thuong_tru": "Lô 187 LK4, MB 121, Đông Vệ, TP Thanh Hóa"
+      "que_quan": "TP.HCM",
+      "noi_thuong_tru": "123 Đường ABC, Quận 1, TP.HCM"
     },
     "medical_analysis": {
-      "current_symptoms": "s",
-      "sleep_quality": "Rất tốt - ngủ sâu giấc 7-8 tiếng",
-      "family_history": "s",
-      "lifestyle_habits": "s",
+      "current_symptoms": "Đau đầu, mệt mỏi",
+      "sleep_quality": "Tốt - ngủ đủ giấc, thỉnh thoảng thức giữa đêm",
+      "family_history": "Gia đình có tiền sử tiểu đường",
+      "lifestyle_habits": "Ít vận động, thường ăn đồ ngọt",
       "work_environment": "Văn phòng - ít vận động",
-      "stress_anxiety_level": "Rất thấp - cuộc sống bình yên",
-      "additional_info": "s"
+      "stress_anxiety_level": "Trung bình - căng thẳng công việc",
+      "additional_info": "Cần kiểm tra sức khỏe định kỳ"
     },
-    "created_at": "2025-09-01 21:34:01",
-    "updated_at": "2025-09-01 21:38:19",
     "diabetes_analysis": {
-      "analysis_date": "2025-09-01 21:38:19",
+      "analysis_date": "2025-09-01 14:30:00",
       "patient_demographics": {
         "gender": "Nam",
-        "full_name": "Hà Minh Hiếu",
-        "birth_date": "2004-05-10"
+        "full_name": "Nguyễn Văn A",
+        "birth_date": "1990-05-15"
       },
       "symptoms_data": {
-        "high_bp": 0,
+        "high_bp": 1,
         "high_chol": 0,
-        "chol_check": 0,
-        "bmi": 22.49134948096886,
+        "chol_check": 1,
+        "bmi": 24.5,
         "smoker": 0,
         "stroke": 0,
         "heart_disease": 0,
-        "phys_activity": 0,
-        "fruits": 0,
-        "veggies": 0,
+        "phys_activity": 1,
+        "fruits": 1,
+        "veggies": 1,
         "hvy_alcohol": 0,
-        "any_healthcare": 0,
+        "any_healthcare": 1,
         "no_doc_cost": 0,
-        "gen_hlth": 1,
+        "gen_hlth": 3,
         "height": 170.0,
-        "weight": 65.0
+        "weight": 70.0
       },
       "ai_diagnosis": {
         "prediction": 0,
-        "probability": 0.06521739130434782,
+        "probability": 0.25,
         "risk_level": "thấp",
-        "confidence": 93.47826086956522
+        "confidence": 75.0
       },
       "doctor_notes": {
         "risk_assessment": "Nguy cơ thấp mắc bệnh tiểu đường",
@@ -75,8 +73,10 @@
           "🏆 Mục tiêu: Tham gia hoạt động thể thao, thử thách sức khỏe để duy trì động lực"
         ]
       }
-    }
+    },
+    "created_at": "2025-09-01 14:00:00",
+    "updated_at": "2025-09-01 14:30:00"
   },
-  "created_at": "2025-09-01 21:34:01",
-  "last_updated": "2025-09-01 21:38:19"
+  "created_at": "2025-09-01 14:00:00",
+  "last_updated": "2025-09-01 14:30:00"
 }
