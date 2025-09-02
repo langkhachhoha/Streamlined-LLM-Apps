@@ -1,42 +1,42 @@
 {
   "current_patient": {
-    "patient_id": "BN_20250901_213401",
+    "patient_id": "BN_20250902_174434",
     "personal_info": {
-      "full_name": "Hà Minh Hiếu",
-      "birth_date": "2004-05-10",
+      "full_name": "Hà Minh Hoàng",
+      "birth_date": "2009-11-12",
       "gender": "Nam",
-      "id_number": "038204001950",
-      "address": "Lô 187 LK4, MB 121, Đông Vệ, TP Thanh Hóa",
+      "id_number": "038209009486",
+      "address": "Phổ Thành Mai, Quảng Thành, TP. Thanh Hóa, Thanh Hóa",
       "nationality": "Việt Nam",
       "place_origin": "Hoàng Trinh, Hoàng Hóa, Thanh Hóa"
     },
     "cccd_info": {
       "extracted_from_image": true,
-      "so_cccd": "038204001950",
-      "ho_ten": "Hà Minh Hiếu",
-      "ngay_sinh": "10/05/2004",
+      "so_cccd": "038209009486",
+      "ho_ten": "Hà Minh Hoàng",
+      "ngay_sinh": "12/11/2009",
       "gioi_tinh": "Nam",
       "quoc_tich": "Việt Nam",
       "que_quan": "Hoàng Trinh, Hoàng Hóa, Thanh Hóa",
-      "noi_thuong_tru": "Lô 187 LK4, MB 121, Đông Vệ, TP Thanh Hóa"
+      "noi_thuong_tru": "Phổ Thành Mai, Quảng Thành, TP. Thanh Hóa, Thanh Hóa"
     },
     "medical_analysis": {
-      "current_symptoms": "Thỉnh thoảng đau mỏi vai gáy, hơi khô mắt do làm việc nhiều với máy tính",
-      "sleep_quality": "Rất tốt - ngủ sâu giấc 7-8 tiếng",
-      "family_history": "Bố có tiền sử tăng huyết áp nhẹ, mẹ khỏe mạnh, không bệnh mạn tính",
-      "lifestyle_habits": "Ăn uống điều độ, ít ăn đồ ngọt và dầu mỡ, thỉnh thoảng đi bơi hoặc đi bộ cuối tuần",
+      "current_symptoms": "Đau bụng ",
+      "sleep_quality": "Trung bình - ngủ được nhưng không sâu giấc",
+      "family_history": "Không có",
+      "lifestyle_habits": "Hay ngủ muộn",
       "work_environment": "Văn phòng - ít vận động",
       "stress_anxiety_level": "Rất thấp - cuộc sống bình yên",
-      "additional_info": "Không hút thuốc, thỉnh thoảng uống 1-2 ly cà phê/ngày, cân nặng ổn định"
+      "additional_info": "Hay tài xỉu"
     },
-    "created_at": "2025-09-01 21:34:01",
-    "updated_at": "2025-09-01 21:38:19",
+    "created_at": "2025-09-02 17:44:34",
+    "updated_at": "2025-09-02 18:53:55",
     "diabetes_analysis": {
-      "analysis_date": "2025-09-01 21:38:19",
+      "analysis_date": "2025-09-02 18:53:55",
       "patient_demographics": {
         "gender": "Nam",
-        "full_name": "Hà Minh Hiếu",
-        "birth_date": "2004-05-10"
+        "full_name": "Hà Minh Hoàng",
+        "birth_date": "2009-11-12"
       },
       "symptoms_data": {
         "high_bp": 0,
@@ -77,6 +77,6 @@
       }
     }
   },
-  "created_at": "2025-09-01 21:34:01",
-  "last_updated": "2025-09-01 21:38:19"
+  "created_at": "2025-09-02 17:44:34",
+  "last_updated": "2025-09-02 18:53:55"
 }

@@ -792,8 +792,8 @@ st.markdown('<div class="main-container">', unsafe_allow_html=True)
 st.markdown(
     """
     <div class="hero-section slide-in-left">
-        <h1 class="main-title">🏥 Doctor App - VinBig Medical Center</h1>
-        <p class="subtitle fade-in-up delay-300">Hệ thống quản lý thông tin bệnh nhân thông minh với công nghệ AI tiên tiến</p>
+        <h1 class="main-title">🏥 VITA – VinBig Intelligent Treatment Assistant</h1>
+        <p class="subtitle fade-in-up delay-300">Nền tảng AI hỗ trợ chẩn đoán và chăm sóc sức khỏe thông minh</p>
         <div class="medical-icons fade-in-up delay-500">
             <span class="medical-icon delay-100">🩺</span>
             <span class="medical-icon delay-200">💊</span>
@@ -816,117 +816,251 @@ col1, col2 = st.columns([2, 1])
 with col1:
     st.markdown('<div class="scroll-slide-left">', unsafe_allow_html=True)
     st.markdown("""
-    ### 🌟 **Doctor App** - Giải pháp y tế thông minh của tương lai
-    
-    **Doctor App** là một hệ thống quản lý thông tin bệnh nhân hiện đại, được phát triển bởi **VinBig AI** 
-    với mục tiêu cách mạng hóa ngành chăm sóc sức khỏe thông qua công nghệ tiên tiến.
-    
-    #### 🔬 **Công nghệ AI tích hợp:**
-    - **Machine Learning**: Hỗ trợ chẩn đoán thông minh
-    - **Deep Learning**: Phân tích hình ảnh y tế
-    - **Natural Language Processing**: Xử lý hồ sơ bệnh án
-    - **Predictive Analytics**: Dự đoán xu hướng sức khỏe
-    
+    ### 🌟 **VITA** - Giải pháp y tế thông minh của tương lai
+
+    **VITA** là nền tảng **AI y tế tiên tiến**, được phát triển bởi **VinBig AI**, 
+    với sứ mệnh hỗ trợ bác sĩ trong chẩn đoán, tư vấn và cá nhân hóa chăm sóc sức khỏe.
+
+    #### 🔬 **Hệ sinh thái AI y tế:**
+    - **🎯 Intelligent Diagnosis**: AI hỗ trợ chẩn đoán đa chuyên khoa
+    - **🤖 Virtual Health Assistant**: Trợ lý sức khỏe cá nhân thông minh
+    - **📈 Predictive Healthcare**: Phân tích xu hướng và dự báo rủi ro
+    - **🔗 Integrated Platform**: Kết nối đa dịch vụ trong một hệ thống
+
     #### 🎯 **Sứ mệnh:**
-    Chúng tôi cam kết mang đến giải pháp y tế **an toàn**, **chính xác** và **hiệu quả** 
-    để bác sĩ có thể đưa ra quyết định điều trị tốt nhất cho bệnh nhân.
+    Mang đến giải pháp y tế **an toàn**, **chính xác** và **hiệu quả**, 
+    giúp bác sĩ đưa ra quyết định điều trị tối ưu và đồng hành cùng bệnh nhân trong hành trình chăm sóc sức khỏe.
     """)
     st.markdown('</div>', unsafe_allow_html=True)
 
 with col2:
     st.markdown('<div class="scroll-slide-right">', unsafe_allow_html=True)
     st.info("""
-    📊 **Thống kê ấn tượng:**
-    
-    • **15,000+** bệnh nhân đã tin tưởng
-    • **50+** bác sĩ chuyên nghiệp
-    • **99.5%** độ chính xác AI
-    • **24/7** hỗ trợ không ngừng
-    • **100%** bảo mật dữ liệu
-    
-    🏆 **Chứng nhận:**
-    • ISO 27001 - Bảo mật thông tin
-    • HIPAA Compliant - Tuân thủ y tế
-    • GDPR Ready - Bảo vệ dữ liệu
+    📊 **Điểm nổi bật:**
+
+    • Được hàng nghìn bệnh nhân và bác sĩ tin tưởng sử dụng  
+    • Độ chính xác cao nhờ công nghệ AI tiên tiến  
+    • Hỗ trợ 24/7, luôn đồng hành cùng người dùng  
+    • Cam kết bảo mật và tuân thủ tiêu chuẩn quốc tế về y tế và dữ liệu  
+
+    🏆 **Uy tín & Chất lượng:**  
+    Được phát triển bởi **VinBig AI**, với nền tảng công nghệ hiện đại và quy trình đạt chuẩn toàn cầu.
     """)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Detailed User Guide Section với animations
 st.markdown("---")
 st.markdown('<div class="scroll-fade-in">', unsafe_allow_html=True)
-st.markdown("## 📚 Hướng dẫn sử dụng chi tiết")
+# st.markdown("## 📚 Hướng dẫn sử dụng chi tiết")
 st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown('<div class="scroll-scale-in">', unsafe_allow_html=True)
 st.markdown("""
-### 🚀 **Quy trình hoàn chỉnh từ A đến Z**
+## 🚀 **Hệ sinh thái y tế thông minh toàn diện**
 
-Để sử dụng **Doctor App** một cách hiệu quả, vui lòng làm theo các bước sau:
+**VITA** là nền tảng hỗ trợ toàn diện cho **bác sĩ** và **bệnh nhân**, tích hợp AI để nâng cao chất lượng chăm sóc sức khỏe.
+
+### 🌟 **TÍNH NĂNG HIỆN TẠI**
+*Khám phá các công cụ AI đang hoạt động trong hệ sinh thái VITA*
 """)
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Step-by-step guide with enhanced styling và animations
-step_col1, step_col2 = st.columns(2)
+# CSS cho hover effects và card styling
+st.markdown("""
+<style>
+.feature-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+    border-radius: 15px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
 
-with step_col1:
-    st.markdown('<div class="scroll-slide-left">', unsafe_allow_html=True)
-    st.markdown("""
-    #### **🔹 BƯỚC 1: Chuẩn bị thông tin**
-    """)
-    st.success("""
-    📋 **Tài liệu cần có:**
-    • CCCD/CMND của bệnh nhân
-    • Hồ sơ bệnh án cũ (nếu có)
-    • Danh sách thuốc đang sử dụng
-    
-    ⏱️ **Thời gian:** 2-3 phút chuẩn bị
-    """)
-    
-    st.markdown("""
-    #### **🔹 BƯỚC 3: Xác thực & lưu trữ**
-    """)
-    st.info("""
-    🔍 **Quá trình xác thực:**
-    • Hệ thống kiểm tra tính hợp lệ
-    • AI phân tích và đánh giá
-    • Mã hóa dữ liệu AES-256
-    • Tạo mã bệnh nhân duy nhất
-    • Đồng bộ vào cơ sở dữ liệu
-    
-    🔐 **Bảo mật:** Tuân thủ chuẩn quốc tế
-    """)
-    st.markdown('</div>', unsafe_allow_html=True)
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    border: 2px solid #00f5ff;
+}
 
-with step_col2:
-    st.markdown('<div class="scroll-slide-right">', unsafe_allow_html=True)
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.feature-card:hover::before {
+    left: 100%;
+}
+
+.feature-title {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.feature-description {
+    color: rgba(255,255,255,0.9);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.feature-details {
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 10px;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-details {
+    opacity: 1;
+    max-height: 300px;
+}
+
+.feature-arrow {
+    margin-left: auto;
+    font-size: 24px;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-arrow {
+    transform: rotate(90deg);
+}
+
+.cccd-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.diabetes-card {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.chatbot-card {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.future-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 30px;
+    border-radius: 20px;
+    margin: 30px 0;
+    text-align: center;
+    color: white;
+}
+
+.future-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.future-description {
+    font-size: 16px;
+    opacity: 0.9;
+    line-height: 1.6;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# Feature Cards với hover effects
+col1, col2, col3 = st.columns(3)
+
+with col1:
     st.markdown("""
-    #### **🔹 BƯỚC 2: Điền form thông tin**
-    """)
-    st.warning("""
-    ✍️ **Cách điền form hiệu quả:**
-    • Điền đầy đủ thông tin cá nhân
-    • Mô tả chi tiết triệu chứng
-    • Liệt kê tiền sử bệnh tật
-    • Ghi rõ thuốc đang sử dụng
-    • Thêm ghi chú quan trọng
-    
-    💡 **Mẹo:** Thông tin càng chi tiết, chẩn đoán càng chính xác
-    """)
-    
+    <div class="feature-card cccd-card">
+        <div class="feature-title">
+            📄 Trích xuất CCCD thông minh
+            <span class="feature-arrow">▶</span>
+        </div>
+        <div class="feature-description">
+            AI tự động nhận dạng và trích xuất thông tin từ Căn cước công dân Việt Nam
+        </div>
+        <div class="feature-details">
+            <strong>✨ Tính năng:</strong><br>
+            • OCR chính xác 98%+<br>
+            • Nhận dạng tự động các trường thông tin<br>
+            • Tự động tạo ID bệnh nhân<br>
+            • Xác thực tính hợp lệ<br>
+            • Bảo mật thông tin cá nhân<br><br>
+            <strong>🎯 Kết quả:</strong> Tiết kiệm 90% thời gian nhập liệu
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
     st.markdown("""
-    #### **🔹 BƯỚC 4: Khám & điều trị**
-    """)
-    st.error("""
-    🩺 **Quy trình khám bệnh:**
-    • Bác sĩ truy cập hồ sơ điện tử
-    • AI hỗ trợ phân tích triệu chứng
-    • Đề xuất phương án điều trị
-    • Theo dõi tiến triển bệnh
-    • Cập nhật hồ sơ liên tục
-    
-    ⚕️ **Kết quả:** Điều trị hiệu quả và an toàn
-    """)
-    st.markdown('</div>', unsafe_allow_html=True)
+    <div class="feature-card diabetes-card">
+        <div class="feature-title">
+            🔬 Dự đoán tiểu đường AI
+            <span class="feature-arrow">▶</span>
+        </div>
+        <div class="feature-description">
+            Phân tích 15+ yếu tố nguy cơ để đánh giá khả năng mắc bệnh tiểu đường
+        </div>
+        <div class="feature-details">
+            <strong>✨ Tính năng:</strong><br>
+            • Thuật toán Machine Learning<br>
+            • Phân tích đa chiều (tuổi, BMI, tiền sử...)<br>
+            • Báo cáo chi tiết nguy cơ<br>
+            • Khuyến nghị cá nhân hóa<br>
+            • Theo dõi lịch sử sức khỏe<br><br>
+            <strong>🎯 Độ chính xác:</strong> 93%+ tin cậy y khoa
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown("""
+    <div class="feature-card chatbot-card">
+        <div class="feature-title">
+            🤖 Dr. HealthBot 24/7
+            <span class="feature-arrow">▶</span>
+        </div>
+        <div class="feature-description">
+            Chatbot AI tư vấn sức khỏe cá nhân hóa dựa trên hồ sơ bệnh nhân
+        </div>
+        <div class="feature-details">
+            <strong>✨ Tính năng:</strong><br>
+            • Tư vấn dựa trên hồ sơ cá nhân<br>
+            • Trả lời câu hỏi y khoa<br>
+            • Giải thích kết quả xét nghiệm<br>
+            • Hướng dẫn chăm sóc tại nhà<br>
+            • Kết nối bác sĩ khi cần thiết<br><br>
+            <strong>🎯 Khả năng:</strong> Phản hồi tức thì, ngôn ngữ tự nhiên
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+# Future Development Section
+st.markdown("""
+<div class="future-section">
+    <div class="future-title">🚀 TƯƠNG LAI - HỆ SINH THÁI TOÀN DIỆN</div>
+    <div class="future-description">
+        Chúng tôi đang phát triển các module chuyên khoa (tim mạch, nội tiết, thần kinh), 
+        tích hợp thiết bị IoT để theo dõi sức khỏe realtime, và kết nối trực tiếp với 
+        các bệnh viện - phòng khám để tạo nên hệ sinh thái y tế hoàn chỉnh.
+        <br><br>
+        <strong>🌟 Tầm nhìn:</strong> Trở thành nền tảng chăm sóc sức khỏe thông minh hàng đầu Việt Nam
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown("---")
 
@@ -934,9 +1068,15 @@ st.markdown("---")
 if 'cccd_extracted_data' not in st.session_state:
     st.session_state.cccd_extracted_data = {}
 
+
+
+# Initialize session state for CCCD data
+if 'cccd_extracted_data' not in st.session_state:
+    st.session_state.cccd_extracted_data = {}
+
 # Patient Information Section with CCCD Upload Side by Side
 st.markdown('<div class="scroll-fade-in">', unsafe_allow_html=True)
-st.markdown('<h2 class="form-title">� Thông tin bệnh nhân</h2>', unsafe_allow_html=True)
+st.markdown('<h2 class="form-title">👤 Thông tin bệnh nhân</h2>', unsafe_allow_html=True)
 st.markdown('</div>', unsafe_allow_html=True)
 
 # Create two main columns: CCCD Upload (left) and Patient Form (right)
@@ -1352,75 +1492,6 @@ with col2:
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Enhanced Footer với animations
-st.markdown("---")
-st.markdown('<div class="scroll-fade-in">', unsafe_allow_html=True)
-st.markdown("## 🌐 Thông tin tổ chức")
-st.markdown('</div>', unsafe_allow_html=True)
-
-footer_col1, footer_col2, footer_col3 = st.columns(3)
-
-with footer_col1:
-    st.markdown('<div class="scroll-slide-left">', unsafe_allow_html=True)
-    st.markdown("""
-    ### 🏢 **VinBig AI**
-    """)
-    st.info("""
-    **Địa chỉ trụ sở:**
-    Tòa VinBig, Khu Công nghệ cao
-    Hà Nội, Việt Nam
-    
-    **Giấy phép:**
-    • Số ĐKKD: 0123456789
-    • Ngày cấp: 01/01/2023
-    • Nơi cấp: Sở KH&ĐT Hà Nội
-    
-    **Website:** vinbig.ai
-    """)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-with footer_col2:
-    st.markdown('<div class="scroll-scale-in">', unsafe_allow_html=True)
-    st.markdown("""
-    ### 📞 **Liên hệ nhanh**
-    """)
-    st.success("""
-    **Hotline 24/7:**
-    🔥 Khẩn cấp: 1900-555-888
-    📞 Tư vấn: 1900-555-999
-    
-    **Email:**
-    📧 support@vinbig-doctor.vn
-    📧 info@vinbig.ai
-    
-    **Mạng xã hội:**
-    📘 Facebook: /VinBigAI
-    📷 Instagram: @vinbig_ai
-    🐦 Twitter: @VinBigAI
-    """)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-with footer_col3:
-    st.markdown('<div class="scroll-slide-right">', unsafe_allow_html=True)
-    st.markdown("""
-    ### 🎯 **Tầm nhìn & Sứ mệnh**
-    """)
-    st.warning("""
-    **Tầm nhìn 2030:**
-    Trở thành nền tảng y tế AI #1 
-    Đông Nam Á
-    
-    **Sứ mệnh:**
-    Democratize healthcare through AI
-    
-    **Giá trị cốt lõi:**
-    • Đổi mới sáng tạo
-    • An toàn bệnh nhân
-    • Chất lượng vượt trội
-    • Trách nhiệm xã hội
-    """)
-    st.markdown('</div>', unsafe_allow_html=True)
-
 # Copyright and legal footer với animation
 st.markdown('<div class="scroll-fade-in">', unsafe_allow_html=True)
 st.markdown(
@@ -1445,13 +1516,13 @@ st.markdown(
             background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
             animation: footerShine 3s ease-in-out infinite;
         "></div>
-        <h3 style="margin-bottom: 1rem; color: white; position: relative; z-index: 1;">🏥 Doctor App - VinBig Medical Center</h3>
+        <h3 style="margin-bottom: 1rem; color: white; position: relative; z-index: 1;">🏥 VITA – VinBig Intelligent Treatment Assistant</h3>
         <p style="font-size: 1.1rem; margin-bottom: 1rem; position: relative; z-index: 1;">
-            Hệ thống quản lý bệnh nhân thông minh với công nghệ AI tiên tiến
+            Nền tảng AI hỗ trợ chẩn đoán và chăm sóc sức khỏe thông minh
         </p>
         <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1rem; position: relative; z-index: 1;">
-            <span>📞 Hotline: 1900-555-888</span>
-            <span>📧 Email: support@vinbig-doctor.vn</span>
+            <span>📞 Hotline: 091-606-1368</span>
+            <span>📧 Email: v.hieuhm7@vinbigdata.org</span>
             <span>🌐 Website: vinbig.ai</span>
         </div>
         <hr style="border: 1px solid rgba(255,255,255,0.3); margin: 1rem 0;">

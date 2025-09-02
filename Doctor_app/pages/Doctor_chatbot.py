@@ -384,12 +384,31 @@ Bạn có câu hỏi gì về sức khỏe mà tôi có thể hỗ trợ không?
 # Chat container
 st.markdown('<div class="chat-container">', unsafe_allow_html=True)
 
-# Display chat messages
+# Display chat messages with personalized names
 for message in st.session_state.chat_messages:
     if message["role"] == "user":
+        # Get user name from patient data
+        user_name = "Bạn"  # Default fallback
+        user_initial = "👤"  # Default avatar
+        if patient_data and 'current_patient' in patient_data:
+            personal_info = patient_data['current_patient'].get('personal_info', {})
+            full_name = personal_info.get('full_name', '')
+            if full_name:
+                # Use first name only for a more personal touch
+                user_name = full_name.split()[-1] if full_name.split() else "Bạn"
+                # Get first letter of the name for avatar
+                user_initial = full_name[0].upper() if full_name else "👤"
+        
         st.markdown(f"""
-        <div class="chat-message user-message">
-            <strong>Bạn:</strong><br>{message["content"]}
+        <div class="chat-message user-message" style="position: relative;">
+            <div style="position: absolute; right: -50px; top: 10px; width: 40px; height: 40px; 
+                        border-radius: 50%; background: linear-gradient(135deg, #64748b 0%, #475569 100%); 
+                        display: flex; align-items: center; justify-content: center; font-size: 1rem; 
+                        font-weight: 600; color: white; box-shadow: 0 4px 15px rgba(100, 116, 139, 0.2); 
+                        border: 3px solid white; font-family: 'Inter', sans-serif;">
+                {user_initial}
+            </div>
+            <strong style="color: #334155;">{user_name}:</strong><br>{message["content"]}
         </div>
         """, unsafe_allow_html=True)
     else:

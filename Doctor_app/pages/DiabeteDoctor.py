@@ -38,7 +38,7 @@ def get_base64_image(image_path):
         return None
 
 # Get doctor image
-doctor_image_path = "/Users/apple/Desktop/LLM-apps/image/Doctor.png"
+doctor_image_path = "/Users/apple/Desktop/LLM-apps/image/Doctor_6.png"
 doctor_base64 = get_base64_image(doctor_image_path)
 
 # Get doctor_1 image for form section
