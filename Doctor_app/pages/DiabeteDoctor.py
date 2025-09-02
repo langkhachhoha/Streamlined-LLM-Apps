@@ -1757,7 +1757,7 @@ with st.form("diabetes_assessment_form"):
     
     with col1:
         smoker = st.radio(
-            "**👩🏼‍⚕️Có hút thuốc không?**",
+            "**👩🏼‍⚕️Đã hút ít nhất 100 điếu thuốc chưa?**",
             options=[0, 1],
             format_func=lambda x: "Không" if x == 0 else "Có",
             key="smoker",
@@ -1766,7 +1766,7 @@ with st.form("diabetes_assessment_form"):
     
     with col2:
         phys_activity = st.radio(
-            "**👩🏼‍⚕️Có tập thể dục thường xuyên không?**",
+            "**👩🏼‍⚕️Có tập thể dục trong 30 ngày qua không?**",
             options=[0, 1],
             format_func=lambda x: "Không" if x == 0 else "Có",
             key="phys_activity",

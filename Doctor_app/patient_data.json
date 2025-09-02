@@ -21,13 +21,13 @@
       "noi_thuong_tru": "Lô 187 LK4, MB 121, Đông Vệ, TP Thanh Hóa"
     },
     "medical_analysis": {
-      "current_symptoms": "s",
+      "current_symptoms": "Thỉnh thoảng đau mỏi vai gáy, hơi khô mắt do làm việc nhiều với máy tính",
       "sleep_quality": "Rất tốt - ngủ sâu giấc 7-8 tiếng",
-      "family_history": "s",
-      "lifestyle_habits": "s",
+      "family_history": "Bố có tiền sử tăng huyết áp nhẹ, mẹ khỏe mạnh, không bệnh mạn tính",
+      "lifestyle_habits": "Ăn uống điều độ, ít ăn đồ ngọt và dầu mỡ, thỉnh thoảng đi bơi hoặc đi bộ cuối tuần",
       "work_environment": "Văn phòng - ít vận động",
       "stress_anxiety_level": "Rất thấp - cuộc sống bình yên",
-      "additional_info": "s"
+      "additional_info": "Không hút thuốc, thỉnh thoảng uống 1-2 ly cà phê/ngày, cân nặng ổn định"
     },
     "created_at": "2025-09-01 21:34:01",
     "updated_at": "2025-09-01 21:38:19",
