@@ -743,13 +743,13 @@ with st.sidebar:
     # Contact details
     st.info("""
     **📱 Hotline 24/7**  
-    1900-555-888
+    091-606-1368
     
     **📧 Email Hỗ Trợ**  
-    support@vinbig-doctor.vn
+    haminhhieu1005@gmail.com 
     
     **🏢 Địa Chỉ**  
-    Tòa VinBig, Hà Nội
+    Century Tower, Hà Nội
     
     **🕒 Giờ Làm Việc**  
     24/7 - Luôn sẵn sàng

@@ -79,42 +79,132 @@ st.markdown(
         backdrop-filter: blur(10px);
     }}
     
-    /* Chat Message Styling */
+    /* Enhanced Chat Message Styling - Modern & Stylish */
     .chat-message {{
-        padding: 1rem 1.5rem;
-        margin: 0.8rem 0;
-        border-radius: 15px;
-        max-width: 80%;
+        padding: 1.8rem 2.2rem;
+        margin: 1.5rem 0;
+        border-radius: 24px;
+        max-width: 85%;
         word-wrap: break-word;
-        animation: slideInMessage 0.3s ease-out;
+        font-size: 1.05rem;
+        line-height: 1.6;
+        box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        position: relative;
+        backdrop-filter: blur(20px);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(255,255,255,0.1);
     }}
     
+    .chat-message:hover {{
+        transform: translateY(-2px);
+        box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+    }}
+    
+    /* User Messages - Professional Design with Orange Theme */
     .user-message {{
-        background: linear-gradient(135deg, #0066cc 0%, #4da6ff 100%);
-        color: white;
+        background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.95) 0%, 
+            rgba(254, 249, 245, 0.95) 100%);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(249, 115, 22, 0.15);
+        border-left: 6px solid #f97316;
+        color: #0f172a;
         margin-left: auto;
-        border-bottom-right-radius: 5px;
-        box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+        border-bottom-right-radius: 8px;
+        box-shadow: 0 8px 32px rgba(249, 115, 22, 0.1);
+        animation: slideInRight 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
     }}
     
+    .user-message::before {{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(180deg, #f97316 0%, #ea580c 100%);
+        border-radius: 0 2px 2px 0;
+    }}
+    
+    /* Bot Messages - Professional Medical Design */
     .bot-message {{
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        color: #333;
+        background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.95) 0%, 
+            rgba(248, 250, 252, 0.95) 100%);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(34, 197, 94, 0.15);
+        border-left: 6px solid #22c55e;
+        color: #0f172a;
         margin-right: auto;
-        border-bottom-left-radius: 5px;
-        border-left: 4px solid #28a745;
-        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.15);
+        border-bottom-left-radius: 8px;
+        box-shadow: 0 8px 32px rgba(34, 197, 94, 0.1);
+        animation: slideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
     }}
     
+    .bot-message::before {{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
+        border-radius: 0 2px 2px 0;
+    }}
+    
+    /* Enhanced Typing Indicator */
     .typing-indicator {{
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border-left: 4px solid #28a745;
-        padding: 1rem 1.5rem;
-        border-radius: 15px;
-        border-bottom-left-radius: 5px;
-        margin: 0.8rem 0;
-        max-width: 80%;
-        animation: pulse 1.5s infinite;
+        background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.95) 0%, 
+            rgba(248, 250, 252, 0.95) 100%);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(34, 197, 94, 0.15);
+        border-left: 6px solid #22c55e;
+        padding: 1.8rem 2.2rem;
+        border-radius: 24px;
+        border-bottom-left-radius: 8px;
+        margin: 1.5rem 0;
+        max-width: 85%;
+        animation: typingPulse 2s infinite ease-in-out;
+        box-shadow: 0 8px 32px rgba(34, 197, 94, 0.1);
+        position: relative;
+    }}
+    
+    @keyframes slideInRight {{
+        from {{
+            opacity: 0;
+            transform: translateX(60px) scale(0.95);
+        }}
+        to {{
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }}
+    }}
+    
+    @keyframes slideInLeft {{
+        from {{
+            opacity: 0;
+            transform: translateX(-60px) scale(0.95);
+        }}
+        to {{
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }}
+    }}
+    
+    @keyframes typingPulse {{
+        0%, 100% {{
+            transform: scale(1);
+            box-shadow: 0 8px 32px rgba(34, 197, 94, 0.1);
+        }}
+        50% {{
+            transform: scale(1.02);
+            box-shadow: 0 12px 40px rgba(34, 197, 94, 0.15);
+        }}
     }}
     
     /* Medical Title Styling */
@@ -123,37 +213,222 @@ st.markdown(
         font-size: 3rem;
         font-weight: 800;
         text-align: center;
-        background: linear-gradient(135deg, #0066cc 0%, #4da6ff 50%, #00cc66 100%);
+        background: linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        text-shadow: 0 4px 6px rgba(0, 102, 204, 0.1);
+        text-shadow: 0 4px 6px rgba(34, 197, 94, 0.1);
         margin-bottom: 0.5rem;
         animation: glow 3s ease-in-out infinite alternate;
     }}
     
     .subtitle {{
-        font-family: 'Inter', sans-serif;
-        font-size: 1.2rem;
-        font-weight: 500;
-        color: #0066cc;
+        font-family: 'Outfit', 'Inter', sans-serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #0f172a;
         text-align: center;
-        margin-bottom: 2rem;
-        opacity: 0.9;
+        margin: 2rem auto;
+        padding: 2rem 3rem;
+        background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.98) 0%, 
+            rgba(240, 253, 244, 0.95) 50%,
+            rgba(255, 255, 255, 0.98) 100%);
+        border: 3px solid transparent;
+        background-clip: padding-box;
+        border-radius: 24px;
+        backdrop-filter: blur(20px);
+        box-shadow: 
+            0 20px 60px rgba(34, 197, 94, 0.15),
+            0 0 0 1px rgba(34, 197, 94, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        max-width: 850px;
+        position: relative;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        animation: subtitlePulse 4s ease-in-out infinite;
     }}
     
-    /* Input Styling */
+    .subtitle::before {{
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(
+            45deg, 
+            #22c55e 0%, 
+            #16a34a 25%, 
+            #15803d 50%, 
+            #16a34a 75%, 
+            #22c55e 100%
+        );
+        background-size: 300% 300%;
+        border-radius: 24px;
+        z-index: -1;
+        animation: gradientFlow 3s ease infinite;
+        opacity: 0.8;
+    }}
+    
+    .subtitle::after {{
+        content: '"';
+        position: absolute;
+        top: 0.5rem;
+        left: 1.5rem;
+        font-size: 3rem;
+        color: #22c55e;
+        opacity: 0.3;
+        font-family: 'Georgia', serif;
+        line-height: 1;
+        animation: quoteFloat 3s ease-in-out infinite alternate;
+    }}
+    
+    .subtitle .quote-end {{
+        position: absolute;
+        bottom: 0.5rem;
+        right: 1.5rem;
+        font-size: 3rem;
+        color: #22c55e;
+        opacity: 0.3;
+        font-family: 'Georgia', serif;
+        line-height: 1;
+        transform: rotate(180deg);
+        animation: quoteFloat 3s ease-in-out infinite alternate-reverse;
+    }}
+    
+    .subtitle:hover {{
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 
+            0 30px 80px rgba(34, 197, 94, 0.25),
+            0 0 0 1px rgba(34, 197, 94, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 1);
+        background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 1) 0%, 
+            rgba(240, 253, 244, 1) 50%,
+            rgba(255, 255, 255, 1) 100%);
+        animation-play-state: paused;
+    }}
+    
+    .subtitle:hover::before {{
+        opacity: 1;
+        animation-duration: 1.5s;
+    }}
+    
+    .subtitle:hover::after,
+    .subtitle:hover .quote-end {{
+        opacity: 0.6;
+        color: #15803d;
+        transform: scale(1.1);
+    }}
+    
+    .subtitle:hover .quote-end {{
+        transform: rotate(180deg) scale(1.1);
+    }}
+    
+    @keyframes subtitlePulse {{
+        0%, 100% {{
+            box-shadow: 
+                0 20px 60px rgba(34, 197, 94, 0.15),
+                0 0 0 1px rgba(34, 197, 94, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }}
+        50% {{
+            box-shadow: 
+                0 25px 70px rgba(34, 197, 94, 0.2),
+                0 0 0 1px rgba(34, 197, 94, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }}
+    }}
+    
+    @keyframes gradientFlow {{
+        0% {{
+            background-position: 0% 50%;
+        }}
+        50% {{
+            background-position: 100% 50%;
+        }}
+        100% {{
+            background-position: 0% 50%;
+        }}
+    }}
+    
+    @keyframes quoteFloat {{
+        0% {{
+            transform: translateY(0) scale(1);
+            opacity: 0.3;
+        }}
+        100% {{
+            transform: translateY(-8px) scale(1.05);
+            opacity: 0.5;
+        }}
+    }}
+    
+    @keyframes sparkleAnimation {{
+        0%, 100% {{
+            opacity: 0;
+            transform: scale(0);
+        }}
+        50% {{
+            opacity: 1;
+            transform: scale(1.5);
+        }}
+    }}
+    
+    /* Enhanced Modern Input Styling */
     .stTextInput > div > div > input {{
-        border-radius: 25px;
-        border: 2px solid #e3f2fd;
-        padding: 12px 20px;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-        background: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        border: 2px solid rgba(249, 115, 22, 0.1);
+        padding: 16px 24px;
+        font-size: 1.05rem;
+        font-weight: 400;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+        font-family: 'Inter', sans-serif;
     }}
     
     .stTextInput > div > div > input:focus {{
-        border-color: #0066cc;
+        border-color: #f97316;
+        box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1), 0 8px 24px rgba(249, 115, 22, 0.15);
+        transform: translateY(-1px);
+        background: rgba(255, 255, 255, 0.95);
+    }}
+    
+    .stTextInput > div > div > input::placeholder {{
+        color: #94a3b8;
+        font-weight: 400;
+    }}
+    
+    /* Enhanced Button Styling */
+    .stButton > button {{
+        background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 16px 32px;
+        font-size: 1.05rem;
+        font-weight: 600;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 16px rgba(34, 197, 94, 0.25);
+        font-family: 'Inter', sans-serif;
+        position: relative;
+        overflow: hidden;
+    }}
+    
+    .stButton > button::before {{
+        content: '💬';
+        margin-right: 8px;
+        font-size: 1.1rem;
+    }}
+    
+    .stButton > button:hover {{
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(34, 197, 94, 0.35);
+        background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    }}
         box-shadow: 0 0 20px rgba(0, 102, 204, 0.2);
         background: white;
     }}
@@ -209,10 +484,10 @@ st.markdown(
     
     @keyframes glow {{
         from {{
-            text-shadow: 0 0 20px rgba(0, 102, 204, 0.2);
+            text-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
         }}
         to {{
-            text-shadow: 0 0 40px rgba(0, 102, 204, 0.4);
+            text-shadow: 0 0 40px rgba(34, 197, 94, 0.4);
         }}
     }}
     
@@ -297,8 +572,17 @@ def send_chat_message(messages):
         return None
 
 # Page Header
-st.markdown('<h1 class="medical-title">🤖 Dr. HealthBot</h1>', unsafe_allow_html=True)
-st.markdown('<p class="subtitle">Trợ lý AI tư vấn sức khỏe cá nhân hóa | Cuộc trò chuyện thông minh về sức khỏe</p>', unsafe_allow_html=True)
+st.markdown('<h1 class="medical-title">🤖 VITA Chatbot</h1>', unsafe_allow_html=True)
+st.markdown('''
+<p class="subtitle">
+    <span class="sparkle"></span>
+    <span class="sparkle"></span>
+    <span class="sparkle"></span>
+    <span class="sparkle"></span>
+    Hiểu bạn từng nhịp – Chăm sóc tận tâm
+    <span class="quote-end">"</span>
+</p>
+''', unsafe_allow_html=True)
 
 # Check server status
 server_online = check_server_status()
@@ -382,9 +666,9 @@ Bạn có câu hỏi gì về sức khỏe mà tôi có thể hỗ trợ không?
     })
 
 # Chat container
-st.markdown('<div class="chat-container">', unsafe_allow_html=True)
+# st.markdown('<div class="chat-container">', unsafe_allow_html=True)
 
-# Display chat messages with personalized names
+# Display chat messages with enhanced modern styling
 for message in st.session_state.chat_messages:
     if message["role"] == "user":
         # Get user name from patient data
@@ -399,22 +683,60 @@ for message in st.session_state.chat_messages:
                 # Get first letter of the name for avatar
                 user_initial = full_name[0].upper() if full_name else "👤"
         
+        # Get current time for timestamp
+        timestamp = datetime.now().strftime("%H:%M")
+        
         st.markdown(f"""
-        <div class="chat-message user-message" style="position: relative;">
-            <div style="position: absolute; right: -50px; top: 10px; width: 40px; height: 40px; 
-                        border-radius: 50%; background: linear-gradient(135deg, #64748b 0%, #475569 100%); 
-                        display: flex; align-items: center; justify-content: center; font-size: 1rem; 
-                        font-weight: 600; color: white; box-shadow: 0 4px 15px rgba(100, 116, 139, 0.2); 
-                        border: 3px solid white; font-family: 'Inter', sans-serif;">
-                {user_initial}
+        <div class="chat-message user-message">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem;">
+                <div style="display: flex; align-items: center; gap: 0.8rem;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; 
+                                background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); 
+                                display: flex; align-items: center; justify-content: center; 
+                                font-size: 1rem; color: white; font-weight: 600;
+                                box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+                                border: 2px solid rgba(255, 255, 255, 0.2);
+                                font-family: 'Inter', sans-serif;">
+                        {user_initial}
+                    </div>
+                    <div>
+                        <div style="font-weight: 700; color: #f97316; font-size: 1rem; margin-bottom: 2px;">{user_name}</div>
+                        <div style="color: #64748b; font-size: 0.8rem; font-weight: 500;">Bệnh nhân</div>
+                    </div>
+                </div>
+                <span style="color: #94a3b8; font-size: 0.85rem; font-weight: 500;">{timestamp}</span>
             </div>
-            <strong style="color: #334155;">{user_name}:</strong><br>{message["content"]}
+            <div style="color: #1e293b; font-size: 1.05rem; line-height: 1.6; font-weight: 400;">
+                {message["content"]}
+            </div>
         </div>
         """, unsafe_allow_html=True)
     else:
+        # Get current time for timestamp
+        timestamp = datetime.now().strftime("%H:%M")
+        
         st.markdown(f"""
         <div class="chat-message bot-message">
-            <strong>🤖 Dr. HealthBot:</strong><br>{message["content"]}
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem;">
+                <div style="display: flex; align-items: center; gap: 0.8rem;">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; 
+                                background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); 
+                                display: flex; align-items: center; justify-content: center; 
+                                font-size: 1.2rem; color: white; 
+                                box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+                                border: 2px solid rgba(255, 255, 255, 0.2);">
+                        👩🏼‍⚕️
+                    </div>
+                    <div>
+                        <div style="font-weight: 700; color: #22c55e; font-size: 1rem; margin-bottom: 2px;">Dr. HealthBot</div>
+                        <div style="color: #64748b; font-size: 0.8rem; font-weight: 500;">AI Health Consultant</div>
+                    </div>
+                </div>
+                <span style="color: #94a3b8; font-size: 0.85rem; font-weight: 500;">{timestamp}</span>
+            </div>
+            <div style="color: #1e293b; font-size: 1.05rem; line-height: 1.6; font-weight: 400;">
+                {message["content"]}
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -447,12 +769,52 @@ if server_online:
                 "content": msg["content"]
             })
         
-        # Show typing indicator
+        # Show enhanced typing indicator with modern design
         typing_placeholder = st.empty()
         typing_placeholder.markdown("""
         <div class="typing-indicator">
-            🤖 Dr. HealthBot đang suy nghĩ...
+            <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;">
+                <div style="width: 40px; height: 40px; border-radius: 50%; 
+                            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); 
+                            display: flex; align-items: center; justify-content: center; 
+                            font-size: 1.2rem; color: white; 
+                            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+                            border: 2px solid rgba(255, 255, 255, 0.2);
+                            animation: doctorThinking 1.5s infinite;">
+                    🩺
+                </div>
+                <div>
+                    <div style="font-weight: 700; color: #22c55e; font-size: 1rem; margin-bottom: 2px;">Dr. HealthBot</div>
+                    <div style="color: #64748b; font-size: 0.8rem; font-weight: 500;">AI Health Consultant</div>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; color: #64748b; font-size: 1rem;">
+                <span style="margin-right: 12px;">Đang phân tích và tư vấn</span>
+                <div style="display: flex; gap: 4px;">
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: typingDot1 1.4s infinite;"></div>
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: typingDot2 1.4s infinite;"></div>
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: typingDot3 1.4s infinite;"></div>
+                </div>
+            </div>
         </div>
+        <style>
+        @keyframes doctorThinking {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes typingDot1 {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes typingDot2 {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes typingDot3 {
+            0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        </style>
         """, unsafe_allow_html=True)
         
         # Get response from server
